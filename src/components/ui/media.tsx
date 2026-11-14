@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { PlaceholderBadge } from '@/components/ui/placeholder-badge';
 import { images, type ImageKey } from '@/content/images';
 import { cn } from '@/lib/cn';
 
@@ -7,8 +8,13 @@ interface MediaProps {
   image: ImageKey;
   alt: string;
   sizes: string;
-  /** Slot aspect ratio as a CSS value, e.g. "4 / 5". */
-  aspect: string;
+  /**
+   * Tailwind aspect-ratio class(es) of the slot, e.g. "aspect-[4/5]". Omit when the parent
+   * already fixes the size (the media then fills it).
+   */
+  aspectClassName?: string;
+  /** Dictionary text for the placeholder badge (common.placeholder). */
+  placeholderLabel: string;
   /** Preload and eager-load (hero only). */
   preload?: boolean;
   quality?: 75 | 85;
@@ -23,18 +29,21 @@ export function Media({
   image,
   alt,
   sizes,
-  aspect,
+  aspectClassName,
+  placeholderLabel,
   preload = false,
   quality,
   className,
 }: MediaProps) {
   const asset = images[image];
-  const position = asset.objectPosition;
 
   return (
     <div
-      className={cn('relative w-full overflow-hidden bg-media', className)}
-      style={{ aspectRatio: aspect }}
+      className={cn(
+        'relative w-full overflow-hidden bg-media',
+        aspectClassName ?? 'h-full',
+        className,
+      )}
     >
       <Image
         src={asset.src}
@@ -45,8 +54,11 @@ export function Media({
         preload={preload}
         quality={quality}
         className="object-cover"
-        style={position ? { objectPosition: position } : undefined}
+        style={asset.objectPosition ? { objectPosition: asset.objectPosition } : undefined}
       />
+      {asset.placeholder ? (
+        <PlaceholderBadge label={placeholderLabel} className="absolute top-2 left-2 bg-bg" />
+      ) : null}
     </div>
   );
 }

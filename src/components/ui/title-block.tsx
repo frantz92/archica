@@ -8,7 +8,11 @@ export interface TitleBlockItem {
   readonly value: ReactNode;
   /** Keeps the label for assistive technology but hides it visually. */
   readonly labelHidden?: boolean;
+  /** Overrides the block's value style for this cell (e.g. a word that must not wrap in a narrow cell). */
+  readonly valueStyle?: ValueStyle;
 }
+
+type ValueStyle = 'value' | 'stat' | 'small';
 
 const valueClasses = {
   value: 'type-value',
@@ -19,7 +23,7 @@ const valueClasses = {
 interface TitleBlockProps {
   items: readonly TitleBlockItem[];
   /** Typographic role of the values. */
-  valueStyle?: 'value' | 'stat' | 'small';
+  valueStyle?: ValueStyle;
   /** Grid classes controlling the column layout per breakpoint. */
   className?: string;
 }
@@ -37,7 +41,7 @@ export function TitleBlock({ items, valueStyle = 'value', className }: TitleBloc
           <dt className={item.labelHidden ? 'sr-only' : 'type-label text-fg-muted'}>
             {item.label}
           </dt>
-          <dd className={valueClasses[valueStyle]}>{item.value}</dd>
+          <dd className={valueClasses[item.valueStyle ?? valueStyle]}>{item.value}</dd>
         </div>
       ))}
     </dl>
