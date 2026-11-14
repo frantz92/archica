@@ -13,6 +13,7 @@ interface ButtonLinkProps {
 export function ButtonLink({ href, className, children }: ButtonLinkProps) {
   return (
     <Link
+      prefetch={false}
       href={href}
       className={cn(
         'inline-flex min-h-12 min-w-11 items-center justify-center rounded-sm bg-accent px-6 text-base font-medium text-on-accent',

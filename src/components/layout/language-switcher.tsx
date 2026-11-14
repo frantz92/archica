@@ -42,6 +42,7 @@ export function LanguageSwitcher({ currentLocale, options, ariaLabel }: Language
           return (
             <li key={locale}>
               <Link
+                prefetch={false}
                 href={`/${locale}${rest}${hash}`}
                 lang={locale}
                 hrefLang={locale}

@@ -71,6 +71,7 @@ export function MobileMenu({ locale, links, phones, email, labels, children }: M
               {links.map((link) => (
                 <li key={link.id}>
                   <Link
+                    prefetch={false}
                     href={`/${locale}#${link.id}`}
                     onClick={close}
                     className="inline-block min-h-11 type-h2"

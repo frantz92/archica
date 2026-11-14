@@ -22,7 +22,8 @@ export function ThemeToggle({ switchToLight, switchToDark }: ThemeToggleProps) {
   const toggle = () => {
     const next = resolvedTheme === 'light' ? 'dark' : 'light';
     const apply = () => flushSync(() => setTheme(next));
-    if (typeof document.startViewTransition === 'function') {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion && typeof document.startViewTransition === 'function') {
       document.startViewTransition(apply);
     } else {
       apply();

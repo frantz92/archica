@@ -103,10 +103,12 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
                     y2={y2}
                     strokeWidth={1}
                     vectorEffect="non-scaling-stroke"
+                    className="hero-line"
+                    style={{ transformOrigin: `${x1}px ${y1}px` }}
                   />
                 ))}
               </svg>
-              <div className="absolute inset-x-[16%] inset-y-[8%]">
+              <div className="hero-reveal absolute inset-x-[16%] inset-y-[8%]">
                 <Media
                   image="hero"
                   alt={hero.imageAlt}

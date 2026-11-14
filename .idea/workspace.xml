@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="479c07fa-42e5-4265-8e55-b0b3d0cb2ce5" name="Changes" comment="" />
+    <list default="true" id="479c07fa-42e5-4265-8e55-b0b3d0cb2ce5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierignore" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/language-switcher.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/language-switcher.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/mobile-menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/mobile-menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/nav-links.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/nav-links.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/not-found-content.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/not-found-content.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/theme-toggle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/theme-toggle.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sections/hero.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sections/hero.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/button-link.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button-link.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/text-link.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/text-link.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/images.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +33,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "frantz92"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/frantz92/archica-website-design.git",
+    "accountId": "acf275e9-c3b8-4bd0-95f1-1f8950ce5d8d"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
   &quot;fromUser&quot;: false
@@ -49,7 +79,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "stage-4",
+    "git-widget-placeholder": "stage-5",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "kotlin-language-version-configured": "true",

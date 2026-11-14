@@ -11,7 +11,7 @@ export interface ImageAsset {
   readonly src: StaticImageData;
   /** Optional CSS object-position for cropping inside the slot. */
   readonly objectPosition?: string;
-  /** PLACEHOLDER: true while the file is a temporary generated image. */
+  /** True while the file is a temporary generated image (shows the placeholder badge on previews). */
   readonly placeholder: boolean;
 }
 

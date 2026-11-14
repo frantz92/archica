@@ -366,3 +366,38 @@ body:has(dialog[open]) {
 [aria-current='true'].link-underline-draw {
   background-size: 100% 1px;
 }
+
+/* ==========================================================================
+   Hero opening (§2.6 item 1). CSS only, once on load. The text is never animated
+   (the h1 must be visible in the first frame). Without motion the end state is the
+   default, so reduced-motion users and no-JS clients see the final composition at once.
+   ========================================================================== */
+
+@keyframes hero-reveal {
+  from {
+    clip-path: inset(28% 36%);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes hero-line {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-reveal {
+    animation: hero-reveal var(--dur-3) var(--ease-out) 150ms both;
+  }
+
+  /* Each line grows from its frame corner (transform-origin is set inline) to the image corner. */
+  .hero-line {
+    animation: hero-line 900ms var(--ease-out) 150ms both;
+  }
+}

@@ -50,6 +50,7 @@ export function NavLinks({ locale, links, ariaLabel }: NavLinksProps) {
           return (
             <li key={link.id}>
               <Link
+                prefetch={false}
                 href={`/${locale}#${link.id}`}
                 aria-current={active ? 'true' : undefined}
                 className={cn(

@@ -5,3 +5,5 @@ package-lock.json
 BLUEPRINT.md
 CLAUDE.md
 AGENTS.md
+.claude
+eslint.config.mjs

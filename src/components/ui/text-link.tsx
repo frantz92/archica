@@ -33,7 +33,7 @@ export function TextLink({
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link prefetch={false} href={href} className={classes}>
       {children}
     </Link>
   );

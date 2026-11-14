@@ -49,6 +49,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
     <HeaderShell>
       <Container className="flex h-full items-center justify-between gap-6">
         <Link
+          prefetch={false}
           href={`/${locale}`}
           aria-label={a11y.homeLink}
           className="inline-flex min-h-11 items-center"

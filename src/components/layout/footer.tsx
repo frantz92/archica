@@ -93,7 +93,11 @@ export function Footer({ locale, dictionary }: FooterProps) {
           <ul className="grid">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="inline-block min-h-11 link-underline-draw py-2">
+                <Link
+                  prefetch={false}
+                  href={link.href}
+                  className="inline-block min-h-11 link-underline-draw py-2"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -115,6 +119,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
         <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 type-small text-fg-muted">
           <p>{footer.copyright(year)}</p>
           <Link
+            prefetch={false}
             href={`/${locale}#${sectionIds.top}`}
             className="inline-flex min-h-11 items-center link-underline-draw"
           >
