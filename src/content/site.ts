@@ -3,6 +3,9 @@ export const site = {
   fullName: 'Studio Architektury i Urbanistyki Archica',
   brand: 'Archica',
   founder: 'mgr arch. Małgorzata Wojtaś-Frankowska',
+  /** The same fact split into parts, for structured data. */
+  founderName: 'Małgorzata Wojtaś-Frankowska',
+  founderTitle: 'mgr arch.',
   foundedYear: 1996,
   taxId: '8541544655',
   phones: [

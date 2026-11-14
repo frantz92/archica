@@ -1,13 +1,17 @@
 import { Analytics } from '@vercel/analytics/next';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { SkipLink } from '@/components/layout/skip-link';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { JsonLd } from '@/components/seo/json-ld';
+import { site } from '@/content/site';
 import { isLocale, locales } from '@/i18n/config';
 import { getDictionary } from '@/i18n/get-dictionary';
+import { brandColors } from '@/lib/brand';
+import { buildProfessionalService } from '@/lib/structured-data';
 import { notFound } from 'next/navigation';
 
 import '../globals.css';
@@ -29,11 +33,17 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dictionary = getDictionary(locale);
+  // Pages provide their own complete metadata (canonical, hreflang, Open Graph); this is the base.
   return {
-    title: dictionary.meta.title,
+    metadataBase: new URL(site.domain),
+    title: { default: dictionary.meta.title, template: `%s — ${site.brand}` },
     description: dictionary.meta.description,
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: brandColors.moss,
+};
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
@@ -49,6 +59,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           <main id="main">{children}</main>
           <Footer locale={locale} dictionary={dictionary} />
         </ThemeProvider>
+        <JsonLd data={buildProfessionalService(locale)} />
         <Analytics />
       </body>
     </html>
