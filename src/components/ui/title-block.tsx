@@ -6,12 +6,20 @@ export interface TitleBlockItem {
   readonly id: string;
   readonly label: ReactNode;
   readonly value: ReactNode;
+  /** Keeps the label for assistive technology but hides it visually. */
+  readonly labelHidden?: boolean;
 }
+
+const valueClasses = {
+  value: 'type-value',
+  stat: 'type-stat',
+  small: 'type-small',
+} as const;
 
 interface TitleBlockProps {
   items: readonly TitleBlockItem[];
   /** Typographic role of the values. */
-  valueStyle?: 'value' | 'stat';
+  valueStyle?: 'value' | 'stat' | 'small';
   /** Grid classes controlling the column layout per breakpoint. */
   className?: string;
 }
@@ -26,8 +34,10 @@ export function TitleBlock({ items, valueStyle = 'value', className }: TitleBloc
     <dl className={cn('grid gap-px border-y border-line bg-line', className)}>
       {items.map((item) => (
         <div key={item.id} className="flex flex-col gap-3 bg-bg p-4 md:p-6">
-          <dt className="type-label text-fg-muted">{item.label}</dt>
-          <dd className={valueStyle === 'stat' ? 'type-stat' : 'type-value'}>{item.value}</dd>
+          <dt className={item.labelHidden ? 'sr-only' : 'type-label text-fg-muted'}>
+            {item.label}
+          </dt>
+          <dd className={valueClasses[valueStyle]}>{item.value}</dd>
         </div>
       ))}
     </dl>

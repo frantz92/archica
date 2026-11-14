@@ -90,6 +90,8 @@
   --media-bg: var(--sage);
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ==========================================================================
    Tailwind theme: semantic tokens only are exposed as colour utilities.
    ========================================================================== */
@@ -163,9 +165,11 @@ body {
   border-radius: var(--radius-sm);
 }
 
-img,
-svg {
-  display: block;
+@layer base {
+  img,
+  svg {
+    display: block;
+  }
 }
 
 /* Cross-fade for the theme switch (View Transitions API, BLUEPRINT §2.6 item 5) */
@@ -329,4 +333,36 @@ svg {
   &:focus-visible {
     background-size: 100% 1px;
   }
+}
+
+/* ==========================================================================
+   Mobile menu dialog (§2.6 item 4, §6.1)
+   ========================================================================== */
+
+.menu-dialog {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.menu-dialog[open] {
+  opacity: 1;
+  transform: none;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* A modal dialog does not lock page scroll by itself. */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* Active navigation link keeps the full underline (§6.1). */
+[aria-current='true'].link-underline-draw {
+  background-size: 100% 1px;
 }

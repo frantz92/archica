@@ -1,7 +1,8 @@
 // Copied verbatim from brand/svg/*-mech.svg (BLUEPRINT §2.7). Do not edit or redraw.
 
 /** Emblem, viewBox 0 0 100 100 (archica-sygnet-mech.svg). */
-export const MARK_PATH = 'sygnet';
+export const MARK_PATH =
+  'M3.164 0L96.836 0L58.836 31L41.164 31ZM96.836 100L3.164 100L41.164 69L58.836 69ZM0 97.419L0 2.581L21 19.713L21 80.287ZM25 22.976L38 33.581L38 66.419L25 77.024ZM100 2.581L100 97.419L79 80.287L79 19.713ZM75 77.024L62 66.419L62 33.581L75 22.976Z';
 
 /** Emblem inside the stacked logo, viewBox 0 0 230.3 166.789 (archica-logo-mech.svg #sygnet). */
 export const STACKED_MARK_PATH =

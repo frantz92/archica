@@ -54,7 +54,7 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
   ] as const;
 
   return (
-    <main id="main">
+    <>
       <Section id={sectionIds.top} labelledBy="stage1-title">
         <Container>
           <p className="type-label text-accent-text">{dictionary.hero.eyebrow}</p>
@@ -158,6 +158,6 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
           </div>
         </Container>
       </Section>
-    </main>
+    </>
   );
 }
