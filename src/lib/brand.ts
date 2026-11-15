@@ -1,6 +1,6 @@
 /**
  * Brand colours needed where CSS variables are unavailable: Web App Manifest, viewport
- * theme-color and ImageResponse icons (BLUEPRINT §8). Values mirror globals.css.
+ * theme-color and ImageResponse icons (BLUEPRINT §8). Values mirror src/styles/tokens.css.
  */
 export const brandColors = {
   coal: '#1E1916',

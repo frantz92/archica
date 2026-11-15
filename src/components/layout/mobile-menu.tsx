@@ -5,10 +5,11 @@ import { useEffect, useRef, type ReactNode } from 'react';
 
 import { CloseIcon, MenuIcon } from '@/components/ui/icons';
 import { Container } from '@/components/ui/container';
-import type { NavLinkItem } from './nav-links';
+import type { Locale } from '@/i18n/config';
+import { sectionHref, type NavLinkItem } from '@/lib/navigation';
 
 interface MobileMenuProps {
-  locale: string;
+  locale: Locale;
   links: readonly NavLinkItem[];
   /** Server-rendered phone and e-mail links (single source: `site`). */
   contact: ReactNode;
@@ -69,7 +70,7 @@ export function MobileMenu({ locale, links, contact, labels, children }: MobileM
                 <li key={link.id}>
                   <Link
                     prefetch={false}
-                    href={`/${locale}#${link.id}`}
+                    href={sectionHref(locale, link.id)}
                     onClick={close}
                     className="inline-block min-h-11 type-h2"
                   >

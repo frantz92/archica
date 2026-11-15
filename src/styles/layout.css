@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+
+@utility container-page {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+/* Same rhythm, but a shorter bottom edge (last section before the footer). */
+@utility section-y-tight-end {
+  padding-block: var(--section-pad) clamp(3rem, 6vw, 5rem);
+}
+
+@utility section-y {
+  padding-block: var(--section-pad);
+}
+
+/*
+ * Anchor landing (menu, footer links). `html` already reserves the fixed header
+ * (scroll-padding-top); this pulls the target up by the section's own top padding, minus a
+ * 1.5 rem breathing space, so the heading lands just under the header instead of after a
+ * band of empty background.
+ */
+@utility section-anchor {
+  scroll-margin-top: calc(1.5rem - var(--section-pad));
+}
+
+/* Responsive 4 / 12 column grid (§2.5) */
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    column-gap: 2rem;
+  }
+}
+
+/*
+ * Link with a permanent 1 px underline. On hover/focus an accent-coloured line draws over it from
+ * the left (§2.6 item 2). Two layers: the accent line (first) and the resting line (second).
+ */
+@utility link-underline {
+  background-image:
+    linear-gradient(var(--accent-line), var(--accent-line)),
+    linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size:
+    0 1px,
+    100% 1px;
+  text-decoration: none;
+  transition: background-size var(--dur-2) var(--ease-out);
+
+  &:hover,
+  &:focus-visible,
+  :is(a, button):is(:hover, :focus-visible) > & {
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
+}
+
+/*
+ * Link with no resting underline: on hover/focus an amber line draws from the left. The active
+ * navigation item (`aria-current="true"`) keeps it permanently. The line sits on the inner text
+ * element, so the anchor can keep its 44 px hit area.
+ */
+@utility link-underline-draw {
+  background-image: linear-gradient(var(--accent-line), var(--accent-line));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  text-decoration: none;
+  transition: background-size var(--dur-2) var(--ease-out);
+
+  &:hover,
+  &:focus-visible,
+  :is(a, button):is(:hover, :focus-visible) > &,
+  &[aria-current='true'],
+  [aria-current='true'] > & {
+    background-size: 100% 1px;
+  }
+}
+
+/* Square icon-only control (menu, close, theme): 44 px target with a hover wash. */
+@utility icon-button {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-1);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--line);
+    }
+  }
+}

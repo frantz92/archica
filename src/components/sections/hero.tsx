@@ -6,6 +6,7 @@ import { TextLink } from '@/components/ui/text-link';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
 import { site } from '@/content/site';
 import { sectionIds } from '@/i18n/config';
+import { sectionHref } from '@/lib/navigation';
 
 import type { SectionProps } from './section-props';
 
@@ -56,10 +57,10 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
             </h1>
             <p className="mt-6 type-lead">{hero.lead}</p>
             <div className="mt-8 flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-center">
-              <ButtonLink href={`/${locale}#${sectionIds.contact}`} className="w-full sm:w-auto">
+              <ButtonLink href={sectionHref(locale, 'contact')} className="w-full sm:w-auto">
                 {hero.primaryCta}
               </ButtonLink>
-              <TextLink href={`/${locale}#${sectionIds.portfolio}`}>{hero.secondaryCta}</TextLink>
+              <TextLink href={sectionHref(locale, 'portfolio')}>{hero.secondaryCta}</TextLink>
             </div>
           </div>
 

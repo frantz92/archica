@@ -13,7 +13,11 @@ Wymagany Node 22 LTS lub nowszy.
 npm install
 npm run dev          # http://localhost:3000 (przekierowanie / → /pl)
 npm run typecheck    # next typegen && tsc --noEmit
-npm run lint         # ESLint CLI
+npm run lint         # ESLint CLI (z regułami projektu: eqeqeq, no-console, import type)
+npm run format:check # Prettier w trybie sprawdzania (CI)
+npm test             # testy jednostkowe (Vitest)
+npm run test:coverage # testy z raportem pokrycia i progiem 80%
+npm run check        # typecheck + lint + format:check + testy z pokryciem (to samo co bramka jakości w CI)
 npm run build        # build produkcyjny
 npm run start        # serwer na podstawie buildu
 npm run format       # Prettier (z sortowaniem klas Tailwind)
@@ -28,12 +32,24 @@ Do builda nie są potrzebne żadne zmienne środowiskowe ani sekrety.
 brand/                paczka logo (źródło, nie jest serwowana)
 public/images/        6 zdjęć o stałych nazwach
 scripts/              check-placeholders.mjs, generate-placeholder-images.mjs
+test/                 wspólna infrastruktura testów: setup, atrapy API przeglądarki, stan routera
 src/app/              trasy: [locale]/ (strona, polityka prywatności, 404, obraz OG), ikony, manifest, sitemap, robots
 src/components/       layout/ (nagłówek, stopka), sections/ (5 sekcji), ui/ (prymitywy), providers/, seo/
 src/content/          dane: site.ts, projects.ts, images.ts, privacy/{pl,en,fr}.ts
 src/i18n/             config.ts, get-dictionary.ts, dictionaries/{pl,en,fr}.ts
-src/lib/              metadata, dane strukturalne, kolory marki dla ikon, pomocniki
+src/lib/              metadata, dane strukturalne, nawigacja po sekcjach, język z parametrów trasy, kolory marki dla ikon, pomocniki
+src/styles/           style globalne podzielone na moduły (tokens, theme, base, typography, layout, menu, hero, effects), importowane z app/globals.css
 ```
+
+## Testy
+
+Testy jednostkowe (Vitest, Testing Library, jsdom) leżą obok kodu jako `*.test.ts(x)`; wspólne atrapy
+(`IntersectionObserver`, `matchMedia`, `<dialog>`, mocki `next/image` i `next/navigation`) są w `test/`.
+Czysta logika działa w środowisku Node, a testy komponentów włączają jsdom komentarzem
+`// @vitest-environment jsdom` na początku pliku. Pokrycie ma próg 80% (instrukcje, gałęzie, funkcje,
+linie) i jest sprawdzane przez `npm run test:coverage`. Poza pokryciem zostają tylko `opengraph-image.tsx`
+i `apple-icon.tsx` (generowane obrazy). Testy pilnują też treści: te same klucze w PL/EN/FR, twarde spacje
+po jednoliterowych spójnikach (PL) i przed `: ; ! ?` (FR), brak zahardkodowanych danych kontaktowych.
 
 ## Edycja treści
 

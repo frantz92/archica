@@ -3,13 +3,14 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/container';
 import { EmailLink, PhoneLinks } from '@/components/ui/contact-links';
 import { Logo } from '@/components/ui/logo';
-import { localeMeta, locales, sectionIds, type Locale } from '@/i18n/config';
+import { localeMeta, mapLocales, type Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/dictionaries/types';
+import { getNavLinks } from '@/lib/navigation';
 
 import { HeaderShell } from './header-shell';
 import { LanguageSwitcher } from './language-switcher';
 import { MobileMenu } from './mobile-menu';
-import { NavLinks, type NavLinkItem } from './nav-links';
+import { NavLinks } from './nav-links';
 import { ThemeToggle } from './theme-toggle';
 
 interface HeaderProps {
@@ -20,19 +21,12 @@ interface HeaderProps {
 export function Header({ locale, dictionary }: HeaderProps) {
   const { a11y, nav } = dictionary;
 
-  const links: NavLinkItem[] = [
-    { id: sectionIds.services, label: nav.services },
-    { id: sectionIds.about, label: nav.about },
-    { id: sectionIds.portfolio, label: nav.portfolio },
-    { id: sectionIds.contact, label: nav.contact },
-  ];
+  const links = getNavLinks(nav);
 
-  const languageOptions = Object.fromEntries(
-    locales.map((code) => [
-      code,
-      { short: localeMeta[code].label, name: a11y.languageNames[code] },
-    ]),
-  ) as Record<Locale, { short: string; name: string }>;
+  const languageOptions = mapLocales((code) => ({
+    short: localeMeta[code].label,
+    name: a11y.languageNames[code],
+  }));
 
   const controls = (
     <>

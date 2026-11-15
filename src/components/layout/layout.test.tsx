@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { site } from '@/content/site';
 import { en, fr, pl } from '@/i18n/test-utils';
+import type { NavLinkItem } from '@/lib/navigation';
 
 import { FakeIntersectionObserver, setReducedMotion } from '../../../test/dom-stubs';
 import { setNavigation } from '../../../test/navigation-state';
@@ -15,7 +16,7 @@ import { Header } from './header';
 import { HeaderShell } from './header-shell';
 import { LanguageSwitcher } from './language-switcher';
 import { MobileMenu } from './mobile-menu';
-import { NavLinks, type NavLinkItem } from './nav-links';
+import { NavLinks } from './nav-links';
 import { NotFoundContent } from './not-found-content';
 import { SkipLink } from './skip-link';
 import { ThemeToggle } from './theme-toggle';

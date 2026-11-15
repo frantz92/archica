@@ -283,7 +283,7 @@ public/images/                 6 zdjęć o stałych nazwach
 scripts/check-placeholders.mjs
 src/
   app/
-    globals.css                tokeny (§2), @theme, style bazowe
+    globals.css                punkt wejścia: importuje moduły z src/styles/ (tokens, theme, base, typography, layout, menu, hero, effects)
     [locale]/
       layout.tsx               S  <html lang>, font, ThemeProvider, SkipLink, Header, <main>, Footer, Analytics, JSON-LD
       page.tsx                 S  składa sekcje; revalidate
@@ -319,7 +319,8 @@ src/
   i18n/
     config.ts  get-dictionary.ts  dictionaries/{pl,en,fr}.ts
   lib/
-    metadata.ts  years.ts  cn.ts
+    metadata.ts  years.ts  cn.ts  plural.ts  navigation.ts  route-locale.ts  structured-data.ts  brand.ts  text.ts
+  styles/                      moduły stylów globalnych (§2); kolejność importów w globals.css jest znacząca
 ```
 
 S = Server Component, C = Client Component. Plików `C` jest dziewięć (osiem z tej listy, w tym `ui/count-up.tsx`, oraz `layout/not-found-content.tsx`, który czyta język z `useParams`) i ta lista jest zamknięta. Sekcje nie zawierają żadnego JS klienckiego poza `copy-button` w kontakcie.
@@ -568,3 +569,4 @@ Zatwierdzone przez użytkownika 2026-11-14. Przy sprzeczności z §6.3 i §6.5 (
 | 23 | Portfolio: cztery fikcyjne projekty, pliki `portfolio-residence/office/interior/pavilion.png` | cztery realne realizacje, pliki `portfolio-1…4.png`, tytuły tłumaczone | Aneks 1, F | E |
 | 24 | O nas z tabelką trzech wierszy | bez tabelki, każda informacja raz | Aneks 1, A#8 | E |
 | 25 | Przełącznik języka z zachowaniem kotwicy; kotwice lądują na początku sekcji; napis logo przycinany przy prawej krawędzi | język zawsze od góry; kotwice korygowane o górny odstęp sekcji (1,5 rem pod menu); `overflow: visible` w logo | uwagi użytkownika po przeglądzie | poprawki |
+| 26 | Jeden plik `globals.css`; powielone strażniki języka i listy nawigacji; brak testów | style w `src/styles/` (wynik kompilacji identyczny bajt w bajt), `lib/navigation.ts`, `lib/route-locale.ts`, `mapLocales`; testy Vitest (próg pokrycia 80%) | czystszy kod, siatka bezpieczeństwa | refaktor |

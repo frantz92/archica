@@ -4,13 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export interface NavLinkItem {
-  readonly id: string;
-  readonly label: string;
-}
+import type { Locale } from '@/i18n/config';
+import { sectionHref, type NavLinkItem } from '@/lib/navigation';
 
 interface NavLinksProps {
-  locale: string;
+  locale: Locale;
   links: readonly NavLinkItem[];
   ariaLabel: string;
 }
@@ -49,7 +47,7 @@ export function NavLinks({ locale, links, ariaLabel }: NavLinksProps) {
             <li key={link.id}>
               <Link
                 prefetch={false}
-                href={`/${locale}#${link.id}`}
+                href={sectionHref(locale, link.id)}
                 aria-current={active ? 'true' : undefined}
                 className="inline-flex min-h-11 items-center"
               >

@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 
 import { PrivacyDocumentView } from '@/components/sections/privacy-document';
 import { TextLink } from '@/components/ui/text-link';
 import { getPrivacyDocument } from '@/content/privacy';
 import { site } from '@/content/site';
-import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n/get-dictionary';
 import { createPageMetadata } from '@/lib/metadata';
+import { resolveRoute } from '@/lib/route-locale';
 
 // Rebuild daily so the copyright year in the footer does not go stale.
 export const revalidate = 86400;
@@ -15,9 +13,10 @@ export const revalidate = 86400;
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/privacy'>): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const { meta } = getDictionary(locale);
+  const {
+    locale,
+    dictionary: { meta },
+  } = await resolveRoute(params);
 
   return createPageMetadata({
     locale,
@@ -30,9 +29,7 @@ export async function generateMetadata({
 }
 
 export default async function PrivacyPage({ params }: PageProps<'/[locale]/privacy'>) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dictionary = getDictionary(locale);
+  const { locale, dictionary } = await resolveRoute(params);
   const document = getPrivacyDocument(locale);
 
   return (

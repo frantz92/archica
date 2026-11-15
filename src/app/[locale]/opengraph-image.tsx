@@ -1,10 +1,10 @@
 import { ImageResponse } from 'next/og';
 
 import { STACKED_MARK_PATH, WORDMARK_PATH } from '@/components/ui/logo-paths';
-import { isLocale, locales } from '@/i18n/config';
+import { locales } from '@/i18n/config';
 import { brandColors } from '@/lib/brand';
 import { OG_IMAGE_SIZE } from '@/lib/metadata';
-import { notFound } from 'next/navigation';
+import { resolveLocale, type LocaleParams } from '@/lib/route-locale';
 
 export const size = OG_IMAGE_SIZE;
 export const dynamicParams = false;
@@ -21,9 +21,8 @@ const LOGO_WIDTH = Math.round((LOGO_HEIGHT * 230.3) / 166.789);
  * 1200 × 630, coal background, stacked logo in chalk drawn from vector paths (no font text).
  * The alt text is set per language in the page metadata (the `alt` export cannot vary by locale).
  */
-export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
+export default async function OpenGraphImage({ params }: { params: LocaleParams }) {
+  await resolveLocale(params);
 
   return new ImageResponse(
     <div

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Tailwind theme: semantic tokens only are exposed as colour utilities.
+   ========================================================================== */
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-line: var(--accent-line);
+  --color-on-accent: var(--on-accent);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-focus: var(--focus);
+  --color-media: var(--media-bg);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

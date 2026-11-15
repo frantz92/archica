@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { defaultLocale, isLocale, localeMeta, locales, sectionIds } from './config';
+import { defaultLocale, isLocale, localeMeta, locales, mapLocales, sectionIds } from './config';
 
 describe('locales', () => {
   it('supports Polish, English and French with Polish as the default', () => {
@@ -35,5 +35,17 @@ describe('sectionIds', () => {
       portfolio: 'portfolio',
       contact: 'contact',
     });
+  });
+});
+
+describe('mapLocales', () => {
+  it('builds one entry per supported language', () => {
+    expect(mapLocales((locale) => locale.toUpperCase())).toEqual({ pl: 'PL', en: 'EN', fr: 'FR' });
+  });
+
+  it('calls the builder exactly once per language', () => {
+    const seen: string[] = [];
+    mapLocales((locale) => seen.push(locale));
+    expect(seen.sort()).toEqual([...locales].sort());
   });
 });

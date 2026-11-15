@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Mobile menu dialog (§2.6 item 4, §6.1)
+   ========================================================================== */
+
+.menu-dialog {
+  opacity: 0;
+  transform: translateY(8px);
+  /* `display` and `overlay` are discrete: they keep the dialog on screen while it fades out. */
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out),
+    display var(--dur-2) allow-discrete,
+    overlay var(--dur-2) allow-discrete;
+}
+
+.menu-dialog[open] {
+  opacity: 1;
+  transform: none;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* A modal dialog does not lock page scroll by itself. */
+body:has(dialog[open]) {
+  overflow: hidden;
+}

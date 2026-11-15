@@ -5,8 +5,9 @@ import { Logo } from '@/components/ui/logo';
 import { PlaceholderBadge } from '@/components/ui/placeholder-badge';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
 import { site } from '@/content/site';
-import { sectionIds, type Locale } from '@/i18n/config';
+import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/dictionaries/types';
+import { getNavLinks, privacyHref, sectionHref } from '@/lib/navigation';
 
 interface FooterProps {
   locale: Locale;
@@ -18,11 +19,8 @@ export function Footer({ locale, dictionary }: FooterProps) {
   const year = new Date().getFullYear();
 
   const navLinks = [
-    { href: `/${locale}#${sectionIds.services}`, label: nav.services },
-    { href: `/${locale}#${sectionIds.about}`, label: nav.about },
-    { href: `/${locale}#${sectionIds.portfolio}`, label: nav.portfolio },
-    { href: `/${locale}#${sectionIds.contact}`, label: nav.contact },
-    { href: `/${locale}/privacy`, label: nav.privacy },
+    ...getNavLinks(nav).map(({ id, label }) => ({ href: sectionHref(locale, id), label })),
+    { href: privacyHref(locale), label: nav.privacy },
   ];
 
   const items: TitleBlockItem[] = [
@@ -92,7 +90,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
           <p>{footer.copyright(year)}</p>
           <Link
             prefetch={false}
-            href={`/${locale}#${sectionIds.top}`}
+            href={sectionHref(locale, 'top')}
             className="inline-flex min-h-11 items-center"
           >
             <span className="link-underline-draw">{footer.backToTop}</span>

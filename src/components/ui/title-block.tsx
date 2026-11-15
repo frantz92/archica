@@ -26,7 +26,7 @@ interface TitleBlockProps {
   valueStyle?: ValueStyle;
   /** Grid classes controlling the column layout per breakpoint. */
   className?: string;
-  /** Cells fade in while scrolling into view (CSS only, see `.reveal` in globals.css). */
+  /** Cells fade in while scrolling into view (CSS only, see `.reveal` in styles/effects.css). */
   reveal?: boolean;
 }
 

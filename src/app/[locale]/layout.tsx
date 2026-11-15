@@ -8,11 +8,10 @@ import { SkipLink } from '@/components/layout/skip-link';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { JsonLd } from '@/components/seo/json-ld';
 import { site } from '@/content/site';
-import { isLocale, locales } from '@/i18n/config';
-import { getDictionary } from '@/i18n/get-dictionary';
+import { locales } from '@/i18n/config';
 import { brandColors } from '@/lib/brand';
+import { resolveRoute } from '@/lib/route-locale';
 import { buildProfessionalService } from '@/lib/structured-data';
-import { notFound } from 'next/navigation';
 
 import '../globals.css';
 
@@ -30,9 +29,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dictionary = getDictionary(locale);
+  const { dictionary } = await resolveRoute(params);
   // Pages provide their own complete metadata (canonical, hreflang, Open Graph); this is the base.
   return {
     metadataBase: new URL(site.domain),
@@ -46,9 +43,7 @@ export const viewport: Viewport = {
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dictionary = getDictionary(locale);
+  const { locale, dictionary } = await resolveRoute(params);
 
   return (
     <html lang={locale} className={`${inter.variable} dark`} suppressHydrationWarning>

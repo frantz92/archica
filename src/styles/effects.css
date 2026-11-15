@@ -1,0 +1,300 @@
+/* ==========================================================================
+   Rules, hover states and scroll motion (BLUEPRINT §2.6 items 8–17).
+   Everything below is CSS only. Scroll-driven effects exist only where
+   `animation-timeline` is supported and the user has not asked for reduced motion; everywhere
+   else the final state is the default, so content is never hidden.
+   ========================================================================== */
+
+/* Top and bottom rules of a title block / matrix. Pseudo-elements so they can draw in. */
+@utility rule-y {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: 1px;
+    background-color: var(--line);
+    transform-origin: left;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: -1px;
+  }
+
+  &::after {
+    bottom: -1px;
+  }
+}
+
+/* Hover on a matrix cell: faint wash and an amber rule drawing along the top edge (§2.6 item 12). */
+@utility cell-hover {
+  position: relative;
+  transition: background-color var(--dur-2) var(--ease-out);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-3) var(--ease-out);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(in srgb, var(--fg) 4%, var(--bg));
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Portfolio project: the image eases in on hover and an amber rule draws under the caption. */
+@utility project-figure {
+  & img {
+    transition: transform 700ms var(--ease-out);
+  }
+
+  & figcaption {
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  & figcaption::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-3) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    &:hover img {
+      transform: scale(1.03);
+    }
+
+    &:hover figcaption::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* The copy-button label cross-fades when it changes (§2.6 item 7). */
+@keyframes label-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes count-veil {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .copy-label {
+    animation: label-in var(--dur-2) var(--ease-out) both;
+  }
+
+  /* Mobile menu: links come in one after another (§2.6 item 13). */
+  .menu-dialog[open] nav li {
+    animation: menu-item-in var(--dur-2) var(--ease-out) both;
+  }
+  .menu-dialog[open] nav li:nth-child(1) {
+    animation-delay: 80ms;
+  }
+  .menu-dialog[open] nav li:nth-child(2) {
+    animation-delay: 120ms;
+  }
+  .menu-dialog[open] nav li:nth-child(3) {
+    animation-delay: 160ms;
+  }
+  .menu-dialog[open] nav li:nth-child(4) {
+    animation-delay: 200ms;
+  }
+  .menu-dialog[open] nav li:nth-child(n + 5) {
+    animation-delay: 240ms;
+  }
+
+  /*
+   * Hero figures (§2.6 item 11). The numbers are animated by <CountUp>; until it takes over (or
+   * without JavaScript) a CSS veil keeps them hidden for 700 ms and then shows the final value.
+   * The h1 is never animated.
+   */
+  .count-up:not([data-ready]) {
+    animation: count-veil 1ms linear 700ms both;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes media-reveal {
+  from {
+    clip-path: inset(6%);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes media-zoom {
+  from {
+    scale: 1.08;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes icon-draw {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes hero-parallax {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 5%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Blocks fade and rise as they enter the viewport (§2.6 item 8). */
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 40%;
+    }
+
+    /* Neighbouring cells of a row start slightly later. */
+    .reveal:nth-child(even) {
+      animation-range: entry 15% entry 50%;
+    }
+
+    /* Rules draw in from the left (§2.6 item 9). Opt-in: not used where the page cannot scroll further. */
+    .rule-draw::before,
+    .rule-draw::after {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 25%;
+    }
+
+    /* The amber mark above a section heading draws in like the rules. */
+    .section-mark {
+      transform-origin: left;
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 25%;
+    }
+
+    /* Frame diagonals of scrolled-in frames grow from the frame corners as the frame enters. */
+    .frame-scroll {
+      view-timeline-name: --frame;
+    }
+
+    .frame-scroll .frame-line {
+      animation: hero-line linear both;
+      animation-timeline: --frame;
+      animation-range: entry 10% entry 80%;
+    }
+
+    /* Service pictograms draw their strokes as the cell scrolls in (cell timeline, 5% to 70%). */
+    .service-cell {
+      view-timeline-name: --service;
+    }
+
+    .service-icon path {
+      stroke-dasharray: 1;
+      animation: icon-draw linear both;
+      animation-timeline: --service;
+      animation-range: entry 5% entry 70%;
+    }
+
+    /* Photos open like the hero frame, at a smaller scale (§2.6 item 10). */
+    .reveal-media {
+      animation: media-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    .reveal-media img {
+      animation: media-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+
+    /* Hero photo drifts slowly while it scrolls out (§2.6 item 11); scaled up so no edge shows. */
+    .hero-reveal img {
+      scale: 1.1;
+      animation: hero-parallax linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+
+/* Hero figures sit at the bottom of their cells, so numbers align when a label wraps to two lines. */
+.hero-stats dd {
+  margin-top: auto;
+}

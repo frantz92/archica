@@ -4,6 +4,11 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'pl';
 
+/** Builds a record with one entry per supported language (typed, so no casts are needed). */
+export function mapLocales<T>(build: (locale: Locale) => T): Record<Locale, T> {
+  return { pl: build('pl'), en: build('en'), fr: build('fr') };
+}
+
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }

@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
 import { cleanup } from '@testing-library/react';
+import type * as Navigation from 'next/navigation';
 import { createElement } from 'react';
 import { afterEach, beforeEach, vi } from 'vitest';
 
@@ -20,7 +21,7 @@ vi.mock('next/image', () => ({
 
 // Router hooks read mutable state, so a test can pretend to be on any page.
 vi.mock('next/navigation', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('next/navigation')>()),
+  ...(await importOriginal<typeof Navigation>()),
   usePathname: () => navigationState.pathname,
   useParams: () => navigationState.params,
 }));

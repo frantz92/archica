@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Design tokens (BLUEPRINT §2). The only place in the project with HEX values.
+   ========================================================================== */
+
+:root {
+  /* Brand colours (§2.2) */
+  --coal: #1e1916;
+  --chalk: #f5f2eb;
+  --amber: #d9822b;
+  --sand: #ead7b7;
+  --sage: #6e7f62;
+
+  /* Derived shades, text only (§2.2) */
+  --amber-300: #e7a261;
+  --amber-700: #844f1a;
+  --sage-300: #a9b79e;
+  --sage-700: #525f4a;
+  --ink: var(--coal);
+
+  /* Motion (§2.6) */
+  --dur-1: 150ms;
+  --dur-2: 300ms;
+  --dur-3: 1200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout (§2.5) */
+  --header-h: 4rem;
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  /* Vertical padding of a page section (top and bottom). */
+  --section-pad: clamp(4.5rem, 9vw, 8rem);
+}
+
+:root,
+.light {
+  /* Semantic tokens: light theme (default, also available as .light for nested previews) */
+  --bg: var(--chalk);
+  --fg: var(--coal);
+  --fg-muted: var(--sage-700);
+  --accent: var(--amber);
+  --accent-text: var(--amber-700);
+  --on-accent: var(--ink);
+  --line: color-mix(in srgb, var(--coal) 20%, transparent);
+  --line-strong: var(--sage);
+  --focus: var(--coal);
+  --media-bg: var(--sand);
+  /* Second background tone for alternating sections (class `.surface`). */
+  --surface: color-mix(in srgb, var(--coal) 5%, var(--chalk));
+  /* Amber for thin lines and small marks; darkened on light backgrounds to keep >= 3:1. */
+  --accent-line: color-mix(in srgb, var(--amber) 65%, var(--amber-700));
+  color-scheme: light;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 5rem;
+  }
+}
+
+/* Dark theme (default, class set on <html>) */
+.dark {
+  --bg: var(--coal);
+  --fg: var(--chalk);
+  --fg-muted: var(--sage-300);
+  --accent-text: var(--amber-300);
+  --line: color-mix(in srgb, var(--chalk) 20%, transparent);
+  --line-strong: color-mix(in srgb, var(--chalk) 45%, transparent);
+  --focus: var(--amber);
+  --media-bg: var(--sage);
+  --surface: color-mix(in srgb, var(--chalk) 5%, var(--coal));
+  --accent-line: var(--amber);
+  color-scheme: dark;
+}
+
+/* Contrast band (used only by the "About" section). Light theme: dark band. */
+.band {
+  --bg: var(--coal);
+  --fg: var(--chalk);
+  --fg-muted: var(--sage-300);
+  --accent-text: var(--amber-300);
+  --line: color-mix(in srgb, var(--chalk) 20%, transparent);
+  --line-strong: color-mix(in srgb, var(--chalk) 45%, transparent);
+  --focus: var(--amber);
+  --media-bg: var(--sage);
+  --accent-line: var(--amber);
+}
+
+/* Contrast band in the dark theme: sand background. */
+.dark .band {
+  --bg: var(--sand);
+  --fg: var(--coal);
+  --fg-muted: var(--sage-700);
+  --accent-text: var(--amber-700);
+  --line: color-mix(in srgb, var(--coal) 20%, transparent);
+  --line-strong: color-mix(in srgb, var(--coal) 60%, transparent);
+  --focus: var(--coal);
+  --media-bg: var(--sage);
+  /* Sand is lighter than chalk, so the line needs more amber-700 to reach 3:1 (3.35:1). */
+  --accent-line: color-mix(in srgb, var(--amber) 40%, var(--amber-700));
+}
+
+/* Alternate section tone: a slightly lifted version of the base background (D2). */
+.surface {
+  --bg: var(--surface);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
