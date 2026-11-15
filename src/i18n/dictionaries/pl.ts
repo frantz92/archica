@@ -56,7 +56,7 @@ export const pl = {
     },
   },
   services: {
-    title: 'W czym pomagamy',
+    title: 'W\u00A0czym pomagamy',
     lead: 'Od wyboru działki do zakończenia budowy jesteśmy przy inwestycji na każdym etapie: projekt, formalności i wsparcie w trakcie realizacji.',
     items: [
       {
