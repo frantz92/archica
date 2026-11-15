@@ -29,6 +29,7 @@ export function Logo({ variant, title, className }: LogoProps) {
       className={className}
       fill="currentColor"
       fillRule="nonzero"
+      overflow="visible"
     >
       <title>{title}</title>
       {variant === 'mark' && <path d={MARK_PATH} className="fill-accent-line" />}

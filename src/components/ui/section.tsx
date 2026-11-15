@@ -28,7 +28,7 @@ export function Section({
       id={id}
       aria-labelledby={labelledBy}
       className={cn(
-        'bg-bg text-fg',
+        'section-anchor bg-bg text-fg',
         tightEnd ? 'section-y-tight-end' : 'section-y',
         tone !== 'default' && tone,
         className,

@@ -29,6 +29,8 @@
   --header-h: 4rem;
   --radius-none: 0;
   --radius-sm: 0.25rem;
+  /* Vertical padding of a page section (top and bottom). */
+  --section-pad: clamp(4.5rem, 9vw, 8rem);
 }
 
 :root,
@@ -316,11 +318,21 @@ body {
 
 /* Same rhythm, but a shorter bottom edge (last section before the footer). */
 @utility section-y-tight-end {
-  padding-block: clamp(4.5rem, 9vw, 8rem) clamp(3rem, 6vw, 5rem);
+  padding-block: var(--section-pad) clamp(3rem, 6vw, 5rem);
 }
 
 @utility section-y {
-  padding-block: clamp(4.5rem, 9vw, 8rem);
+  padding-block: var(--section-pad);
+}
+
+/*
+ * Anchor landing (menu, footer links). `html` already reserves the fixed header
+ * (scroll-padding-top); this pulls the target up by the section's own top padding, minus a
+ * 1.5 rem breathing space, so the heading lands just under the header instead of after a
+ * band of empty background.
+ */
+@utility section-anchor {
+  scroll-margin-top: calc(1.5rem - var(--section-pad));
 }
 
 /* Responsive 4 / 12 column grid (§2.5) */

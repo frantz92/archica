@@ -1,8 +1,6 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useSyncExternalStore } from 'react';
 
 import { cn } from '@/lib/cn';
 import { locales, type Locale } from '@/i18n/config';
@@ -18,18 +16,16 @@ interface LanguageSwitcherProps {
   ariaLabel: string;
 }
 
-function subscribeToHash(onChange: () => void): () => void {
-  window.addEventListener('hashchange', onChange);
-  return () => window.removeEventListener('hashchange', onChange);
-}
-
-const getHash = (): string => window.location.hash;
-const getServerHash = (): string => '';
-
-/** Links to the same path in the other languages, keeping the anchor. Plain text, no flags. */
+/**
+ * Links to the same page in the other languages. Plain text, no flags.
+ *
+ * Deliberately plain `<a>` elements (a full page load, not client-side navigation) and no anchor:
+ * with `scroll-behavior: smooth` on <html> (Next.js 16 no longer overrides it), the router's
+ * scroll-to-top is a smooth scroll that Safari interrupts while the new page lays out, leaving
+ * the page stuck mid-way. A full load always starts at the top.
+ */
 export function LanguageSwitcher({ currentLocale, options, ariaLabel }: LanguageSwitcherProps) {
   const pathname = usePathname();
-  const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
   const rest = pathname.startsWith(`/${currentLocale}`)
     ? pathname.slice(currentLocale.length + 1)
     : '';
@@ -41,9 +37,8 @@ export function LanguageSwitcher({ currentLocale, options, ariaLabel }: Language
           const current = locale === currentLocale;
           return (
             <li key={locale}>
-              <Link
-                prefetch={false}
-                href={`/${locale}${rest}${hash}`}
+              <a
+                href={`/${locale}${rest}`}
                 lang={locale}
                 hrefLang={locale}
                 title={options[locale].name}
@@ -54,7 +49,7 @@ export function LanguageSwitcher({ currentLocale, options, ariaLabel }: Language
                 )}
               >
                 {options[locale].short}
-              </Link>
+              </a>
             </li>
           );
         })}
