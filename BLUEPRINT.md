@@ -1,6 +1,6 @@
 # BLUEPRINT.md — archica.pl
 
-Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.2, 2026-11-15 (zmiany względem 1.0: §13b).
+Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.3, 2026-11-15 (zmiany względem 1.0: §13b).
 Źródło prawdy o faktach: „Specyfikacja strony Archica (wersja 1.2)". Ten dokument ją uszczegóławia i w kilku punktach świadomie zmienia (lista w §13).
 
 ---
@@ -53,9 +53,10 @@ Jeżeli któregoś pliku brakuje, zgłoś to i nie generuj zamienników.
 
 Powściągliwa, typograficzna strona pracowni. Jeden wyrazisty motyw, reszta cicha:
 
-- **Motyw przewodni: „otwór w perspektywie".** Hero odtwarza sygnet w skali strony (rama, cztery ukośne linie, obraz w otworze). To jedyny element z animacją wejścia.
+- **Motyw przewodni: „otwór w perspektywie".** Hero odtwarza sygnet w skali strony (rama, cztery bursztynowe ukośne linie, obraz w otworze). Ten sam motyw, w ramach proporcji zdjęcia, mają jeszcze dokładnie dwa zdjęcia: „O nas" i jedno zdjęcie portfolio (slot B). Nie dodawaj ram przy pozostałych zdjęciach: motyw przestałby być wyjątkiem, a portfolio straciłoby asymetrię.
+- **Budżet bursztynu.** Bursztynowe *wypełnienie* ma wyłącznie przycisk główny i skip-link. Wszędzie indziej bursztyn to cienka kreska (≤ 2 px: linie ram, podkreślenia, znacznik sekcji, piktogramy) albo mały znak (sygnet). Liczby, nagłówki i tła nie są bursztynowe. Dzięki temu przycisk główny pozostaje najmocniejszym elementem.
 - **Motyw pomocniczy: „tabelka rysunkowa".** Komórki rozdzielone liniami 1 px z małą etykietą i dużą wartością, jak tabelka na rysunku architektonicznym. Występuje dokładnie w czterech miejscach: pasek danych w hero, macierz usług, dane kontaktowe, stopka.
-- Bez kart z tłem i cieniem, bez ikon dekoracyjnych, bez gradientów, bez cieni, bez numeracji sekcji „01/02/03", bez strzałek doklejanych do linków, bez liczników odliczających w górę, bez karuzel, bez własnego kursora. Ruch przy scrollu i stany hover są dozwolone wyłącznie w zakresie §2.6 (od wersji 1.1).
+- Bez kart z tłem i cieniem, bez ikon dekoracyjnych (wyjątek: cztery własne piktogramy usług, §6.3), bez gradientów, bez cieni, bez numeracji sekcji „01/02/03", bez strzałek doklejanych do linków, bez licznika poza paskiem danych w hero (§2.6 pkt 17), bez karuzel, bez własnego kursora. Ruch przy scrollu i stany hover są dozwolone wyłącznie w zakresie §2.6 (od wersji 1.1).
 - Wyrównanie do lewej w całej stronie. Nic nie jest centrowane poza obrazem w ramie hero i stroną 404.
 
 ### 2.2 Kolory marki (jedyne źródło HEX)
@@ -96,6 +97,10 @@ Komponenty używają tylko tych tokenów (klasy typu `bg-bg`, `text-fg`, `border
 | `--line-strong` (obrys kontrolek, ≥ 3:1) | chalk 45% | sage | coal 60% | chalk 45% |
 | `--focus` | amber | coal | coal | amber |
 | `--media-bg` (tło pod ładującym się zdjęciem) | sage | sand | sage | sage |
+| `--accent-line` (cienkie kreski i znaki, ≥ 3:1) | amber | amber 65% + amber-700 | amber 40% + amber-700 | amber |
+| `--surface` (drugi ton tła, klasa `.surface`) | chalk 5% na coal | coal 5% na chalk | n/d | n/d |
+
+`--accent-line` jest bursztynem dla kresek i znaków; na jasnych tłach (kreda, piasek) jest przyciemniony domieszką `amber-700`, bo czysty bursztyn ma tam < 3:1 (obliczone: 3,43:1 na kredzie, 3,11:1 na `--surface` jasnego motywu, 3,35:1 na piasku). Nie używaj go dla tekstu (do tego `--accent-text`). Klasa `.surface` zmienia tylko `--bg`; służy do przemiennego rozróżnienia sekcji, bez nowego koloru marki. Kolejność teł na stronie głównej: hero (bazowe), Usługi (`surface`), O nas (`band`), Portfolio (bazowe), Kontakt (`surface`), stopka (bazowe). Kontrasty `--fg`, `--fg-muted`, `--accent-text` na `--surface`: ≥ 5,47:1.
 
 Zasady:
 - Linie i obrysy to oryginalne kolory marki z przezroczystością (`color-mix` albo alfa), nie nowe odcienie.
@@ -152,14 +157,18 @@ Dodatkowe animacje od wersji 1.1 (wdrażane w etapie C; zasada: tylko CSS, tylko
 9. **Rysowanie linii**: górna i dolna linia `title-block` (o ile ma `reveal`) i macierzy usług rysują się od lewej (`scaleX`; klasa `.rule-draw`). Linie wykonane jako pseudoelementy `.rule-y`. Nie dotyczy hero ani stopki: tam strona nie przewija się dalej i linia zostałaby narysowana w połowie.
 10. **Odsłanianie zdjęć** w „O nas" i portfolio: `clip-path` `inset(6%)`→`inset(0)` i skala zdjęcia 1.08→1 (klasa `.reveal-media`).
 11. **Hero**: wartości paska danych wchodzą po otwarciu ramy (opóźnienie 900–1140 ms, czas, nie scroll); zdjęcie przesuwa się o 5% przy wyjeżdżaniu z ekranu (powiększone o 10%, żeby nie odsłonić krawędzi).
-12. **Hover** (tylko `@media (hover: hover)`): komórki usług (tło +4% `--fg`, bursztynowa linia rysuje się wzdłuż górnej krawędzi), projekty w portfolio (zdjęcie 1→1.03 w 700 ms, bursztynowa linia pod podpisem), przycisk główny (`brightness(1.1)`, uniesienie o 1 px), linki tekstowe (bursztynowa linia rysuje się nad stałym podkreśleniem), linki nawigacji i stopki (linia w kolorze tekstu; aktywna sekcja ma linię bursztynową), przyciski-ikony (tło `--line`). Podkreślenie linku leży na samym tekście, a strefa kliknięcia ma min. 44 px.
+12. **Hover** (tylko `@media (hover: hover)`; podkreślenia linków w kolorze `--accent-line`): komórki usług (tło +4% `--fg`, bursztynowa linia rysuje się wzdłuż górnej krawędzi), projekty w portfolio (zdjęcie 1→1.03 w 700 ms, bursztynowa linia pod podpisem), przycisk główny (`brightness(1.1)`, uniesienie o 1 px), linki tekstowe (bursztynowa linia rysuje się nad stałym podkreśleniem), linki nawigacji i stopki (linia w kolorze tekstu; aktywna sekcja ma linię bursztynową), przyciski-ikony (tło `--line`). Podkreślenie linku leży na samym tekście, a strefa kliknięcia ma min. 44 px.
 13. **Menu mobilne**: linki wchodzą kolejno (od 80 ms, co 40 ms); zamknięcie animowane tak jak otwarcie (`transition-behavior: allow-discrete`). Etykieta przycisku „Skopiuj e-mail" przenika przy zmianie na „Skopiowano". Obrót ikony motywu został pominięty: odpalałby się też przy każdym załadowaniu strony.
+14. **Znacznik sekcji**: bursztynowa kreska 48 × 2 px nad h2 każdej sekcji; rysuje się od lewej przy scrollu (`.section-mark`).
+15. **Ramy zdjęć** (komponent `framed-media`): w hero kreski ramy rysują się raz przy ładowaniu; w „O nas" i portfolio rosną od narożników ramy, gdy rama wjeżdża w ekran (`.frame-scroll`, `.frame-line`).
+16. **Piktogramy usług** rysują swoje kreski, gdy kafelek wjeżdża w ekran (`.service-cell`, `.service-icon`; `pathLength` 1, `stroke-dashoffset`).
+17. **Licznik w hero** (`count-up`, jedyny kliencki element ruchu): liczby w pasku danych wjeżdżają od dołu (900 ms) i liczą od 0 do wartości (1,4 s) raz, gdy są w połowie widoczne; start z opóźnieniem 700/800/900 ms. Wartość końcowa jest w HTML i w kopii dla czytników ekranu; przy `prefers-reduced-motion` brak animacji; bez JS krótka zasłona CSS (700 ms) i wartość końcowa.
 
 `@media (prefers-reduced-motion: reduce)`: wszystkie powyższe wyłączone (stan końcowy od razu), `scroll-behavior: auto`. Płynne przewijanie do kotwic tylko bez tej preferencji.
 
 ### 2.7 Logo
 
-Komponent `Logo` renderuje SVG inline z `fill="currentColor"` (kolor z `--fg`, więc jeden komponent obsługuje oba motywy; nie używaj plików `-kreda`/`-mech` jako `<img>`). Warianty:
+Komponent `Logo` renderuje SVG inline. Sygnet ma `fill: var(--accent-line)` (bursztyn; na jasnych tłach lekko przyciemniony), napis `fill="currentColor"` (kolor z `--fg`), więc jeden komponent obsługuje oba motywy. Nie używaj plików `-kreda`/`-mech` jako `<img>`; ikona strony, ikona Apple i obraz Open Graph pozostają w kolorach z §8. Warianty:
 
 | Wariant | Geometria | Użycie |
 |---|---|---|
@@ -332,10 +341,12 @@ src/
     sections/
       hero.tsx  services.tsx  about.tsx  portfolio.tsx  contact.tsx      S
     ui/
-      container.tsx  section.tsx  section-header.tsx  logo.tsx  icons.tsx  button-link.tsx
+      container.tsx  section.tsx  section-header.tsx  section-mark.tsx  logo.tsx  icons.tsx  button-link.tsx
+      framed-media.tsx  service-icons.tsx
       text-link.tsx  title-block.tsx  media.tsx  placeholder-badge.tsx
       postal-address.tsx  contact-links.tsx (PhoneLinks, EmailLink)      S
       copy-button.tsx          C
+      count-up.tsx             C
     providers/theme-provider.tsx   C
     seo/json-ld.tsx            S
   content/
@@ -346,9 +357,10 @@ src/
     metadata.ts  years.ts  cn.ts
 ```
 
-S = Server Component, C = Client Component. Plików `C` jest osiem (siedem z tej listy oraz `layout/not-found-content.tsx`, który czyta język z `useParams`) i ta lista jest zamknięta. Sekcje nie zawierają żadnego JS klienckiego poza `copy-button` w kontakcie.
+S = Server Component, C = Client Component. Plików `C` jest dziewięć (osiem z tej listy, w tym `ui/count-up.tsx`, oraz `layout/not-found-content.tsx`, który czyta język z `useParams`) i ta lista jest zamknięta. Sekcje nie zawierają żadnego JS klienckiego poza `copy-button` w kontakcie.
 
 Uwagi:
+- `framed-media.tsx` składa ramę z bursztynowymi przekątnymi i zdjęciem w otworze (hero, „O nas", portfolio slot B); `service-icons.tsx` zawiera cztery piktogramy usług (klucze = `services.items[].id`); `section-mark.tsx` to bursztynowy znacznik nad h2; `count-up.tsx` to licznik liczb w hero.
 - `postal-address.tsx` i `contact-links.tsx` renderują adres, telefony i e-mail wyłącznie z `site.ts`. Używają ich kontakt, stopka i (jako slot `contact` przekazany z serwera) menu mobilne; nie wolno przepisywać tych danych w JSX. `section-header.tsx` to wspólny nagłówek sekcji (h2 po lewej, opcjonalny lead po prawej).
 - `header-shell.tsx` owija dzieci renderowane na serwerze i tylko przełącza `data-scrolled`; nie renderuje treści samodzielnie.
 - `theme-toggle.tsx` pokazuje ikonę słońca/księżyca przez CSS zależny od klasy `.dark` (bez stanu `mounted`, bez migotania). `<html>` ma `suppressHydrationWarning`.
@@ -378,7 +390,7 @@ Zawartość: eyebrow, h1, lead, przycisk główny (→ `#contact`), link drugorz
 Desktop:
 - `min-height: 100svh`, treść zaczyna się pod nagłówkiem. Siatka 12 kolumn.
 - Kolumny 1–6: eyebrow, h1, lead, akcje; blok wyrównany do dołu obszaru nad paskiem danych.
-- Kolumny 7–12: **rama**. Kwadrat (`aspect-ratio: 1`), obrys 1 px `--line`, wysokość ograniczona do `min(szerokość kolumny, 68svh)`. W środku obraz 4:5 zajmujący 68% szerokości i 84% wysokości ramy (odsunięcie 16% z boków, 8% z góry i dołu). Cztery linie 1 px `--line` łączą narożniki ramy z narożnikami obrazu (SVG na całą ramę, `preserveAspectRatio="none"`, `vector-effect: non-scaling-stroke`, `aria-hidden`).
+- Kolumny 7–12: **rama**. Kwadrat (`aspect-ratio: 1`), obrys 1 px `--line`, wysokość ograniczona do `min(szerokość kolumny, 68svh)` (komponent `framed-media`). W środku obraz 4:5 zajmujący 68% szerokości i 84% wysokości ramy (odsunięcie 16% z boków, 8% z góry i dołu). Cztery linie 1,25 px w kolorze `--accent-line` łączą narożniki ramy z narożnikami obrazu (SVG na całą ramę, `preserveAspectRatio="none"`, `vector-effect: non-scaling-stroke`, `aria-hidden`).
 - Pasek danych na dole sekcji, pełna szerokość kontenera, `title-block` w 4 komórkach: (1) `{lata}` z etykietą „rok/lata/lat praktyki" (odmiana wg liczby); (2) 86 z etykietą „projektów" (placeholder); (3) 9 z etykietą „nagród" (placeholder); (4) „Stargard" z etykietą „siedziba pracowni". Wartości w stylu `stat`, etykiety `label`.
 - Animacja otwarcia: §2.6 pkt 1.
 
@@ -392,8 +404,8 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 
 ### 6.3 Usługi (`#services`)
 
-- Nagłówek sekcji (`section-header`): sam h2, bez leadu i bez etykiety nad nagłówkiem. Wspólny komponent z leadem w kolumnach 7–12 jest używany w portfolio i kontakcie.
-- Macierz 2 × 2 (`title-block`): linia nad i pod macierzą, jedna linia pionowa i jedna pozioma w środku; bez obrysu po bokach, bez tła komórek, bez ikon, bez numerów.
+- Nagłówek sekcji (`section-header`): bursztynowy znacznik (§2.6 pkt 14) i h2, bez leadu i bez etykiety tekstowej. Wspólny komponent z leadem w kolumnach 7–12 jest używany w portfolio i kontakcie.
+- Macierz 2 × 2 (`title-block`): linia nad i pod macierzą, jedna linia pionowa i jedna pozioma w środku; bez obrysu po bokach, bez numerów. Tło sekcji: `surface`. Nad h3 piktogram 40 px (§2.6 pkt 16, własny rysunek techniczny: obrys 1,5 px, bez wypełnień, kolor `--accent-line`); jedyne ikony na stronie poza przyciskami interfejsu.
 - Komórka: `padding: clamp(1.5rem, 3vw, 3rem)`, `min-height: 18rem` (desktop), układ kolumnowy: h3 u góry, opis (`body`, maks. 42ch) pod nim. Bez wiersza „dla kogo".
 - Komórki nie są linkami (bez `cursor: pointer`), ale mają dyskretny hover z §2.6 pkt 12.
 - Tablet: 2 × 2. Mobile: jedna kolumna, cztery wiersze rozdzielone liniami, `min-height` zniesione.
@@ -402,7 +414,7 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 ### 6.4 O nas (`#about`) — pas kontrastowy
 
 - Sekcja ma klasę `.band` (§2.3): w motywie ciemnym tło piaskowe i tekst węgiel, w jasnym tło węgiel i tekst kreda. Pas na pełną szerokość okna.
-- Desktop: zdjęcie `about-studio.png` w kolumnach 1–5, proporcje 4:5. Tekst w kolumnach 7–12: h2, cytat (`<figure>` z `<blockquote>` w stylu `quote` i `<figcaption>` z podpisem w stylu `small`), dwa akapity, na dole `title-block` z trzema wierszami (etykieta: wartość): „Rok założenia": 1996; „Siedziba": Stargard; „Klienci": inwestorzy prywatni i samorządy (nazwisko założycielki występuje raz, w podpisie cytatu).
+- Desktop: zdjęcie `about-studio.png` w ramie `framed-media` (rama 4:5 w kolumnach 1–5, odsunięcie zdjęcia 10%). Tekst w kolumnach 7–12: h2, cytat (`<figure>` z `<blockquote>` w stylu `quote` i `<figcaption>` z podpisem w stylu `small`), dwa akapity, na dole `title-block` z trzema wierszami (etykieta: wartość): „Rok założenia": 1996; „Siedziba": Stargard; „Klienci": inwestorzy prywatni i samorządy (nazwisko założycielki występuje raz, w podpisie cytatu).
 - Cudzysłowy są częścią tekstu cytatu (ze słownika), nie dekoracją graficzną. Bez wielkiego ozdobnego znaku cudzysłowu.
 - Mobile: h2, zdjęcie (pełna szerokość kontenera, 4:5), cytat, akapity, tabelka.
 
@@ -411,7 +423,7 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 - Nagłówek sekcji (`section-header`): h2 i lead.
 - Desktop, układ asymetryczny na siatce 12 kolumn (cztery sloty):
   - A: kolumny 1–7, proporcje 4:3.
-  - B: kolumny 9–12, proporcje 4:5, odsunięty w dół o 6rem względem A.
+  - B: kolumny 9–12, proporcje 4:5, odsunięty w dół o 6rem względem A; jedyny slot portfolio w ramie `framed-media` (odsunięcie zdjęcia 12%).
   - C: kolumny 1–4, proporcje 4:5.
   - D: kolumny 6–12, proporcje 4:3, odsunięty w dół o 6rem względem C.
   - Odstęp pionowy między wierszami: 6rem.
@@ -432,7 +444,7 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 
 ### 6.7 Stopka
 
-- Linia górna `--line`. Desktop, trzy kolumny: (1) `Logo stacked`, sygnet ok. 72 px; (2) Dane firmy: pełna nazwa, NIP, numer uprawnień (mock, z dopiskiem „do uzupełnienia"); (3) Nawigacja: cztery sekcje, Polityka prywatności. Dane kontaktowe nie powtarzają się w stopce (są w sekcji Kontakt tuż nad nią i w menu mobilnym).
+- Tło bazowe (Kontakt tuż nad nią ma `surface`), górny odstęp 3rem; sekcja Kontakt ma krótszy dolny odstęp (`section-y-tight-end`). Linia górna `--line`. Desktop, trzy kolumny: (1) `Logo stacked`, sygnet ok. 72 px; (2) Dane firmy: pełna nazwa, NIP, numer uprawnień (mock, z dopiskiem „do uzupełnienia"); (3) Nawigacja: cztery sekcje, Polityka prywatności. Dane kontaktowe nie powtarzają się w stopce (są w sekcji Kontakt tuż nad nią i w menu mobilnym).
 - Wiersz dolny: „© {rok} Archica" po lewej (pełna nazwa firmy jest w kolumnie „Dane firmy"); link „Wróć na górę" po prawej.
 - Mobile: kolumny jedna pod drugą, `Logo mark` zamiast `stacked`.
 
@@ -584,3 +596,4 @@ Zatwierdzone przez użytkownika 2026-11-14. Przy sprzeczności z §6.3 i §6.5 (
 | 16 | Statystyki 86 i 9 (placeholdery), odmiana „lat praktyki" na sztywno; H1 „Architektura, która zaczyna się od miejsca." | statystyki nadal placeholderami; odmiana liczebnika przez `Intl.PluralRules`; nowy H1, lead hero od użytkownika, „Wybrane projekty" zamiast „realizacji" | błąd językowy od 2028 r.; portfolio to wizualizacje | B |
 | 17 | Odstęp pionowy sekcji `clamp(5rem, 12vw, 11rem)`; stopka w 4 kolumnach z danymi kontaktowymi; linie `--line` 16% | stopka w 3 kolumnach bez powtórzenia danych kontaktowych; odstęp `clamp(4.5rem, 9vw, 8rem)`; linie 20%; jednolity `section-header`; cienka linia między Portfolio a Kontaktem; lead hero w kolorze `--fg`; `text-wrap: balance`/`pretty` | rytm, duplikat kontaktu, czytelność | B/C |
 | 18 | Kolor bazowy: Głęboki Mech `#2C3E35` (`--moss`) | Palony Węgiel `#1E1916` (`--coal`); `--ink` = `--coal`; kontrasty przeliczone (§2.2), wszystkie pary ≥ AA | próba kolorystyczna na życzenie użytkownika; powrót = podmiana jednej wartości i nazwy tokenu | kolor |
+| 19 | Sekcje na jednym tle; bursztyn tylko na przycisku; liczby statyczne; sygnet w kolorze tekstu | Przemienny `surface`; znacznik sekcji; bursztynowe kreski ram, podkreśleń i sygnet (`--accent-line`); ramy zdjęć w 3 miejscach; 4 piktogramy usług; licznik w hero; budżet bursztynu (§2.1) | więcej detalu i dynamiki bez osłabienia przycisku głównego | D |
