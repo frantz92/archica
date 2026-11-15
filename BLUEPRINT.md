@@ -1,6 +1,6 @@
 # BLUEPRINT.md — archica.pl
 
-Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.3, 2026-11-15 (zmiany względem 1.0: §13b).
+Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.4, 2026-11-15 (zmiany względem 1.0: §13b). **Pierwszeństwo treści ma `BLUEPRINT-ANEKS-1.md`** (zatwierdzone teksty i zmiany treści z 2026-11-15); w razie różnic między tym dokumentem a aneksem w sprawie tekstów i danych obowiązuje aneks.
 Źródło prawdy o faktach: „Specyfikacja strony Archica (wersja 1.2)". Ten dokument ją uszczegóławia i w kilku punktach świadomie zmienia (lista w §13).
 
 ---
@@ -18,7 +18,7 @@ Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.3, 2026-11-1
 
 Wejścia, które muszą być w repo przed etapem 1 (dostarcza użytkownik):
 - `brand/` — rozpakowana paczka logo (`svg/`, `README.txt`); potrzebne są `svg/archica-logo-mech.svg` (ścieżki `#sygnet` i `#napis`) oraz `svg/archica-sygnet-mech.svg`.
-- `public/images/` — 6 plików PNG o stałych nazwach: `hero-building.png`, `about-studio.png`, `portfolio-residence.png`, `portfolio-office.png`, `portfolio-interior.png`, `portfolio-pavilion.png`.
+- `public/images/` — 6 plików PNG o stałych nazwach: `hero-building.png`, `about-studio.png`, `portfolio-1.png`, `portfolio-2.png`, `portfolio-3.png`, `portfolio-4.png` (kolejność slotów A–D; zmiana nazw z Aneksu 1). Obecnie to tymczasowe zdjęcia CC0 do podmiany.
 
 Jeżeli któregoś pliku brakuje, zgłoś to i nie generuj zamienników.
 
@@ -134,7 +134,7 @@ Wagi w użyciu: 400 i 500. Bez 600/700 (logo jest w Medium; pogrubienia psują s
 - Siatka: 4 kolumny poniżej 768 px, 12 kolumn od 768 px. Odstęp kolumn: 1rem / 1.5rem (≥768) / 2rem (≥1280).
 - Punkty łamania (domyślne Tailwind): `md` 768, `lg` 1024, `xl` 1280. „Mobile" = poniżej 768, „tablet" = 768–1023, „desktop" = od 1024.
 - Skala odstępów (wielokrotności 4 px): 4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 160. Odstęp pionowy sekcji: `padding-block: clamp(4.5rem, 9vw, 8rem)`; odstęp nagłówka sekcji od jej treści: 3rem (mobile) / 5rem (od 1024 px), ustawiany wyłącznie w `section-header`.
-- Wysokość nagłówka `--header-h`: 4rem (mobile/tablet), 5rem (desktop). `html { scroll-padding-top: var(--header-h) }`.
+- Wysokość nagłówka `--header-h`: 4rem (mobile/tablet), 5rem (desktop). `html { scroll-padding-top: var(--header-h) }`. Sekcje mają `scroll-margin-top: calc(1.5rem - var(--section-pad))` (klasa `section-anchor`), więc po kliknięciu w menu lub stopkę nagłówek sekcji ląduje 1,5 rem pod paskiem menu, a nie po własnym górnym odstępie sekcji (`--section-pad`).
 - Promienie: `--radius-none: 0` dla zdjęć, ram, komórek, sekcji i pasa; `--radius-sm: 0.25rem` wyłącznie dla kontrolek (przyciski, przełączniki, pierścień fokusu). Nic nie jest w pełni zaokrąglone.
 - Linie: zawsze 1 px, `--line`. Brak cieni (`box-shadow` tylko jako pierścień fokusu).
 - Minimalny cel dotykowy 44 × 44 px.
@@ -168,7 +168,7 @@ Dodatkowe animacje od wersji 1.1 (wdrażane w etapie C; zasada: tylko CSS, tylko
 
 ### 2.7 Logo
 
-Komponent `Logo` renderuje SVG inline. Sygnet ma `fill: var(--accent-line)` (bursztyn; na jasnych tłach lekko przyciemniony), napis `fill="currentColor"` (kolor z `--fg`), więc jeden komponent obsługuje oba motywy. Nie używaj plików `-kreda`/`-mech` jako `<img>`; ikona strony, ikona Apple i obraz Open Graph pozostają w kolorach z §8. Warianty:
+Komponent `Logo` renderuje SVG inline. Element `<svg>` ma `overflow: visible`, bo napis kończy się dokładnie na krawędzi viewBox i antyaliasing przycinał ostatnie „a". Sygnet ma `fill: var(--accent-line)` (bursztyn; na jasnych tłach lekko przyciemniony), napis `fill="currentColor"` (kolor z `--fg`), więc jeden komponent obsługuje oba motywy. Nie używaj plików `-kreda`/`-mech` jako `<img>`; ikona strony, ikona Apple i obraz Open Graph pozostają w kolorach z §8. Warianty:
 
 | Wariant | Geometria | Użycie |
 |---|---|---|
@@ -211,71 +211,36 @@ Sygnet uproszczony do małych rozmiarów (favicon), `viewBox="0 0 100 100"`:
 
 Lata praktyki liczone na serwerze: `bieżący rok − 1996` (w 2026 r. daje 30). Strona główna ma `export const revalidate = 86400`, żeby liczba i rok w stopce nie zestarzały się między wdrożeniami **[WERYFIKUJ, że konfiguracja segmentu działa w zainstalowanej wersji]**.
 
-### 3.2 Portfolio (`src/content/projects.ts`) — wszystko placeholder
+### 3.2 Portfolio (`src/content/projects.ts`) — cztery realne realizacje (Aneks 1, F)
 
-| Kolejność | Plik | Tytuł (taki sam w PL/EN/FR) | Kategoria (tłumaczona) | Slot |
+| Slot | Plik | Tytuł PL | Kategoria PL | `location` |
 |---|---|---|---|---|
-| 1 | `portfolio-residence.png` | Rezydencja Brzozowa | dom prywatny | A |
-| 2 | `portfolio-office.png` | Biura Meridian | komercyjne | B |
-| 3 | `portfolio-interior.png` | Wnętrze Linden | architektura wnętrz | C |
-| 4 | `portfolio-pavilion.png` | Pawilon Grove | przestrzeń publiczna | D |
+| A | `portfolio-1.png` | Modernizacja plaż: Dziewoklicz, Dąbie, Głębokie | Przestrzeń publiczna | Szczecin |
+| B | `portfolio-2.png` | Dom jednorodzinny w Pełczycach | Dom prywatny | Pełczyce |
+| C | `portfolio-3.png` | Promenada nad jeziorem Miedwie | Przestrzeń publiczna | (puste) |
+| D | `portfolio-4.png` | Plan urbanistyczny w Stargardzie | Urbanistyka | Stargard |
 
-Model projektu ma pola opcjonalne `location` i `year` (na razie puste, nie wypełniaj) oraz `placeholder: true`. Nazwy własne projektów nie są tłumaczone.
+Tytuły i kategorie są tłumaczone (słowniki, teksty EN i FR w aneksie), nazwy miejscowości zostają polskie. Pole `year` jest puste (lat nie podano). Model projektu: `id`, `slug`, `image`, `slot`, opcjonalne `location` i `year`. Dane projektów nie są placeholderami; placeholderami są zdjęcia w slotach.
 
 ### 3.3 Placeholdery
 
-Placeholderami są: statystyki „86 projektów" i „9 nagród", cztery projekty portfolio, sześć zdjęć, numer uprawnień, okresy przechowywania danych w polityce prywatności.
+Placeholderami są wyłącznie: sześć zdjęć (wraz z ich tekstami alternatywnymi), numer uprawnień i okresy przechowywania danych w polityce prywatności (Aneks 1, A#3). Statystyki w hero (30 / 86 / 26 / 15) i cztery realizacje portfolio są potwierdzonymi danymi.
 
-- Każdy ma w danych `placeholder: true` i komentarz `// PLACEHOLDER:` z opisem, co podmienić.
+- Każdy ma komentarz `// PLACEHOLDER:` z opisem, co podmienić.
 - Na wdrożeniach podglądowych (`VERCEL_ENV !== 'production'`) i lokalnie przy elemencie widać małą plakietkę „placeholder". Na produkcji plakietek nie ma, poza numerem uprawnień, który zawsze jest jawnie fikcyjny.
 - `npm run check:placeholders` (`scripts/check-placeholders.mjs`): wypisuje wszystkie znaczniki `PLACEHOLDER` z `src/content` i `src/i18n`, kończy się kodem 1, jeśli jakiś istnieje. Nie jest częścią `build`; służy jako kontrola przed publikacją.
 
 ### 3.4 Teksty
 
-Teksty PL zatwierdzone przez użytkownika 2026-11-14 (sekcja Usługi i lead hero pochodzą od użytkownika). Jeżeli użytkownik dostarczy inne teksty, mają pierwszeństwo. EN i FR tłumaczysz z PL według zasad w §4.3, poza pozycjami podanymi niżej w trzech językach.
+Wszystkie teksty widoczne na stronie (PL, EN, FR) są zatwierdzone przez użytkownika i zapisane w `BLUEPRINT-ANEKS-1.md`, sekcje B–I (elementy wspólne, hero, usługi, o nas, portfolio, kontakt, zasady treści, SEO). Wpisuj je do słowników dokładnie tak, jak podano, stosując §4.3. Nie przepisuj ich własnymi słowami i nie tłumacz ponownie. Tłumaczenia EN i FR wymagają weryfikacji przez native speakera przed publikacją.
 
-| Klucz | PL | EN | FR |
-|---|---|---|---|
-| Nawigacja | Usługi · O nas · Portfolio · Kontakt | Services · About · Portfolio · Contact | Services · À propos · Portfolio · Contact |
-| Eyebrow hero | Studio Architektury i Urbanistyki | Architecture and Urban Planning Studio | Atelier d'architecture et d'urbanisme |
-| H1 | Projekt, wnętrza, nadzór. Jedna pracownia. | Design, interiors, supervision. One studio. | Conception, intérieurs, suivi de chantier. Un seul atelier. |
-| Przycisk główny | Omów swój projekt | Discuss your project | Présentez-nous votre projet |
-| Link drugorzędny | Zobacz projekty | See our projects | Voir les projets |
-| H2 usługi | Usługi | Services | Services |
-| H2 o nas | Wiesz, z kim pracujesz | Know who you are working with | Vous savez avec qui vous travaillez |
-| H2 portfolio | Wybrane projekty | Selected projects | Projets sélectionnés |
-| H2 kontakt | Masz działkę albo pomysł? Porozmawiajmy. | Got a plot or an idea? Let’s talk. | Un terrain ou une idée ? Parlons-en. |
-| Etykiety tabelki kontaktu | Telefon · E-mail · Adres · Godziny pracy | Phone · Email · Address · Opening hours | Téléphone · E-mail · Adresse · Horaires |
-| Statystyki | rok/lata/lat praktyki (odmiana przez `Intl.PluralRules`) · projektów · nagród · siedziba pracowni | year/years in practice · projects · awards · studio location | an/ans de pratique · projets · prix · siège de l’atelier |
-| Cytat | „Każdy projekt zaczyna się od działki, nie od szkicownika." | “Every project starts with the site, not the sketchbook.” | « Chaque projet commence par le site, pas par le carnet de croquis. » |
-| Podpis cytatu | mgr arch. Małgorzata Wojtaś-Frankowska, założycielka pracowni | Małgorzata Wojtaś-Frankowska, architect and founder | Małgorzata Wojtaś-Frankowska, architecte et fondatrice |
-| `<title>` | Archica — pracownia architektoniczna w Stargardzie | Archica — architecture studio in Stargard, Poland | Archica — atelier d’architecture à Stargard, Pologne |
-
-(Kropki środkowe w tabeli tylko oddzielają osobne napisy; nie trafiają na stronę.)
-
-Teksty PL do przetłumaczenia:
-
-- **Lead hero:** „Od pierwszego szkicu do odbioru inwestycji prowadzimy każdy etap projektu."
-- **Lead usług:** brak (sekcja ma tylko nagłówek i cztery komórki).
-- **Usługi** (tytuł / opis; bez wiersza „dla kogo"):
-  1. Projektowanie architektoniczne / „Od koncepcji do dokumentacji wykonawczej dla domów prywatnych, biur i budynków publicznych."
-  2. Architektura wnętrz / „Planowanie przestrzeni dopasowane do sposobu życia."
-  3. Planowanie urbanistyczne / „Koncepcje zagospodarowania terenu respektujące kontekst i społeczność."
-  4. Nadzór inwestorski / „Nadzór na budowie, aby realizacja odpowiadała projektowi."
-
-  Źródło: tekst dostarczony przez użytkownika. Użytkownik wykluczył frazy z jego pierwotnej wersji, których pracownia nie potwierdziła (doradztwo materiałowe, projekt oświetlenia, strategie inwestycyjne, koordynacja z wykonawcami); nie wracaj do nich bez potwierdzenia. Pozwolenia i uzgodnienia nie są opisane jako usługa, więc nie obiecuj ich w hero ani w opisie meta.
-- **O nas, akapit 1:** „Archica to kilkuosobowa pracownia, którą od początku prowadzi jej założycielka. Za projektem stoi więc konkretna osoba, a nie anonimowy zespół."
-- **O nas, akapit 2:** „Projekt prowadzą te same osoby od pierwszej wizyty na działce po nadzór na budowie. Niczego nie trzeba tłumaczyć dwa razy."
-- **O nas, tabelka:** Rok założenia: 1996; Siedziba: Stargard; Klienci: inwestorzy prywatni i samorządy.
-- **Lead portfolio:** „Projekty różnej skali: od domu jednorodzinnego po przestrzeń publiczną." Portfolio zawiera wizualizacje, więc nagłówek brzmi „Wybrane projekty", nie „realizacje".
-- **Lead kontaktu:** „Zadzwoń lub napisz. Powiemy, od czego zacząć." (godziny są wyłącznie w komórce „Godziny pracy").
-- **Opis meta:** „Pracownia architektury i urbanistyki w Stargardzie, od 1996 roku. Projektowanie architektoniczne, architektura wnętrz, planowanie urbanistyczne i nadzór inwestorski."
-- **404:** „Tej strony nie ma w projekcie" / „Adres mógł się zmienić albo wkradła się literówka."
-- **Teksty alternatywne zdjęć:** opisowe, neutralne, bez nazw fikcyjnych projektów poza ich tytułem (np. „Wizualizacja: Rezydencja Brzozowa, widok od ogrodu" dopasuj do faktycznej zawartości pliku). Zdjęcie w „O nas": opis tego, co widać.
-
-Zakazane w treści: wzmianki o biurach w hero i „O nas", superlatywy („najlepsi", „wiodący"), obietnice terminów i cen.
-
----
+Rozstrzygnięcia wdrożeniowe spoza aneksu (zatwierdzone przez użytkownika lub konieczne technicznie):
+- Wartość statystyki „lata” liczy się na serwerze; etykieta odmienia się przez `Intl.PluralRules` (rok / lata / lat). Liczby 86, 26 i 15 są stałymi w `site.ts`.
+- Etykieta wiersza „dla kogo” w kafelkach usług (aneks jej nie podaje): „Dla kogo:” / „For whom:” / „Pour qui :”.
+- Stopka ma trzy kolumny: logo, Firma, Nawigacja. Kolumny „Kontakt” nie ma (decyzja użytkownika, 2026-11-15: dane kontaktowe są w sekcji Kontakt tuż nad stopką); klucz „Kontakt” z aneksu B pozostaje nieużywany.
+- Eyebrow hero zawiera kropkę środkową jako znak tekstu (aneks A#7).
+- Godziny pracy pojawiają się dwa razy: w leadzie kontaktu (wg aneksu G) i w kafelku „Godziny”.
+- Tytuł strony głównej jest absolutny (bez szablonu `%s — Archica`); tytuł polityki prywatności używa szablonu.
 
 ## 4. Języki i routing
 
@@ -334,7 +299,7 @@ src/
       header-shell.tsx         C  stan „przewinięto" jako data-atrybut
       nav-links.tsx            C  aktywna sekcja (IntersectionObserver)
       mobile-menu.tsx          C  natywny <dialog>
-      language-switcher.tsx    C  usePathname, zachowuje ścieżkę i kotwicę
+      language-switcher.tsx    C  usePathname, zachowuje ścieżkę, nie kotwicę
       theme-toggle.tsx         C
       footer.tsx               S
       skip-link.tsx            S
@@ -378,7 +343,7 @@ Uwagi:
 - Nie ma pozycji „Start": do góry strony prowadzi logo.
 - Stan na górze strony: tło przezroczyste, bez linii. Po przewinięciu o 24 px: tło `--bg` 88% + `backdrop-filter: blur(12px)`, linia dolna `--line`. Nagłówek nie chowa się przy przewijaniu.
 - Aktywna sekcja: link z `aria-current="true"` i podkreśleniem 1 px. Na `/privacy` linki prowadzą do `/{locale}#sekcja` i żaden nie jest aktywny.
-- Przełącznik języka: linki do tej samej ścieżki w innym języku, z zachowaniem kotwicy; atrybuty `lang` i `hrefLang`; bieżący język ma `aria-current="true"` i kolor `--fg`, pozostałe `--fg-muted`.
+- Przełącznik języka: linki do tej samej ścieżki w innym języku, bez kotwicy (zmiana języka zawsze otwiera stronę od góry); atrybuty `lang` i `hrefLang`; bieżący język ma `aria-current="true"` i kolor `--fg`, pozostałe `--fg-muted`.
 - Przełącznik motywu: `aria-label` opisuje akcję („Włącz motyw jasny" / „Włącz motyw ciemny").
 - Mobile i tablet (poniżej 1024 px): logo + przycisk menu. Nawigacja, języki i motyw są w menu.
 - Menu mobilne: natywny `<dialog>` otwierany `showModal()`, na cały ekran, tło `--bg`. Zawartość: przycisk zamknięcia u góry po prawej; cztery linki w stylu `h2` jeden pod drugim; pod linią: oba telefony i e-mail; na dole w jednym wierszu języki i przełącznik motywu. Zamknięcie: przycisk, Esc, kliknięcie linku. Po zamknięciu fokus wraca na przycisk menu.
@@ -389,9 +354,9 @@ Zawartość: eyebrow, h1, lead, przycisk główny (→ `#contact`), link drugorz
 
 Desktop:
 - `min-height: 100svh`, treść zaczyna się pod nagłówkiem. Siatka 12 kolumn.
-- Kolumny 1–6: eyebrow, h1, lead, akcje; blok wyrównany do dołu obszaru nad paskiem danych.
+- Kolumny 1–6: eyebrow („Studio Architektury i Urbanistyki · Stargard"), h1, lead, akcje; blok wyrównany do dołu obszaru nad paskiem danych.
 - Kolumny 7–12: **rama**. Kwadrat (`aspect-ratio: 1`), obrys 1 px `--line`, wysokość ograniczona do `min(szerokość kolumny, 68svh)` (komponent `framed-media`). W środku obraz 4:5 zajmujący 68% szerokości i 84% wysokości ramy (odsunięcie 16% z boków, 8% z góry i dołu). Cztery linie 1,25 px w kolorze `--accent-line` łączą narożniki ramy z narożnikami obrazu (SVG na całą ramę, `preserveAspectRatio="none"`, `vector-effect: non-scaling-stroke`, `aria-hidden`).
-- Pasek danych na dole sekcji, pełna szerokość kontenera, `title-block` w 4 komórkach: (1) `{lata}` z etykietą „rok/lata/lat praktyki" (odmiana wg liczby); (2) 86 z etykietą „projektów" (placeholder); (3) 9 z etykietą „nagród" (placeholder); (4) „Stargard" z etykietą „siedziba pracowni". Wartości w stylu `stat`, etykiety `label`.
+- Pasek danych na dole sekcji, pełna szerokość kontenera, `title-block` w 4 komórkach liczbowych w stylu `stat` (licznik, §2.6 pkt 17): `{lata}` lat praktyki · 86 projektów · 26 wygranych przetargów miejskich · 15 gmin i miast. Żadna nie jest placeholderem. Etykiety `label`; liczby wyrównane do dołu komórek.
 - Animacja otwarcia: §2.6 pkt 1.
 
 Tablet: jak desktop, ale tekst w kolumnach 1–12 nad ramą; rama w kolumnach 3–10; pasek danych 4 komórki.
@@ -404,9 +369,9 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 
 ### 6.3 Usługi (`#services`)
 
-- Nagłówek sekcji (`section-header`): bursztynowy znacznik (§2.6 pkt 14) i h2, bez leadu i bez etykiety tekstowej. Wspólny komponent z leadem w kolumnach 7–12 jest używany w portfolio i kontakcie.
+- Nagłówek sekcji (`section-header`): bursztynowy znacznik (§2.6 pkt 14), h2 „W czym pomagamy" i lead (Aneks 1, D).
 - Macierz 2 × 2 (`title-block`): linia nad i pod macierzą, jedna linia pionowa i jedna pozioma w środku; bez obrysu po bokach, bez numerów. Tło sekcji: `surface`. Nad h3 piktogram 40 px (§2.6 pkt 16, własny rysunek techniczny: obrys 1,5 px, bez wypełnień, kolor `--accent-line`); jedyne ikony na stronie poza przyciskami interfejsu.
-- Komórka: `padding: clamp(1.5rem, 3vw, 3rem)`, `min-height: 18rem` (desktop), układ kolumnowy: h3 u góry, opis (`body`, maks. 42ch) pod nim. Bez wiersza „dla kogo".
+- Komórka: `padding: clamp(1.5rem, 3vw, 3rem)`, `min-height: 18rem` (desktop), układ kolumnowy: piktogram, h3, opis (`body`, maks. 42ch), na dole wiersz „Dla kogo: …" (`small`, `--fg-muted`). Kafelki: domy jednorodzinne, obiekty publiczne i komunalne, urbanistyka, formalności (pozwolenia, uzgodnienia, nadzór w trakcie budowy). Piktogramy: dom, budynek publiczny z kolumnami, kwartały, dokument z haczykiem.
 - Komórki nie są linkami (bez `cursor: pointer`), ale mają dyskretny hover z §2.6 pkt 12.
 - Tablet: 2 × 2. Mobile: jedna kolumna, cztery wiersze rozdzielone liniami, `min-height` zniesione.
 - Semantyka: `<ul>` z czterema `<li>`, w każdym `<h3>`.
@@ -414,13 +379,13 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 ### 6.4 O nas (`#about`) — pas kontrastowy
 
 - Sekcja ma klasę `.band` (§2.3): w motywie ciemnym tło piaskowe i tekst węgiel, w jasnym tło węgiel i tekst kreda. Pas na pełną szerokość okna.
-- Desktop: zdjęcie `about-studio.png` w ramie `framed-media` (rama 4:5 w kolumnach 1–5, odsunięcie zdjęcia 10%). Tekst w kolumnach 7–12: h2, cytat (`<figure>` z `<blockquote>` w stylu `quote` i `<figcaption>` z podpisem w stylu `small`), dwa akapity, na dole `title-block` z trzema wierszami (etykieta: wartość): „Rok założenia": 1996; „Siedziba": Stargard; „Klienci": inwestorzy prywatni i samorządy (nazwisko założycielki występuje raz, w podpisie cytatu).
+- Desktop: zdjęcie `about-studio.png` w ramie `framed-media` (rama 4:5 w kolumnach 1–5, odsunięcie zdjęcia 10%). Tekst w kolumnach 7–12: h2, cytat (`<figure>` z `<blockquote>` w stylu `quote` i `<figcaption>` z podpisem w stylu `small`), dwa akapity. Tabelki nie ma (Aneks 1, A#8): rok założenia występuje w nagłówku, nazwisko w podpisie cytatu, Stargard w pierwszym akapicie.
 - Cudzysłowy są częścią tekstu cytatu (ze słownika), nie dekoracją graficzną. Bez wielkiego ozdobnego znaku cudzysłowu.
-- Mobile: h2, zdjęcie (pełna szerokość kontenera, 4:5), cytat, akapity, tabelka.
+- Mobile: h2, zdjęcie (pełna szerokość kontenera, 4:5), cytat, akapity.
 
 ### 6.5 Portfolio (`#portfolio`)
 
-- Nagłówek sekcji (`section-header`): h2 i lead.
+- Nagłówek sekcji (`section-header`): h2 „Wybrane realizacje" (bez leadu).
 - Desktop, układ asymetryczny na siatce 12 kolumn (cztery sloty):
   - A: kolumny 1–7, proporcje 4:3.
   - B: kolumny 9–12, proporcje 4:5, odsunięty w dół o 6rem względem A; jedyny slot portfolio w ramie `framed-media` (odsunięcie zdjęcia 12%).
@@ -434,12 +399,12 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 
 ### 6.6 Kontakt (`#contact`)
 
-- Nagłówek sekcji (`section-header`): h2 i lead. Lead nie powtarza godzin pracy.
+- Nagłówek sekcji (`section-header`): h2 „Porozmawiajmy o projekcie" i lead z godzinami dostępności (Aneks 1, G).
 - `title-block` w 4 komórkach (desktop: jeden wiersz; tablet: 2 × 2; mobile: jedna kolumna):
   1. Telefon — dwa linki `tel:` jeden pod drugim, styl `value`.
-  2. E-mail — link `mailto:` w stylu `value` i pod nim przycisk tekstowy „Skopiuj e-mail" (`copy-button`; po kliknięciu etykieta „Skopiowano" na 2 s, komunikat w `aria-live="polite"`).
-  3. Adres — `<address>` w dwóch liniach, pod nim link „Zobacz w Mapach Google" (nowa karta, `rel="noopener noreferrer"`, ukryty tekst „otwiera się w nowej karcie").
-  4. Godziny pracy — dni i godziny w dwóch liniach.
+  2. E-mail — link `mailto:` w stylu `value` i pod nim przycisk tekstowy „Kopiuj adres" (`copy-button`; po kliknięciu etykieta „Skopiowano" na 2 s, komunikat w `aria-live="polite"`).
+  3. Adres — `<address>` w dwóch liniach, pod nim link „Pokaż na mapie" (nowa karta, `rel="noopener noreferrer"`, ukryty tekst „otwiera się w nowej karcie").
+  4. Godziny — dni i godziny w dwóch liniach.
 - Bez formularza, bez osadzonej mapy, bez ikon w komórkach.
 
 ### 6.7 Stopka
@@ -549,7 +514,7 @@ Gotowe, gdy: `/` przekierowuje na `/pl`; `/pl`, `/en`, `/fr` budują się statyc
 
 ### Etap 2 — Szkielet strony
 Zakres: `SkipLink`, nagłówek w wersji desktop i mobile (§6.1) z nawigacją, przełącznikiem języka, przełącznikiem motywu i menu `<dialog>`; stopka (§6.7); strona 404 (§6.9).
-Gotowe, gdy: cały szkielet da się obsłużyć klawiaturą; przełącznik języka zachowuje ścieżkę i kotwicę; menu zatrzymuje i zwraca fokus; nagłówek zmienia stan po przewinięciu; układ poprawny przy 320, 768, 1024 i 1440 px.
+Gotowe, gdy: cały szkielet da się obsłużyć klawiaturą; przełącznik języka zachowuje ścieżkę i otwiera stronę od góry; menu zatrzymuje i zwraca fokus; nagłówek zmienia stan po przewinięciu; układ poprawny przy 320, 768, 1024 i 1440 px.
 
 ### Etap 3 — Sekcje
 Zakres: Hero, Usługi, O nas, Portfolio, Kontakt (§6.2–6.6) z pełną treścią w trzech językach i zdjęciami (§7); plakietki placeholderów (§3.3); `copy-button`. Bez animacji otwarcia hero (stan końcowy na stałe).
@@ -597,3 +562,9 @@ Zatwierdzone przez użytkownika 2026-11-14. Przy sprzeczności z §6.3 i §6.5 (
 | 17 | Odstęp pionowy sekcji `clamp(5rem, 12vw, 11rem)`; stopka w 4 kolumnach z danymi kontaktowymi; linie `--line` 16% | stopka w 3 kolumnach bez powtórzenia danych kontaktowych; odstęp `clamp(4.5rem, 9vw, 8rem)`; linie 20%; jednolity `section-header`; cienka linia między Portfolio a Kontaktem; lead hero w kolorze `--fg`; `text-wrap: balance`/`pretty` | rytm, duplikat kontaktu, czytelność | B/C |
 | 18 | Kolor bazowy: Głęboki Mech `#2C3E35` (`--moss`) | Palony Węgiel `#1E1916` (`--coal`); `--ink` = `--coal`; kontrasty przeliczone (§2.2), wszystkie pary ≥ AA | próba kolorystyczna na życzenie użytkownika; powrót = podmiana jednej wartości i nazwy tokenu | kolor |
 | 19 | Sekcje na jednym tle; bursztyn tylko na przycisku; liczby statyczne; sygnet w kolorze tekstu | Przemienny `surface`; znacznik sekcji; bursztynowe kreski ram, podkreśleń i sygnet (`--accent-line`); ramy zdjęć w 3 miejscach; 4 piktogramy usług; licznik w hero; budżet bursztynu (§2.1) | więcej detalu i dynamiki bez osłabienia przycisku głównego | D |
+| 20 | Teksty z propozycji BLUEPRINT i własnych | Teksty, hero, usługi, o nas, portfolio, kontakt, SEO z `BLUEPRINT-ANEKS-1.md` (Aneks 1 ma pierwszeństwo) | zatwierdzone przez użytkownika 2026-11-15 | E |
+| 21 | Statystyki 86 i 9 (placeholdery) i komórka „Stargard" | cztery liczby potwierdzone: lata, 86 projektów, 26 przetargów, 15 gmin i miast | dane od użytkownika | E |
+| 22 | Usługi: projektowanie, wnętrza, urbanistyka, nadzór inwestorski | domy jednorodzinne, obiekty publiczne i komunalne, urbanistyka, formalności (z „dla kogo" i leadem); wnętrza i obiekty komercyjne pominięte | Aneks 1 | E |
+| 23 | Portfolio: cztery fikcyjne projekty, pliki `portfolio-residence/office/interior/pavilion.png` | cztery realne realizacje, pliki `portfolio-1…4.png`, tytuły tłumaczone | Aneks 1, F | E |
+| 24 | O nas z tabelką trzech wierszy | bez tabelki, każda informacja raz | Aneks 1, A#8 | E |
+| 25 | Przełącznik języka z zachowaniem kotwicy; kotwice lądują na początku sekcji; napis logo przycinany przy prawej krawędzi | język zawsze od góry; kotwice korygowane o górny odstęp sekcji (1,5 rem pod menu); `overflow: visible` w logo | uwagi użytkownika po przeglądzie | poprawki |
