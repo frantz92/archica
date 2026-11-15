@@ -32,7 +32,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
   const badge = <PlaceholderBadge label={common.placeholder} className="ml-2 align-middle" />;
 
   const statItems: TitleBlockItem[] = [
-    { id: 'years', label: hero.stats.yearsLabel, value: years },
+    { id: 'years', label: hero.stats.yearsLabel(years), value: years },
     {
       id: 'projects',
       label: (
@@ -75,7 +75,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
             <h1 id="hero-title" className="mt-6 max-w-[14ch] type-display">
               {hero.title}
             </h1>
-            <p className="mt-6 type-lead text-fg-muted">{hero.lead}</p>
+            <p className="mt-6 type-lead">{hero.lead}</p>
             <div className="mt-8 flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-center">
               <ButtonLink href={`/${locale}#${sectionIds.contact}`} className="w-full sm:w-auto">
                 {hero.primaryCta}
@@ -125,7 +125,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
         <TitleBlock
           items={statItems}
           valueStyle="stat"
-          className="mb-10 grid-cols-2 md:grid-cols-4"
+          className="hero-stats mb-10 grid-cols-2 md:grid-cols-4"
         />
       </Container>
     </section>

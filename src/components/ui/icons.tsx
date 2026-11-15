@@ -55,12 +55,3 @@ export function MoonIcon(props: IconProps) {
     </Icon>
   );
 }
-
-export function CopyIcon(props: IconProps) {
-  return (
-    <Icon {...props}>
-      <rect x="8" y="8" width="12" height="12" />
-      <path d="M16 8V4H4v12h4" />
-    </Icon>
-  );
-}

@@ -17,7 +17,7 @@ export function ButtonLink({ href, className, children }: ButtonLinkProps) {
       href={href}
       className={cn(
         'inline-flex min-h-12 min-w-11 items-center justify-center rounded-sm bg-accent px-6 text-base font-medium text-on-accent',
-        'transition-transform duration-150 active:scale-[0.98]',
+        'transition-[transform,filter] duration-150 hover:-translate-y-px hover:brightness-110 active:translate-y-0 active:scale-[0.98]',
         className,
       )}
     >

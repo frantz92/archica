@@ -49,7 +49,7 @@ export function LanguageSwitcher({ currentLocale, options, ariaLabel }: Language
                 title={options[locale].name}
                 aria-current={current ? 'true' : undefined}
                 className={cn(
-                  'inline-flex min-h-11 min-w-11 items-center justify-center type-small font-medium',
+                  'inline-flex min-h-11 min-w-11 items-center justify-center type-small font-medium transition-colors duration-150',
                   current ? 'text-fg' : 'text-fg-muted hover:text-fg',
                 )}
               >

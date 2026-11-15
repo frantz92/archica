@@ -40,7 +40,9 @@ export function CopyButton({ text, label, copiedLabel }: CopyButtonProps) {
         onClick={copy}
         className="inline-flex min-h-11 items-center rounded-sm link-underline-draw type-small"
       >
-        {copied ? copiedLabel : label}
+        <span key={copied ? 'copied' : 'idle'} className="copy-label">
+          {copied ? copiedLabel : label}
+        </span>
       </button>
       <span role="status" aria-live="polite" className="sr-only">
         {copied ? copiedLabel : ''}

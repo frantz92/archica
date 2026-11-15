@@ -31,12 +31,8 @@ export function NotFoundContent({ strings, logoName }: NotFoundContentProps) {
       <Logo variant="mark" title={logoName} className="size-24" />
       <h1 className="type-h2">{text.title}</h1>
       <p className="type-body">{text.description}</p>
-      <Link
-        prefetch={false}
-        href={`/${locale}`}
-        className="inline-flex min-h-11 items-center link-underline"
-      >
-        {text.homeLink}
+      <Link prefetch={false} href={`/${locale}`} className="inline-flex min-h-11 items-center">
+        <span className="link-underline">{text.homeLink}</span>
       </Link>
     </div>
   );

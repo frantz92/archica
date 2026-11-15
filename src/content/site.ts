@@ -1,4 +1,13 @@
 /** Company facts (BLUEPRINT §3.1). Do not change without a new source. */
+const address = {
+  street: 'ul. Czarnieckiego 25a',
+  postalCode: '73-110',
+  city: 'Stargard',
+  country: 'PL',
+} as const;
+
+const domain = 'https://archica.pl';
+
 export const site = {
   fullName: 'Studio Architektury i Urbanistyki Archica',
   brand: 'Archica',
@@ -14,12 +23,19 @@ export const site = {
   ],
   email: 'archica@archica.pl',
   address: {
-    street: 'ul. Czarnieckiego 25a',
-    postalCode: '73-110',
-    city: 'Stargard',
-    country: 'PL',
+    ...address,
+    /** Single-line Polish postal format, used in running text (privacy policy). */
+    line: `${address.street}, ${address.postalCode} ${address.city}`,
   },
-  domain: 'https://archica.pl',
+  /** Opening hours, Monday to Friday. The only place they are defined (24 h, "HH:MM"). */
+  hours: {
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '08:00',
+    closes: '16:00',
+  },
+  domain,
+  /** Host name without the scheme, for running text. */
+  hostname: domain.replace('https://', ''),
   mapUrl:
     'https://www.google.com/maps/search/?api=1&query=ul.+Czarnieckiego+25a%2C+73-110+Stargard',
   // PLACEHOLDER: replace with the real professional licence number. Always shown as a mock value.

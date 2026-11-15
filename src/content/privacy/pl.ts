@@ -5,8 +5,6 @@ import { nonBreaking } from '@/lib/text';
 
 import type { PrivacyDocument } from './types';
 
-const address = `${site.address.street}, ${site.address.postalCode} ${site.address.city}`;
-
 export const privacyPl: PrivacyDocument = {
   updated: '14 listopada 2026',
   updatedIso: '2026-11-14',
@@ -17,7 +15,7 @@ export const privacyPl: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: `Administratorem danych osobowych przetwarzanych w\u00A0związku z\u00A0działaniem strony archica.pl jest ${site.fullName} z\u00A0siedzibą w\u00A0Stargardzie, ${address}, NIP ${site.taxId}.`,
+          text: `Administratorem danych osobowych przetwarzanych w\u00A0związku z\u00A0działaniem strony ${site.hostname} jest ${site.fullName} z\u00A0siedzibą w\u00A0Stargardzie, ${site.address.line}, NIP ${site.taxId}.`,
         },
         {
           type: 'paragraph',

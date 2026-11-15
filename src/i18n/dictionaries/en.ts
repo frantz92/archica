@@ -1,15 +1,16 @@
+import { site } from '@/content/site';
+import { pluralForm } from '@/lib/plural';
+
 import type { Dictionary } from './types';
 
 /** British English. Quotation marks “…”, apostrophe ’ (BLUEPRINT §4.3). */
 export const en = {
   meta: {
-    title: 'Archica — Architecture and Urban Planning Studio, Stargard, Poland',
-    description:
-      'Architecture and urban planning studio in Stargard, Poland, since 1996. Design of family houses and public buildings, urban planning and full handling of permits and formalities.',
+    title: 'Archica — architecture studio in Stargard, Poland',
+    description: `Architecture and urban planning studio in Stargard, Poland, since ${site.foundedYear}. Architectural design, interior architecture, urban planning and construction supervision.`,
     ogImageAlt: 'Archica logo — Architecture and Urban Planning Studio',
     privacyTitle: 'Privacy policy',
-    privacyDescription:
-      'Information on how personal data is processed on archica.pl and on the rights of data subjects.',
+    privacyDescription: `Information on how personal data is processed on ${site.hostname} and on the rights of data subjects.`,
   },
   a11y: {
     skipToContent: 'Skip to content',
@@ -34,74 +35,68 @@ export const en = {
   },
   hero: {
     eyebrow: 'Architecture and Urban Planning Studio',
-    title: 'Architecture that begins with the place.',
-    lead: 'Since 1996 we have been designing family houses, public buildings and urban spaces in Stargard. We lead each project from the site analysis to the building permit.',
-    primaryCta: 'Get in touch',
-    secondaryCta: 'See our work',
-    imageAlt: 'Visualisation of a building designed by the Archica studio',
+    title: 'Design, interiors, supervision. One studio.',
+    lead: 'From the first sketch to the final handover, we lead every stage of the project.',
+    primaryCta: 'Discuss your project',
+    secondaryCta: 'See our projects',
+    imageAlt: 'Glass facade of a modern building against the sky',
     stats: {
-      yearsLabel: 'years in practice',
+      yearsLabel: (years: number): string =>
+        pluralForm('en', years, { one: 'year in practice', other: 'years in practice' }),
       projectsLabel: 'projects',
       awardsLabel: 'awards',
-      locationValue: 'Stargard',
-      locationLabel: 'since 1996',
+      locationValue: site.address.city,
+      locationLabel: 'studio location',
     },
   },
   services: {
-    title: 'What we design',
-    lead: 'We design buildings from start to finish, and we handle permits, documentation and approvals ourselves.',
+    title: 'Services',
     items: [
       {
-        title: 'Family houses',
+        title: 'Architectural design',
         description:
-          'Individual house designs tailored to the plot, the budget and the way the household lives.',
-        audience: 'Private clients',
+          'From concept to construction documentation for private houses, offices and public buildings.',
       },
       {
-        title: 'Public and municipal buildings',
-        description:
-          'Public buildings, promenades and cemeteries: spaces meant to serve residents well for decades.',
-        audience: 'Local authorities',
+        title: 'Interior architecture',
+        description: 'Space planning tailored to the way you live.',
       },
       {
         title: 'Urban planning',
-        description:
-          'Urban planning and land development concepts. We put the space in order before the first building appears.',
-        audience: 'Local authorities',
+        description: 'Land development concepts that respect their context and community.',
       },
       {
-        title: 'Formalities',
-        description:
-          'We take care of permits, documentation and approvals ourselves. The client has a single point of contact from the first conversation to the decision.',
-        audience: 'Private clients and local authorities',
+        title: 'Construction supervision',
+        description: 'Supervision on site so that the finished building matches the design.',
       },
     ],
-    audienceLabel: 'For whom',
   },
   about: {
-    title: 'A studio since 1996',
+    title: 'Know who you are working with',
     quote: '“Every project starts with the site, not the sketchbook.”',
-    quoteAuthor: 'Małgorzata Wojtaś-Frankowska, architect',
+    quoteAuthor: `${site.founderName}, architect and founder`,
     paragraphs: [
-      'Archica has been working in Stargard since 1996. The studio was founded and is led by Małgorzata Wojtaś-Frankowska, architect.',
-      'We work in a small team, so every project is led from start to finish by the same people: from the first visit to the site to the complete set of documents.',
+      'Archica is a small studio led from the start by its founder. A real person stands behind every project, not an anonymous team.',
+      'The same people lead a project from the first visit to the site through to supervision on site. Nothing has to be explained twice.',
     ],
-    imageAlt: 'Interior of the Archica architectural studio',
+    imageAlt: 'Architectural model of a house on display',
     table: {
       foundedLabel: 'Founded',
       seatLabel: 'Office',
-      leaderLabel: 'Led by',
+      clientsLabel: 'Clients',
+      clientsValue: 'Private investors and local authorities',
     },
   },
   portfolio: {
-    title: 'Selected work',
+    title: 'Selected projects',
+    lead: 'Projects of various scales, from a family house to a public space.',
     projects: {
       residence: {
-        category: 'private house',
+        category: 'family house',
         imageAlt: 'Visualisation: Rezydencja Brzozowa',
       },
       office: {
-        category: 'commercial',
+        category: 'commercial building',
         imageAlt: 'Visualisation: Biura Meridian',
       },
       interior: {
@@ -115,37 +110,36 @@ export const en = {
     },
   },
   contact: {
-    title: 'Let’s talk about your project',
-    lead: 'Call or write to us. We reply Monday to Friday, 08:00–16:00.',
+    title: 'Got a plot or an idea? Let’s talk.',
+    lead: 'Call or write to us. We will tell you where to start.',
     labels: {
       phone: 'Phone',
       email: 'Email',
       address: 'Address',
-      hours: 'Hours',
+      hours: 'Opening hours',
     },
-    copyEmail: 'Copy address',
+    copyEmail: 'Copy email',
     copiedEmail: 'Copied',
-    showOnMap: 'Show on map',
+    showOnMap: 'View in Google Maps',
     hoursDays: 'Mon–Fri',
-    hoursTime: '08:00–16:00',
+    hoursTime: `${site.hours.opens}–${site.hours.closes}`,
   },
   footer: {
-    companyTitle: 'Company',
-    contactTitle: 'Contact',
+    companyTitle: 'Company details',
     navTitle: 'Navigation',
     taxIdLabel: 'NIP',
     licenseLabel: 'Licence number',
     licenseTodo: 'to be completed',
     backToTop: 'Back to top',
-    copyright: (year: number): string => `© ${year} Studio Architektury i Urbanistyki Archica`,
+    copyright: (year: number): string => `© ${year} ${site.brand}`,
   },
   privacy: {
     updatedLabel: 'Last updated',
     backToHome: 'Back to the home page',
   },
   notFound: {
-    title: 'Page not found',
-    description: 'The page you are looking for does not exist or has been moved.',
+    title: 'This page isn’t in the plans',
+    description: 'The address may have changed, or there may be a typo.',
     homeLink: 'Back to the home page',
   },
   common: {

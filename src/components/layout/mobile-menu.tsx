@@ -10,9 +10,10 @@ import type { NavLinkItem } from './nav-links';
 interface MobileMenuProps {
   locale: string;
   links: readonly NavLinkItem[];
-  phones: readonly { readonly display: string; readonly href: string }[];
-  email: string;
-  labels: { open: string; close: string; title: string };
+  /** Server-rendered phone and e-mail links (single source: `site`). */
+  contact: ReactNode;
+  /** `title` names the dialog, `nav` names the link list inside it (they must differ). */
+  labels: { open: string; close: string; title: string; nav: string };
   /** Server-rendered bottom row (language switcher and theme toggle). */
   children: ReactNode;
 }
@@ -20,7 +21,7 @@ interface MobileMenuProps {
 const DESKTOP_QUERY = '(min-width: 1024px)';
 
 /** Full-screen menu on a native <dialog>: focus is trapped by showModal() and returned on close. */
-export function MobileMenu({ locale, links, phones, email, labels, children }: MobileMenuProps) {
+export function MobileMenu({ locale, links, contact, labels, children }: MobileMenuProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openerRef = useRef<HTMLButtonElement>(null);
 
@@ -42,7 +43,7 @@ export function MobileMenu({ locale, links, phones, email, labels, children }: M
         type="button"
         aria-haspopup="dialog"
         onClick={() => dialogRef.current?.showModal()}
-        className="inline-flex size-11 items-center justify-center rounded-sm"
+        className="icon-button"
       >
         <MenuIcon />
         <span className="sr-only">{labels.open}</span>
@@ -56,17 +57,13 @@ export function MobileMenu({ locale, links, phones, email, labels, children }: M
       >
         <Container className="flex min-h-dvh flex-col">
           <div className="flex h-(--header-h) shrink-0 items-center justify-end">
-            <button
-              type="button"
-              onClick={close}
-              className="inline-flex size-11 items-center justify-center rounded-sm"
-            >
+            <button type="button" onClick={close} className="icon-button">
               <CloseIcon />
               <span className="sr-only">{labels.close}</span>
             </button>
           </div>
 
-          <nav aria-label={labels.title} className="pt-8">
+          <nav aria-label={labels.nav} className="pt-8">
             <ul className="grid gap-4">
               {links.map((link) => (
                 <li key={link.id}>
@@ -83,16 +80,7 @@ export function MobileMenu({ locale, links, phones, email, labels, children }: M
             </ul>
           </nav>
 
-          <div className="mt-10 grid gap-1 border-t border-line pt-6">
-            {phones.map((phone) => (
-              <a key={phone.href} href={phone.href} className="inline-block min-h-11 py-2">
-                {phone.display}
-              </a>
-            ))}
-            <a href={`mailto:${email}`} className="inline-block min-h-11 py-2">
-              {email}
-            </a>
-          </div>
+          <div className="mt-10 grid gap-1 border-t border-line pt-6">{contact}</div>
 
           <div className="mt-auto flex items-center justify-between gap-4 py-8">{children}</div>
         </Container>

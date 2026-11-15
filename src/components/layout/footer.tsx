@@ -58,34 +58,6 @@ export function Footer({ locale, dictionary }: FooterProps) {
       ),
     },
     {
-      id: 'contact',
-      label: footer.contactTitle,
-      value: (
-        <div className="grid gap-1">
-          <address className="not-italic">
-            {site.address.street}
-            <br />
-            {site.address.postalCode} {site.address.city}
-          </address>
-          {site.phones.map((phone) => (
-            <a
-              key={phone.href}
-              href={phone.href}
-              className="inline-block min-h-11 link-underline-draw py-2"
-            >
-              {phone.display}
-            </a>
-          ))}
-          <a
-            href={`mailto:${site.email}`}
-            className="inline-block min-h-11 link-underline-draw py-2"
-          >
-            {site.email}
-          </a>
-        </div>
-      ),
-    },
-    {
       id: 'nav',
       label: footer.navTitle,
       value: (
@@ -96,9 +68,9 @@ export function Footer({ locale, dictionary }: FooterProps) {
                 <Link
                   prefetch={false}
                   href={link.href}
-                  className="inline-block min-h-11 link-underline-draw py-2"
+                  className="inline-flex min-h-11 items-center"
                 >
-                  {link.label}
+                  <span className="link-underline-draw">{link.label}</span>
                 </Link>
               </li>
             ))}
@@ -110,20 +82,20 @@ export function Footer({ locale, dictionary }: FooterProps) {
 
   return (
     <footer className="bg-bg text-fg">
-      <Container className="pt-16 pb-8">
+      <Container className="pt-20 pb-10">
         <TitleBlock
           items={items}
           valueStyle="small"
-          className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+          className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         />
         <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 type-small text-fg-muted">
           <p>{footer.copyright(year)}</p>
           <Link
             prefetch={false}
             href={`/${locale}#${sectionIds.top}`}
-            className="inline-flex min-h-11 items-center link-underline-draw"
+            className="inline-flex min-h-11 items-center"
           >
-            {footer.backToTop}
+            <span className="link-underline-draw">{footer.backToTop}</span>
           </Link>
         </div>
       </Container>

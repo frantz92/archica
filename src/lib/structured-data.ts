@@ -26,9 +26,9 @@ export function buildProfessionalService(locale: Locale): Record<string, unknown
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '08:00',
-      closes: '16:00',
+      dayOfWeek: site.hours.dayOfWeek,
+      opens: site.hours.opens,
+      closes: site.hours.closes,
     },
     foundingDate: String(site.foundedYear),
     founder: {

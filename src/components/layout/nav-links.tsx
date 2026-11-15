@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/cn';
-
 export interface NavLinkItem {
   readonly id: string;
   readonly label: string;
@@ -53,12 +51,9 @@ export function NavLinks({ locale, links, ariaLabel }: NavLinksProps) {
                 prefetch={false}
                 href={`/${locale}#${link.id}`}
                 aria-current={active ? 'true' : undefined}
-                className={cn(
-                  'inline-flex min-h-11 items-center link-underline-draw',
-                  active && 'link-underline-active',
-                )}
+                className="inline-flex min-h-11 items-center"
               >
-                {link.label}
+                <span className="link-underline-draw">{link.label}</span>
               </Link>
             </li>
           );

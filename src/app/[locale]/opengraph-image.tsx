@@ -18,7 +18,7 @@ const LOGO_HEIGHT = 320;
 const LOGO_WIDTH = Math.round((LOGO_HEIGHT * 230.3) / 166.789);
 
 /**
- * 1200 × 630, moss background, stacked logo in chalk drawn from vector paths (no font text).
+ * 1200 × 630, coal background, stacked logo in chalk drawn from vector paths (no font text).
  * The alt text is set per language in the page metadata (the `alt` export cannot vary by locale).
  */
 export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string }> }) {
@@ -33,7 +33,7 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ loc
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: brandColors.moss,
+        background: brandColors.coal,
       }}
     >
       <svg width={LOGO_WIDTH} height={LOGO_HEIGHT} viewBox="0 0 230.3 166.789">

@@ -31,11 +31,7 @@ export function ThemeToggle({ switchToLight, switchToDark }: ThemeToggleProps) {
   };
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      className="inline-flex size-11 items-center justify-center rounded-sm"
-    >
+    <button type="button" onClick={toggle} className="icon-button">
       <SunIcon className="hidden dark:block" />
       <MoonIcon className="dark:hidden" />
       <span className="hidden dark:block">

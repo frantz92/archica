@@ -26,6 +26,8 @@ interface TitleBlockProps {
   valueStyle?: ValueStyle;
   /** Grid classes controlling the column layout per breakpoint. */
   className?: string;
+  /** Cells fade in while scrolling into view (CSS only, see `.reveal` in globals.css). */
+  reveal?: boolean;
 }
 
 /**
@@ -33,11 +35,19 @@ interface TitleBlockProps {
  * (BLUEPRINT §2.1, §5). The lines are the 1 px grid gap showing the line-coloured list background
  * through opaque cells, so only inner edges and the top/bottom rules appear.
  */
-export function TitleBlock({ items, valueStyle = 'value', className }: TitleBlockProps) {
+export function TitleBlock({
+  items,
+  valueStyle = 'value',
+  className,
+  reveal = false,
+}: TitleBlockProps) {
   return (
-    <dl className={cn('grid gap-px border-y border-line bg-line', className)}>
+    <dl className={cn('rule-y grid gap-px bg-line', reveal && 'rule-draw', className)}>
       {items.map((item) => (
-        <div key={item.id} className="flex flex-col gap-3 bg-bg p-4 md:p-6">
+        <div
+          key={item.id}
+          className={cn('flex flex-col gap-3 bg-bg p-4 md:p-6', reveal && 'reveal')}
+        >
           <dt className={item.labelHidden ? 'sr-only' : 'type-label text-fg-muted'}>
             {item.label}
           </dt>

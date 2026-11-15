@@ -21,12 +21,13 @@ export function TextLink({
   className,
   children,
 }: TextLinkProps) {
-  const classes = cn('inline-block min-h-11 py-2 link-underline', className);
+  const classes = cn('inline-flex min-h-11 items-center', className);
+  const label = <span className="link-underline">{children}</span>;
 
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
-        {children}
+        {label}
         {externalHint ? <span className="sr-only"> ({externalHint})</span> : null}
       </a>
     );
@@ -34,7 +35,7 @@ export function TextLink({
 
   return (
     <Link prefetch={false} href={href} className={classes}>
-      {children}
+      {label}
     </Link>
   );
 }

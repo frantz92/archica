@@ -6,7 +6,7 @@ import { brandColors } from '@/lib/brand';
 export const size = { width: 180, height: 180 };
 export const contentType = 'image/png';
 
-/** 180 × 180, moss background, full emblem in chalk at 60% of the width. */
+/** 180 × 180, coal background, full emblem in chalk at 60% of the width. */
 export default function AppleIcon() {
   const markSize = size.width * 0.6;
   return new ImageResponse(
@@ -17,7 +17,7 @@ export default function AppleIcon() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: brandColors.moss,
+        background: brandColors.coal,
       }}
     >
       <svg width={markSize} height={markSize} viewBox="0 0 100 100">

@@ -3,6 +3,6 @@
  * theme-color and ImageResponse icons (BLUEPRINT §8). Values mirror globals.css.
  */
 export const brandColors = {
-  moss: '#2C3E35',
+  coal: '#1E1916',
   chalk: '#F5F2EB',
 } as const;

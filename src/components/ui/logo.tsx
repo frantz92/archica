@@ -1,4 +1,4 @@
-import { FAVICON_MARK_PATH, MARK_PATH, STACKED_MARK_PATH, WORDMARK_PATH } from './logo-paths';
+import { MARK_PATH, STACKED_MARK_PATH, WORDMARK_PATH } from './logo-paths';
 
 export type LogoVariant = 'mark' | 'horizontal' | 'stacked';
 
@@ -46,6 +46,3 @@ export function Logo({ variant, title, className }: LogoProps) {
     </svg>
   );
 }
-
-/** Simplified emblem for tiny sizes; exported for reuse by icon generators (Stage 4). */
-export const faviconMarkPath = FAVICON_MARK_PATH;

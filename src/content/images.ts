@@ -15,8 +15,9 @@ export interface ImageAsset {
   readonly placeholder: boolean;
 }
 
-// PLACEHOLDER: all six files are temporary generated images (scripts/generate-placeholder-images.mjs).
-// Replace them in public/images/ keeping the file names.
+// PLACEHOLDER: all six files are temporary free stock photos (CC0, Wikimedia Commons; credits in
+// README.md), cropped to the slot ratios. They are not Archica projects. Replace them in
+// public/images/ keeping the file names, then set `placeholder: false`.
 export const images: Record<ImageKey, ImageAsset> = {
   hero: { src: heroBuilding, placeholder: true },
   about: { src: aboutStudio, placeholder: true },

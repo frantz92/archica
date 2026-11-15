@@ -1,6 +1,7 @@
 import { Container } from '@/components/ui/container';
 import { Media } from '@/components/ui/media';
 import { Section } from '@/components/ui/section';
+import { SectionHeader } from '@/components/ui/section-header';
 import { projects, type Project, type ProjectSlot } from '@/content/projects';
 import { sectionIds } from '@/i18n/config';
 
@@ -51,24 +52,26 @@ export function Portfolio({ dictionary }: SectionProps) {
   return (
     <Section id={sectionIds.portfolio} labelledBy="portfolio-title">
       <Container>
-        <h2 id="portfolio-title" className="type-h2">
-          {portfolio.title}
-        </h2>
+        <SectionHeader id="portfolio-title" title={portfolio.title} lead={portfolio.lead} />
 
-        <div className="mt-16 grid-page gap-y-12 lg:mt-24 lg:items-start lg:gap-y-24">
+        <div className="grid-page gap-y-12 lg:items-start lg:gap-y-24">
           {projects.map((project) => {
             const layout = SLOTS[project.slot];
             const text = portfolio.projects[project.id];
             return (
-              <figure key={project.id} className={`col-span-4 md:col-span-6 ${layout.placement}`}>
+              <figure
+                key={project.id}
+                className={`project-figure col-span-4 md:col-span-6 ${layout.placement}`}
+              >
                 <Media
                   image={project.image}
                   alt={text.imageAlt}
                   sizes={layout.sizes}
                   aspectClassName={layout.aspect}
+                  className="reveal-media"
                   placeholderLabel={common.placeholder}
                 />
-                <figcaption className="mt-4 grid gap-1">
+                <figcaption className="reveal mt-4 grid gap-1">
                   <h3 className="type-h3">{project.title}</h3>
                   <p className="type-small text-fg-muted">
                     {captionDetails(project, text.category)}

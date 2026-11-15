@@ -1,16 +1,17 @@
+import { site } from '@/content/site';
+import { pluralForm } from '@/lib/plural';
+
 /**
  * Polish dictionary: the reference for the `Dictionary` type (BLUEPRINT §4.2).
  * Typography (§4.3): non-breaking spaces ( ) after one-letter prepositions and conjunctions.
  */
 export const pl = {
   meta: {
-    title: 'Archica — Studio Architektury i\u00A0Urbanistyki, Stargard',
-    description:
-      'Pracownia architektury i urbanistyki w Stargardzie, od 1996 roku. Projekty domów jednorodzinnych i obiektów publicznych, urbanistyka oraz pełna obsługa formalności.',
+    title: 'Archica — pracownia architektoniczna w Stargardzie',
+    description: `Pracownia architektury i urbanistyki w Stargardzie, od ${site.foundedYear} roku. Projektowanie architektoniczne, architektura wnętrz, planowanie urbanistyczne i nadzór inwestorski.`,
     ogImageAlt: 'Logo Archica — Studio Architektury i Urbanistyki',
     privacyTitle: 'Polityka prywatności',
-    privacyDescription:
-      'Informacje o przetwarzaniu danych osobowych na stronie archica.pl oraz o prawach osób, których dane dotyczą.',
+    privacyDescription: `Informacje o przetwarzaniu danych osobowych na stronie ${site.hostname} oraz o prawach osób, których dane dotyczą.`,
   },
   a11y: {
     skipToContent: 'Przejdź do treści',
@@ -35,74 +36,73 @@ export const pl = {
   },
   hero: {
     eyebrow: 'Studio Architektury i Urbanistyki',
-    title: 'Architektura, która zaczyna się od miejsca.',
-    lead: 'Od 1996 roku projektujemy w Stargardzie domy jednorodzinne, obiekty publiczne i przestrzenie miejskie. Prowadzimy inwestycję od analizy działki po pozwolenie na budowę.',
-    primaryCta: 'Skontaktuj się',
-    secondaryCta: 'Zobacz realizacje',
-    imageAlt: 'Wizualizacja budynku projektowanego przez pracownię Archica',
+    title: 'Projekt, wnętrza, nadzór. Jedna pracownia.',
+    lead: 'Od pierwszego szkicu do odbioru inwestycji prowadzimy każdy etap projektu.',
+    primaryCta: 'Omów swój projekt',
+    secondaryCta: 'Zobacz projekty',
+    imageAlt: 'Szklana fasada nowoczesnego budynku na tle nieba',
     stats: {
-      yearsLabel: 'lat praktyki',
+      yearsLabel: (years: number): string =>
+        pluralForm('pl', years, {
+          one: 'rok praktyki',
+          few: 'lata praktyki',
+          many: 'lat praktyki',
+          other: 'lat praktyki',
+        }),
       projectsLabel: 'projektów',
       awardsLabel: 'nagród',
-      locationValue: 'Stargard',
-      locationLabel: 'od 1996',
+      locationValue: site.address.city,
+      locationLabel: 'siedziba pracowni',
     },
   },
   services: {
-    title: 'Co projektujemy',
-    lead: 'Budynki projektujemy od A do Z, a pozwolenia, dokumentację i uzgodnienia prowadzimy we własnym zakresie.',
+    title: 'Usługi',
     items: [
       {
-        title: 'Domy jednorodzinne',
+        title: 'Projektowanie architektoniczne',
         description:
-          'Indywidualne projekty domów dopasowane do działki, budżetu i sposobu życia domowników.',
-        audience: 'Inwestorzy prywatni',
+          'Od koncepcji do dokumentacji wykonawczej dla domów prywatnych, biur i budynków publicznych.',
       },
       {
-        title: 'Obiekty publiczne i komunalne',
-        description:
-          'Budynki publiczne, promenady i cmentarze: przestrzenie, które mają dobrze służyć mieszkańcom przez dziesięciolecia.',
-        audience: 'Samorządy',
+        title: 'Architektura wnętrz',
+        description: 'Planowanie przestrzeni dopasowane do sposobu życia.',
       },
       {
-        title: 'Urbanistyka',
-        description:
-          'Planowanie urbanistyczne i koncepcje zagospodarowania terenu. Porządkujemy przestrzeń, zanim powstanie pierwszy budynek.',
-        audience: 'Samorządy',
+        title: 'Planowanie urbanistyczne',
+        description: 'Koncepcje zagospodarowania terenu respektujące kontekst i społeczność.',
       },
       {
-        title: 'Formalności',
-        description:
-          'Pozwolenia, dokumentację i uzgodnienia załatwiamy sami. Inwestor ma jeden punkt kontaktu od pierwszej rozmowy do decyzji.',
-        audience: 'Inwestorzy prywatni i samorządy',
+        title: 'Nadzór inwestorski',
+        description: 'Nadzór na budowie, aby realizacja odpowiadała projektowi.',
       },
     ],
-    audienceLabel: 'Dla kogo',
   },
   about: {
-    title: 'Pracownia od 1996 roku',
-    quote: '„Każdy projekt zaczyna się od działki, nie od szkicownika.”',
-    quoteAuthor: 'mgr arch. Małgorzata Wojtaś-Frankowska',
+    title: 'Wiesz, z kim pracujesz',
+    quote: '„Każdy projekt zaczyna się od działki, nie od szkicownika.”',
+    quoteAuthor: `${site.founder}, założycielka pracowni`,
     paragraphs: [
-      'Archica działa w Stargardzie od 1996 roku. Pracownię założyła i prowadzi mgr arch. Małgorzata Wojtaś-Frankowska.',
-      'Pracujemy w kilkuosobowym zespole, więc każdy projekt od początku do końca prowadzą te same osoby: od pierwszej wizyty na działce po komplet dokumentów.',
+      'Archica to kilkuosobowa pracownia, którą od początku prowadzi jej założycielka. Za projektem stoi więc konkretna osoba, a nie anonimowy zespół.',
+      'Projekt prowadzą te same osoby od pierwszej wizyty na działce po nadzór na budowie. Niczego nie trzeba tłumaczyć dwa razy.',
     ],
-    imageAlt: 'Wnętrze pracowni architektonicznej Archica',
+    imageAlt: 'Makieta architektoniczna domu na wystawie',
     table: {
-      foundedLabel: 'Założenie',
+      foundedLabel: 'Rok założenia',
       seatLabel: 'Siedziba',
-      leaderLabel: 'Prowadząca',
+      clientsLabel: 'Klienci',
+      clientsValue: 'Inwestorzy prywatni i samorządy',
     },
   },
   portfolio: {
-    title: 'Wybrane realizacje',
+    title: 'Wybrane projekty',
+    lead: 'Projekty różnej skali: od domu jednorodzinnego po przestrzeń publiczną.',
     projects: {
       residence: {
-        category: 'dom prywatny',
+        category: 'dom jednorodzinny',
         imageAlt: 'Wizualizacja: Rezydencja Brzozowa',
       },
       office: {
-        category: 'komercyjne',
+        category: 'obiekt komercyjny',
         imageAlt: 'Wizualizacja: Biura Meridian',
       },
       interior: {
@@ -116,37 +116,36 @@ export const pl = {
     },
   },
   contact: {
-    title: 'Porozmawiajmy o projekcie',
-    lead: 'Zadzwoń albo napisz. Odpowiadamy od poniedziałku do piątku w godzinach 08:00–16:00.',
+    title: 'Masz działkę albo pomysł? Porozmawiajmy.',
+    lead: 'Zadzwoń lub napisz. Powiemy, od czego zacząć.',
     labels: {
       phone: 'Telefon',
       email: 'E-mail',
       address: 'Adres',
-      hours: 'Godziny',
+      hours: 'Godziny pracy',
     },
-    copyEmail: 'Kopiuj adres',
+    copyEmail: 'Skopiuj e-mail',
     copiedEmail: 'Skopiowano',
-    showOnMap: 'Pokaż na mapie',
+    showOnMap: 'Zobacz w Mapach Google',
     hoursDays: 'pon.–pt.',
-    hoursTime: '08:00–16:00',
+    hoursTime: `${site.hours.opens}–${site.hours.closes}`,
   },
   footer: {
-    companyTitle: 'Firma',
-    contactTitle: 'Kontakt',
+    companyTitle: 'Dane firmy',
     navTitle: 'Nawigacja',
     taxIdLabel: 'NIP',
     licenseLabel: 'Numer uprawnień',
     licenseTodo: 'do uzupełnienia',
-    backToTop: 'Do góry',
-    copyright: (year: number): string => `© ${year} Studio Architektury i Urbanistyki Archica`,
+    backToTop: 'Wróć na górę',
+    copyright: (year: number): string => `© ${year} ${site.brand}`,
   },
   privacy: {
     updatedLabel: 'Ostatnia aktualizacja',
     backToHome: 'Wróć na stronę główną',
   },
   notFound: {
-    title: 'Nie znaleziono strony',
-    description: 'Strona, której szukasz, nie istnieje lub została przeniesiona.',
+    title: 'Tej strony nie ma w projekcie',
+    description: 'Adres mógł się zmienić albo wkradła się literówka.',
     homeLink: 'Wróć na stronę główną',
   },
   common: {

@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
 }
 
 export const viewport: Viewport = {
-  themeColor: brandColors.moss,
+  themeColor: brandColors.coal,
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {

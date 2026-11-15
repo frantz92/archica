@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { PrivacyDocumentView } from '@/components/sections/privacy-document';
 import { TextLink } from '@/components/ui/text-link';
 import { getPrivacyDocument } from '@/content/privacy';
+import { site } from '@/content/site';
 import { isLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n/get-dictionary';
 import { createPageMetadata } from '@/lib/metadata';
@@ -22,7 +23,7 @@ export async function generateMetadata({
     locale,
     path: '/privacy',
     title: meta.privacyTitle,
-    socialTitle: `${meta.privacyTitle} — Archica`,
+    socialTitle: `${meta.privacyTitle} — ${site.brand}`,
     description: meta.privacyDescription,
     imageAlt: meta.ogImageAlt,
   });

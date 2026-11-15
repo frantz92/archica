@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 import { Container } from '@/components/ui/container';
+import { EmailLink, PhoneLinks } from '@/components/ui/contact-links';
 import { Logo } from '@/components/ui/logo';
-import { site } from '@/content/site';
 import { localeMeta, locales, sectionIds, type Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/dictionaries/types';
 
@@ -65,9 +65,18 @@ export function Header({ locale, dictionary }: HeaderProps) {
         <MobileMenu
           locale={locale}
           links={links}
-          phones={site.phones}
-          email={site.email}
-          labels={{ open: a11y.openMenu, close: a11y.closeMenu, title: a11y.mobileMenuTitle }}
+          contact={
+            <>
+              <PhoneLinks />
+              <EmailLink />
+            </>
+          }
+          labels={{
+            open: a11y.openMenu,
+            close: a11y.closeMenu,
+            title: a11y.mobileMenuTitle,
+            nav: a11y.mainNav,
+          }}
         >
           {controls}
         </MobileMenu>

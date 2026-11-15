@@ -40,7 +40,8 @@ src/lib/              metadata, dane strukturalne, kolory marki dla ikon, pomocn
 - **Teksty widoczne na stronie** są w słownikach `src/i18n/dictionaries/`. `pl.ts` jest wzorcem:
   `en.ts` i `fr.ts` używają `satisfies Dictionary`, więc brakujący klucz zatrzymuje `npm run typecheck`
   i `npm run build`. W komponentach nie ma tekstów na sztywno.
-- **Dane firmy** (adres, telefony, NIP, godziny): `src/content/site.ts`.
+- **Dane firmy** (adres, telefony, e-mail, NIP, godziny, rok założenia, nazwisko, domena): `src/content/site.ts`, jedyne źródło. Słowniki,
+  dane strukturalne, polityka prywatności i komponenty (`ui/postal-address`, `ui/contact-links`) importują je stąd; nie przepisuj ich ręcznie.
 - **Projekty w portfolio**: `src/content/projects.ts`. Pola `location` i `year` są opcjonalne; po wypełnieniu
   pojawiają się w podpisie. Pole `slug` jest przygotowane pod przyszłe podstrony projektów.
 - **Polityka prywatności**: `src/content/privacy/{pl,en,fr}.ts` (lista sekcji: nagłówek + akapity/listy).
@@ -49,8 +50,21 @@ src/lib/              metadata, dane strukturalne, kolory marki dla ikon, pomocn
 
 ## Podmiana zdjęć
 
-Zdjęcia są teraz **tymczasowymi placeholderami** wygenerowanymi skryptem
-`scripts/generate-placeholder-images.mjs`. Aby je podmienić, wgraj własne pliki do `public/images/`
+Zdjęcia są teraz **tymczasowymi zdjęciami stockowymi** na licencji CC0 (domena publiczna, atrybucja nie jest
+wymagana, ale podajemy źródła), przycięte do proporcji slotów. **To nie są realizacje Archiki**, więc przed
+publikacją trzeba je podmienić. Poprzednie szare placeholdery da się odtworzyć skryptem
+`scripts/generate-placeholder-images.mjs`.
+
+| Plik                      | Źródło (Wikimedia Commons)                                                                                           |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `hero-building.png`       | [Cube berlin.jpg](https://commons.wikimedia.org/wiki/File:Cube_berlin.jpg)                                           |
+| `about-studio.png`        | [Model of Chochikukyo House 1.jpg](https://commons.wikimedia.org/wiki/File:Model_of_Chochikukyo_House_1.jpg)         |
+| `portfolio-residence.png` | [Midcentury Modern Danbury CT.jpg](https://commons.wikimedia.org/wiki/File:Midcentury_Modern_Danbury_CT.jpg)         |
+| `portfolio-office.png`    | [Regular glass facade (Unsplash).jpg](<https://commons.wikimedia.org/wiki/File:Regular_glass_facade_(Unsplash).jpg>) |
+| `portfolio-interior.png`  | [Living room (Unsplash).jpg](<https://commons.wikimedia.org/wiki/File:Living_room_(Unsplash).jpg>)                   |
+| `portfolio-pavilion.png`  | [Wooden pavilion, Battersea Park.jpg](https://commons.wikimedia.org/wiki/File:Wooden_pavilion,_Battersea_Park.jpg)   |
+
+Aby je podmienić, wgraj własne pliki do `public/images/`
 **pod tymi samymi nazwami** (kod nie wymaga zmian). Slot przycina zdjęcie (`object-fit: cover`),
 więc plik może mieć dowolne wymiary, ale zalecane źródła to:
 

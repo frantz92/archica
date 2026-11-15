@@ -1,6 +1,9 @@
 import { Container } from '@/components/ui/container';
+import { EmailLink, PhoneLinks } from '@/components/ui/contact-links';
 import { CopyButton } from '@/components/ui/copy-button';
+import { PostalAddress } from '@/components/ui/postal-address';
 import { Section } from '@/components/ui/section';
+import { SectionHeader } from '@/components/ui/section-header';
 import { TextLink } from '@/components/ui/text-link';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
 import { site } from '@/content/site';
@@ -17,15 +20,7 @@ export function Contact({ dictionary }: SectionProps) {
       label: contact.labels.phone,
       value: (
         <div className="grid">
-          {site.phones.map((phone) => (
-            <a
-              key={phone.href}
-              href={phone.href}
-              className="inline-block min-h-11 link-underline-draw py-1.5"
-            >
-              {phone.display}
-            </a>
-          ))}
+          <PhoneLinks compact />
         </div>
       ),
     },
@@ -34,12 +29,7 @@ export function Contact({ dictionary }: SectionProps) {
       label: contact.labels.email,
       value: (
         <div className="grid justify-items-start">
-          <a
-            href={`mailto:${site.email}`}
-            className="inline-block min-h-11 link-underline-draw py-1.5 break-all"
-          >
-            {site.email}
-          </a>
+          <EmailLink compact className="break-all" />
           <CopyButton
             text={site.email}
             label={contact.copyEmail}
@@ -53,11 +43,7 @@ export function Contact({ dictionary }: SectionProps) {
       label: contact.labels.address,
       value: (
         <div className="grid justify-items-start gap-2">
-          <address className="not-italic">
-            {site.address.street}
-            <br />
-            {site.address.postalCode} {site.address.city}
-          </address>
+          <PostalAddress />
           <TextLink
             href={site.mapUrl}
             external
@@ -83,20 +69,10 @@ export function Contact({ dictionary }: SectionProps) {
   ];
 
   return (
-    <Section id={sectionIds.contact} labelledBy="contact-title">
+    <Section id={sectionIds.contact} labelledBy="contact-title" className="border-t border-line">
       <Container>
-        <div className="grid-page gap-y-6">
-          <h2 id="contact-title" className="col-span-4 type-h2 md:col-span-12 lg:col-span-8">
-            {contact.title}
-          </h2>
-          <p className="col-span-4 type-lead text-fg-muted md:col-span-12 lg:col-span-8">
-            {contact.lead}
-          </p>
-        </div>
-        <TitleBlock
-          items={items}
-          className="mt-16 grid-cols-1 md:grid-cols-2 lg:mt-24 lg:grid-cols-4"
-        />
+        <SectionHeader id="contact-title" title={contact.title} lead={contact.lead} />
+        <TitleBlock items={items} reveal className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4" />
       </Container>
     </Section>
   );
