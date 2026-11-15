@@ -2,10 +2,10 @@ import type { StaticImageData } from 'next/image';
 
 import aboutStudio from '../../public/images/about-studio.png';
 import heroBuilding from '../../public/images/hero-building.png';
-import portfolioInterior from '../../public/images/portfolio-interior.png';
-import portfolioOffice from '../../public/images/portfolio-office.png';
-import portfolioPavilion from '../../public/images/portfolio-pavilion.png';
-import portfolioResidence from '../../public/images/portfolio-residence.png';
+import portfolio1 from '../../public/images/portfolio-1.png';
+import portfolio2 from '../../public/images/portfolio-2.png';
+import portfolio3 from '../../public/images/portfolio-3.png';
+import portfolio4 from '../../public/images/portfolio-4.png';
 
 export interface ImageAsset {
   readonly src: StaticImageData;
@@ -21,10 +21,10 @@ export interface ImageAsset {
 export const images: Record<ImageKey, ImageAsset> = {
   hero: { src: heroBuilding, placeholder: true },
   about: { src: aboutStudio, placeholder: true },
-  residence: { src: portfolioResidence, placeholder: true },
-  office: { src: portfolioOffice, placeholder: true },
-  interior: { src: portfolioInterior, placeholder: true },
-  pavilion: { src: portfolioPavilion, placeholder: true },
+  portfolio1: { src: portfolio1, placeholder: true },
+  portfolio2: { src: portfolio2, placeholder: true },
+  portfolio3: { src: portfolio3, placeholder: true },
+  portfolio4: { src: portfolio4, placeholder: true },
 };
 
-export type ImageKey = 'hero' | 'about' | 'residence' | 'office' | 'interior' | 'pavilion';
+export type ImageKey = 'hero' | 'about' | 'portfolio1' | 'portfolio2' | 'portfolio3' | 'portfolio4';

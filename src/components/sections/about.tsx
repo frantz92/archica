@@ -2,8 +2,6 @@ import { Container } from '@/components/ui/container';
 import { FramedMedia } from '@/components/ui/framed-media';
 import { Section } from '@/components/ui/section';
 import { SectionMark } from '@/components/ui/section-mark';
-import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
-import { site } from '@/content/site';
 import { sectionIds } from '@/i18n/config';
 
 import type { SectionProps } from './section-props';
@@ -12,12 +10,6 @@ const ABOUT_SIZES = '(min-width: 1024px) 38vw, 100vw';
 
 export function About({ dictionary }: SectionProps) {
   const { about, common } = dictionary;
-
-  const tableItems: TitleBlockItem[] = [
-    { id: 'founded', label: about.table.foundedLabel, value: site.foundedYear },
-    { id: 'seat', label: about.table.seatLabel, value: site.address.city },
-    { id: 'clients', label: about.table.clientsLabel, value: about.table.clientsValue },
-  ];
 
   return (
     <Section id={sectionIds.about} labelledBy="about-title" tone="band">
@@ -58,7 +50,6 @@ export function About({ dictionary }: SectionProps) {
                 </p>
               ))}
             </div>
-            <TitleBlock items={tableItems} reveal className="mt-auto grid-cols-1 lg:mt-8" />
           </div>
         </div>
       </Container>

@@ -39,6 +39,7 @@ export const en = {
     lead: `Since ${site.foundedYear} we have designed houses, public spaces and urban plans. We help you choose a plot, handle the paperwork and look for practical, contemporary solutions together.`,
     primaryCta: 'Get in touch',
     secondaryCta: 'See our work',
+    // PLACEHOLDER: describe the real photo after replacing hero-building.png.
     imageAlt: 'Glass facade of a modern building against the sky',
     stats: {
       yearsLabel: (years: number): string =>
@@ -84,40 +85,39 @@ export const en = {
     audienceLabel: 'For whom:',
   },
   about: {
-    title: 'Know who you are working with',
+    title: `A studio since ${site.foundedYear}`,
     quote: '“Every project starts with the site, not the sketchbook.”',
-    quoteAuthor: `${site.founderName}, architect and founder`,
+    quoteAuthor: `${site.founderName}, architect`,
     paragraphs: [
-      'Archica is a small studio led from the start by its founder. A real person stands behind every project, not an anonymous team.',
-      'The same people lead a project from the first visit to the site through to supervision on site. Nothing has to be explained twice.',
+      'We are a small team based in Stargard. We design together with the client and favour practical, contemporary solutions.',
+      'We have a wide network of contacts and many years of experience working with local authorities and contractors. That lets us support your decisions at every stage, from choosing the plot to the end of construction.',
     ],
+    // PLACEHOLDER: describe the real photo after replacing about-studio.png.
     imageAlt: 'Architectural model of a house on display',
-    table: {
-      foundedLabel: 'Founded',
-      seatLabel: 'Office',
-      clientsLabel: 'Clients',
-      clientsValue: 'Private investors and local authorities',
-    },
   },
   portfolio: {
-    title: 'Selected projects',
-    lead: 'Projects of various scales, from a family house to a public space.',
+    title: 'Selected work',
+    // PLACEHOLDER: alt texts follow the pattern "Project: {title}" until the photos are replaced.
     projects: {
-      residence: {
-        category: 'family house',
-        imageAlt: 'Visualisation: Rezydencja Brzozowa',
+      beaches: {
+        title: 'Beach renovation: Dziewoklicz, Dąbie, Głębokie',
+        category: 'Public space',
+        imageAlt: 'Project: Beach renovation: Dziewoklicz, Dąbie, Głębokie',
       },
-      office: {
-        category: 'commercial building',
-        imageAlt: 'Visualisation: Biura Meridian',
+      house: {
+        title: 'Single-family house in Pełczyce',
+        category: 'Private house',
+        imageAlt: 'Project: Single-family house in Pełczyce',
       },
-      interior: {
-        category: 'interior architecture',
-        imageAlt: 'Visualisation: Wnętrze Linden',
+      promenade: {
+        title: 'Promenade on Lake Miedwie',
+        category: 'Public space',
+        imageAlt: 'Project: Promenade on Lake Miedwie',
       },
-      pavilion: {
-        category: 'public space',
-        imageAlt: 'Visualisation: Pawilon Grove',
+      plan: {
+        title: 'Urban plan for Stargard',
+        category: 'Urban planning',
+        imageAlt: 'Project: Urban plan for Stargard',
       },
     },
   },

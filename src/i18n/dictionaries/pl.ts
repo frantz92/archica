@@ -40,6 +40,7 @@ export const pl = {
     lead: `Od ${site.foundedYear} roku projektujemy domy jednorodzinne, przestrzenie publiczne i plany urbanistyczne. Pomagamy wybrać działkę, prowadzimy formalności i wspólnie szukamy rozwiązań praktycznych i współczesnych.`,
     primaryCta: 'Skontaktuj się',
     secondaryCta: 'Zobacz realizacje',
+    // PLACEHOLDER: describe the real photo after replacing hero-building.png.
     imageAlt: 'Szklana fasada nowoczesnego budynku na tle nieba',
     stats: {
       yearsLabel: (years: number): string =>
@@ -90,40 +91,39 @@ export const pl = {
     audienceLabel: 'Dla kogo:',
   },
   about: {
-    title: 'Wiesz, z kim pracujesz',
+    title: `Pracownia od ${site.foundedYear} roku`,
     quote: '„Każdy projekt zaczyna się od działki, nie od szkicownika.”',
-    quoteAuthor: `${site.founder}, założycielka pracowni`,
+    quoteAuthor: `${site.founder}`,
     paragraphs: [
-      'Archica to kilkuosobowa pracownia, którą od początku prowadzi jej założycielka. Za projektem stoi więc konkretna osoba, a nie anonimowy zespół.',
-      'Projekt prowadzą te same osoby od pierwszej wizyty na działce po nadzór na budowie. Niczego nie trzeba tłumaczyć dwa razy.',
+      'Jesteśmy kilkuosobowym zespołem ze Stargardu. Projektujemy wspólnie z inwestorem i stawiamy na rozwiązania praktyczne i współczesne.',
+      'Mamy szerokie kontakty i wieloletnie doświadczenie we współpracy z urzędami i wykonawcami. Dlatego wspieramy inwestora w decyzjach na każdym etapie, od wyboru działki do zakończenia budowy.',
     ],
+    // PLACEHOLDER: describe the real photo after replacing about-studio.png.
     imageAlt: 'Makieta architektoniczna domu na wystawie',
-    table: {
-      foundedLabel: 'Rok założenia',
-      seatLabel: 'Siedziba',
-      clientsLabel: 'Klienci',
-      clientsValue: 'Inwestorzy prywatni i samorządy',
-    },
   },
   portfolio: {
-    title: 'Wybrane projekty',
-    lead: 'Projekty różnej skali: od domu jednorodzinnego po przestrzeń publiczną.',
+    title: 'Wybrane realizacje',
+    // PLACEHOLDER: alt texts follow the pattern "Projekt: {title}" until the photos are replaced.
     projects: {
-      residence: {
-        category: 'dom jednorodzinny',
-        imageAlt: 'Wizualizacja: Rezydencja Brzozowa',
+      beaches: {
+        title: 'Modernizacja plaż: Dziewoklicz, Dąbie, Głębokie',
+        category: 'Przestrzeń publiczna',
+        imageAlt: 'Projekt: Modernizacja plaż: Dziewoklicz, Dąbie, Głębokie',
       },
-      office: {
-        category: 'obiekt komercyjny',
-        imageAlt: 'Wizualizacja: Biura Meridian',
+      house: {
+        title: 'Dom jednorodzinny w Pełczycach',
+        category: 'Dom prywatny',
+        imageAlt: 'Projekt: Dom jednorodzinny w Pełczycach',
       },
-      interior: {
-        category: 'architektura wnętrz',
-        imageAlt: 'Wizualizacja: Wnętrze Linden',
+      promenade: {
+        title: 'Promenada nad jeziorem Miedwie',
+        category: 'Przestrzeń publiczna',
+        imageAlt: 'Projekt: Promenada nad jeziorem Miedwie',
       },
-      pavilion: {
-        category: 'przestrzeń publiczna',
-        imageAlt: 'Wizualizacja: Pawilon Grove',
+      plan: {
+        title: 'Plan urbanistyczny w Stargardzie',
+        category: 'Urbanistyka',
+        imageAlt: 'Projekt: Plan urbanistyczny w Stargardzie',
       },
     },
   },

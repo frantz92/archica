@@ -48,6 +48,7 @@ export const fr = {
     lead: `Depuis ${site.foundedYear}, nous concevons des maisons, des espaces publics et des plans d’urbanisme. Nous vous aidons à choisir le terrain, nous gérons les démarches et nous cherchons ensemble des solutions pratiques et contemporaines.`,
     primaryCta: 'Nous contacter',
     secondaryCta: 'Voir les réalisations',
+    // PLACEHOLDER: describe the real photo after replacing hero-building.png.
     imageAlt: 'Façade vitrée d’un bâtiment moderne sur fond de ciel',
     stats: {
       yearsLabel: (years: number): string =>
@@ -93,40 +94,39 @@ export const fr = {
     audienceLabel: 'Pour qui :',
   },
   about: {
-    title: 'Vous savez avec qui vous travaillez',
+    title: `Un atelier depuis ${site.foundedYear}`,
     quote: '« Chaque projet commence par le site, pas par le carnet de croquis. »',
-    quoteAuthor: `${site.founderName}, architecte et fondatrice`,
+    quoteAuthor: `${site.founderName}, architecte`,
     paragraphs: [
-      'Archica est un petit atelier dirigé depuis ses débuts par sa fondatrice. Derrière chaque projet se tient une personne précise, et non une équipe anonyme.',
-      'Les mêmes personnes mènent un projet de la première visite sur le terrain jusqu’au suivi de chantier. Rien n’a besoin d’être expliqué deux fois.',
+      'Nous sommes une petite équipe installée à Stargard. Nous concevons avec le maître d’ouvrage et privilégions des solutions pratiques et contemporaines.',
+      'Nous disposons d’un large réseau de contacts et d’une longue expérience de travail avec les administrations et les entreprises. Nous pouvons ainsi vous accompagner dans vos décisions à chaque étape, du choix du terrain à la fin du chantier.',
     ],
+    // PLACEHOLDER: describe the real photo after replacing about-studio.png.
     imageAlt: 'Maquette d’architecture d’une maison exposée',
-    table: {
-      foundedLabel: 'Fondation',
-      seatLabel: 'Siège',
-      clientsLabel: 'Clients',
-      clientsValue: 'Particuliers et collectivités locales',
-    },
   },
   portfolio: {
-    title: 'Projets sélectionnés',
-    lead: 'Des projets de toutes échelles, de la maison individuelle à l’espace public.',
+    title: 'Réalisations choisies',
+    // PLACEHOLDER: alt texts follow the pattern "Projet : {titre}" until the photos are replaced.
     projects: {
-      residence: {
-        category: 'maison individuelle',
-        imageAlt: 'Visualisation : Rezydencja Brzozowa',
+      beaches: {
+        title: 'Réaménagement de plages : Dziewoklicz, Dąbie, Głębokie',
+        category: 'Espace public',
+        imageAlt: 'Projet : Réaménagement de plages : Dziewoklicz, Dąbie, Głębokie',
       },
-      office: {
-        category: 'bâtiment commercial',
-        imageAlt: 'Visualisation : Biura Meridian',
+      house: {
+        title: 'Maison individuelle à Pełczyce',
+        category: 'Maison individuelle',
+        imageAlt: 'Projet : Maison individuelle à Pełczyce',
       },
-      interior: {
-        category: 'architecture d’intérieur',
-        imageAlt: 'Visualisation : Wnętrze Linden',
+      promenade: {
+        title: 'Promenade du lac de Miedwie',
+        category: 'Espace public',
+        imageAlt: 'Projet : Promenade du lac de Miedwie',
       },
-      pavilion: {
-        category: 'espace public',
-        imageAlt: 'Visualisation : Pawilon Grove',
+      plan: {
+        title: 'Plan d’urbanisme de Stargard',
+        category: 'Urbanisme',
+        imageAlt: 'Projet : Plan d’urbanisme de Stargard',
       },
     },
   },

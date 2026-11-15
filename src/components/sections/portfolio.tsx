@@ -56,7 +56,7 @@ export function Portfolio({ dictionary }: SectionProps) {
   return (
     <Section id={sectionIds.portfolio} labelledBy="portfolio-title">
       <Container>
-        <SectionHeader id="portfolio-title" title={portfolio.title} lead={portfolio.lead} />
+        <SectionHeader id="portfolio-title" title={portfolio.title} />
 
         <div className="grid-page gap-y-12 lg:items-start lg:gap-y-24">
           {projects.map((project) => {
@@ -89,7 +89,7 @@ export function Portfolio({ dictionary }: SectionProps) {
                   />
                 )}
                 <figcaption className="reveal mt-4 grid gap-1">
-                  <h3 className="type-h3">{project.title}</h3>
+                  <h3 className="type-h3">{text.title}</h3>
                   <p className="type-small text-fg-muted">
                     {captionDetails(project, text.category)}
                   </p>

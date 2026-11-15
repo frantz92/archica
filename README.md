@@ -55,27 +55,27 @@ wymagana, ale podajemy źródła), przycięte do proporcji slotów. **To nie są
 publikacją trzeba je podmienić. Poprzednie szare placeholdery da się odtworzyć skryptem
 `scripts/generate-placeholder-images.mjs`.
 
-| Plik                      | Źródło (Wikimedia Commons)                                                                                           |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `hero-building.png`       | [Cube berlin.jpg](https://commons.wikimedia.org/wiki/File:Cube_berlin.jpg)                                           |
-| `about-studio.png`        | [Model of Chochikukyo House 1.jpg](https://commons.wikimedia.org/wiki/File:Model_of_Chochikukyo_House_1.jpg)         |
-| `portfolio-residence.png` | [Midcentury Modern Danbury CT.jpg](https://commons.wikimedia.org/wiki/File:Midcentury_Modern_Danbury_CT.jpg)         |
-| `portfolio-office.png`    | [Regular glass facade (Unsplash).jpg](<https://commons.wikimedia.org/wiki/File:Regular_glass_facade_(Unsplash).jpg>) |
-| `portfolio-interior.png`  | [Living room (Unsplash).jpg](<https://commons.wikimedia.org/wiki/File:Living_room_(Unsplash).jpg>)                   |
-| `portfolio-pavilion.png`  | [Wooden pavilion, Battersea Park.jpg](https://commons.wikimedia.org/wiki/File:Wooden_pavilion,_Battersea_Park.jpg)   |
+| Plik                            | Źródło (Wikimedia Commons)                                                                                                                                             |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hero-building.png`             | [Cube berlin.jpg](https://commons.wikimedia.org/wiki/File:Cube_berlin.jpg)                                                                                             |
+| `about-studio.png`              | [Model of Chochikukyo House 1.jpg](https://commons.wikimedia.org/wiki/File:Model_of_Chochikukyo_House_1.jpg)                                                           |
+| `portfolio-1.png` (slot A, 4:3) | [Crystal Beach 5.jpg](https://commons.wikimedia.org/wiki/File:Crystal_Beach_5.jpg)                                                                                     |
+| `portfolio-2.png` (slot B, 4:5) | [Midcentury Modern Danbury CT.jpg](https://commons.wikimedia.org/wiki/File:Midcentury_Modern_Danbury_CT.jpg)                                                           |
+| `portfolio-3.png` (slot C, 4:5) | [Ypacaraí lake shore in San Bernardino 190316.jpg](https://commons.wikimedia.org/wiki/File:Ypacara%C3%AD_lake_shore_in_San_Bernardino_190316.jpg)                      |
+| `portfolio-4.png` (slot D, 4:3) | [Aerial view of Arinaga, 3x4 format](<https://commons.wikimedia.org/wiki/File:Aerial_view_of_Arinaga_(coastal_town_in_Gran_Canaria)_-_8_August_2020_-_3x4_format.jpg>) |
 
 Aby je podmienić, wgraj własne pliki do `public/images/`
 **pod tymi samymi nazwami** (kod nie wymaga zmian). Slot przycina zdjęcie (`object-fit: cover`),
 więc plik może mieć dowolne wymiary, ale zalecane źródła to:
 
-| Plik                      | Slot | Zalecane minimum |
-| ------------------------- | ---- | ---------------- |
-| `hero-building.png`       | 4:5  | 1600 × 2000 px   |
-| `about-studio.png`        | 4:5  | 1600 × 2000 px   |
-| `portfolio-office.png`    | 4:5  | 1600 × 2000 px   |
-| `portfolio-interior.png`  | 4:5  | 1600 × 2000 px   |
-| `portfolio-residence.png` | 4:3  | 2400 × 1800 px   |
-| `portfolio-pavilion.png`  | 4:3  | 2400 × 1800 px   |
+| Plik                       | Slot | Zalecane minimum |
+| -------------------------- | ---- | ---------------- |
+| `hero-building.png`        | 4:5  | 1600 × 2000 px   |
+| `about-studio.png`         | 4:5  | 1600 × 2000 px   |
+| `portfolio-1.png` (slot A) | 4:3  | 2400 × 1800 px   |
+| `portfolio-2.png` (slot B) | 4:5  | 1600 × 2000 px   |
+| `portfolio-3.png` (slot C) | 4:5  | 1600 × 2000 px   |
+| `portfolio-4.png` (slot D) | 4:3  | 2400 × 1800 px   |
 
 Po podmianie ustaw `placeholder: false` w `src/content/images.ts` (znika plakietka na podglądach),
 zaktualizuj teksty alternatywne w słownikach (`hero.imageAlt`, `about.imageAlt`,
