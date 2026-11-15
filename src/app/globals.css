@@ -711,6 +711,17 @@ body:has(dialog[open]) {
       animation-range: cover 0% cover 25%;
     }
 
+    /* Frame diagonals of scrolled-in frames grow from the frame corners as the frame enters. */
+    .frame-scroll {
+      view-timeline-name: --frame;
+    }
+
+    .frame-scroll .frame-line {
+      animation: hero-line linear both;
+      animation-timeline: --frame;
+      animation-range: entry 10% entry 80%;
+    }
+
     /* Photos open like the hero frame, at a smaller scale (§2.6 item 10). */
     .reveal-media {
       animation: media-reveal linear both;

@@ -1,5 +1,5 @@
 import { Container } from '@/components/ui/container';
-import { Media } from '@/components/ui/media';
+import { FramedMedia } from '@/components/ui/framed-media';
 import { Section } from '@/components/ui/section';
 import { SectionMark } from '@/components/ui/section-mark';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
@@ -32,13 +32,15 @@ export function About({ dictionary }: SectionProps) {
           </div>
 
           <div className="col-span-4 md:col-span-8 lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
-            <Media
+            <FramedMedia
               image="about"
               alt={about.imageAlt}
               sizes={ABOUT_SIZES}
-              aspectClassName="aspect-[4/5]"
-              className="reveal-media"
               placeholderLabel={common.placeholder}
+              frameClassName="aspect-[4/5] w-full"
+              insetX={10}
+              insetY={10}
+              motion="scroll"
             />
           </div>
 

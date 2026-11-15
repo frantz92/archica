@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/container';
+import { FramedMedia } from '@/components/ui/framed-media';
 import { Media } from '@/components/ui/media';
 import { Section } from '@/components/ui/section';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -13,6 +14,8 @@ interface SlotLayout {
   /** Aspect ratio per breakpoint: slot ratio on mobile, 4:5 on tablet, slot ratio on desktop. */
   readonly aspect: string;
   readonly sizes: string;
+  /** Photo sits in an amber-lined frame (used for one slot only, to keep the layout asymmetric). */
+  readonly framed?: boolean;
 }
 
 const WIDE_SIZES = '(min-width: 1024px) 56vw, (min-width: 768px) 50vw, 100vw';
@@ -29,6 +32,7 @@ const SLOTS: Record<ProjectSlot, SlotLayout> = {
     placement: 'lg:col-span-4 lg:col-start-9 lg:mt-24',
     aspect: 'aspect-[4/5]',
     sizes: NARROW_SIZES,
+    framed: true,
   },
   C: {
     placement: 'lg:col-span-4 lg:col-start-1',
@@ -63,14 +67,27 @@ export function Portfolio({ dictionary }: SectionProps) {
                 key={project.id}
                 className={`project-figure col-span-4 md:col-span-6 ${layout.placement}`}
               >
-                <Media
-                  image={project.image}
-                  alt={text.imageAlt}
-                  sizes={layout.sizes}
-                  aspectClassName={layout.aspect}
-                  className="reveal-media"
-                  placeholderLabel={common.placeholder}
-                />
+                {layout.framed ? (
+                  <FramedMedia
+                    image={project.image}
+                    alt={text.imageAlt}
+                    sizes={layout.sizes}
+                    placeholderLabel={common.placeholder}
+                    frameClassName={`${layout.aspect} w-full`}
+                    insetX={12}
+                    insetY={12}
+                    motion="scroll"
+                  />
+                ) : (
+                  <Media
+                    image={project.image}
+                    alt={text.imageAlt}
+                    sizes={layout.sizes}
+                    aspectClassName={layout.aspect}
+                    className="reveal-media"
+                    placeholderLabel={common.placeholder}
+                  />
+                )}
                 <figcaption className="reveal mt-4 grid gap-1">
                   <h3 className="type-h3">{project.title}</h3>
                   <p className="type-small text-fg-muted">

@@ -1,6 +1,6 @@
 import { ButtonLink } from '@/components/ui/button-link';
 import { Container } from '@/components/ui/container';
-import { Media } from '@/components/ui/media';
+import { FramedMedia } from '@/components/ui/framed-media';
 import { PlaceholderBadge } from '@/components/ui/placeholder-badge';
 import { TextLink } from '@/components/ui/text-link';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
@@ -15,17 +15,6 @@ interface HeroProps extends SectionProps {
 }
 
 const HERO_SIZES = '(min-width: 1024px) 33vw, (min-width: 768px) 46vw, 68vw';
-
-/**
- * Corner lines of the frame: each connects a frame corner to the matching corner of the image
- * (image inset: 16% horizontally, 8% vertically).
- */
-const FRAME_LINES: readonly (readonly [number, number, number, number])[] = [
-  [0, 0, 16, 8],
-  [100, 0, 84, 8],
-  [0, 100, 16, 92],
-  [100, 100, 84, 92],
-];
 
 export function Hero({ dictionary, locale, years }: HeroProps) {
   const { hero, common } = dictionary;
@@ -85,40 +74,19 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
           </div>
 
           <div className="col-span-4 md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-7">
-            {/* Frame: a square with a 4:5 image in the opening, echoing the emblem. */}
-            <div className="relative mx-auto aspect-square w-full max-w-[68svh] border border-line">
-              <svg
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-                focusable="false"
-                className="absolute inset-0 size-full stroke-line"
-              >
-                {FRAME_LINES.map(([x1, y1, x2, y2]) => (
-                  <line
-                    key={`${x1}-${y1}`}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    strokeWidth={1}
-                    vectorEffect="non-scaling-stroke"
-                    className="hero-line"
-                    style={{ transformOrigin: `${x1}px ${y1}px` }}
-                  />
-                ))}
-              </svg>
-              <div className="hero-reveal absolute inset-x-[16%] inset-y-[8%]">
-                <Media
-                  image="hero"
-                  alt={hero.imageAlt}
-                  sizes={HERO_SIZES}
-                  placeholderLabel={common.placeholder}
-                  preload
-                  quality={85}
-                />
-              </div>
-            </div>
+            {/* Frame: a square with a 4:5 photo in the opening, echoing the emblem. */}
+            <FramedMedia
+              image="hero"
+              alt={hero.imageAlt}
+              sizes={HERO_SIZES}
+              placeholderLabel={common.placeholder}
+              frameClassName="mx-auto aspect-square w-full max-w-[68svh]"
+              insetX={16}
+              insetY={8}
+              motion="load"
+              preload
+              quality={85}
+            />
           </div>
         </div>
 
