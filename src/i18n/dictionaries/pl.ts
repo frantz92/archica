@@ -55,30 +55,39 @@ export const pl = {
     },
   },
   services: {
-    title: 'Usługi',
+    title: 'W czym pomagamy',
+    lead: 'Od wyboru działki do zakończenia budowy jesteśmy przy inwestycji na każdym etapie: projekt, formalności i wsparcie w trakcie realizacji.',
     items: [
       {
-        id: 'design',
-        title: 'Projektowanie architektoniczne',
+        id: 'houses',
+        title: 'Domy jednorodzinne',
         description:
-          'Od koncepcji do dokumentacji wykonawczej dla domów prywatnych, biur i budynków publicznych.',
+          'Pomagamy wybrać działkę, a potem projektujemy dom razem z inwestorem. Proponujemy rozwiązania praktyczne i współczesne, a gotowy projekt możemy dopasować do indywidualnych potrzeb. Każdy projekt pokazujemy na wizualizacji.',
+        audience: 'Inwestorzy prywatni',
       },
       {
-        id: 'interiors',
-        title: 'Architektura wnętrz',
-        description: 'Planowanie przestrzeni dopasowane do sposobu życia.',
+        id: 'public',
+        title: 'Obiekty publiczne i komunalne',
+        description:
+          'Promenady nad jeziorami, plaże, place zabaw, skate parki, cmentarze i budynki publiczne. Projektujemy całe założenia: od układu ścieżek po altany, mostki i małą architekturę.',
+        audience: 'Samorządy',
       },
       {
         id: 'urban',
-        title: 'Planowanie urbanistyczne',
-        description: 'Koncepcje zagospodarowania terenu respektujące kontekst i społeczność.',
+        title: 'Urbanistyka',
+        description:
+          'Miejscowe plany zagospodarowania, studia uwarunkowań i kierunków zagospodarowania oraz decyzje o warunkach zabudowy. Porządkujemy przestrzeń, zanim powstanie pierwszy budynek.',
+        audience: 'Samorządy',
       },
       {
-        id: 'supervision',
-        title: 'Nadzór inwestorski',
-        description: 'Nadzór na budowie, aby realizacja odpowiadała projektowi.',
+        id: 'permits',
+        title: 'Formalności',
+        description:
+          'Pozwolenia, dokumentację i uzgodnienia z urzędami załatwiamy we własnym zakresie, a w trakcie budowy zapewniamy nadzór. Mamy szerokie kontakty w branży, więc na każdym etapie podpowiemy, z kim warto współpracować.',
+        audience: 'Inwestorzy prywatni i samorządy',
       },
     ],
+    audienceLabel: 'Dla kogo:',
   },
   about: {
     title: 'Wiesz, z kim pracujesz',

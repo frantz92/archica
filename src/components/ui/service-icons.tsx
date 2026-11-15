@@ -6,14 +6,14 @@ import { cn } from '@/lib/cn';
  * `services.items[].id` in the dictionaries.
  */
 const ICON_PATHS: Readonly<Record<string, string>> = {
-  /** Floor plan with a door swing. */
-  design: 'M4 4H36V36H4Z M4 16H14 M22 4V20H36 M14 36V28 M14 28A8 8 0 0 1 22 36',
-  /** Room in perspective, like the emblem. */
-  interiors: 'M4 4H36V36H4Z M14 12H26V28H14Z M4 4L14 12 M36 4L26 12 M4 36L14 28 M36 36L26 28',
+  /** House with a door: single-family houses. */
+  houses: 'M4 20L20 6L36 20 M8 17V34H32V17 M17 34V24H23V34',
+  /** Civic building with a pediment and columns: public and municipal projects. */
+  public: 'M4 14L20 6L36 14Z M9 18V30 M16 18V30 M24 18V30 M31 18V30 M6 30H34 M4 34H36',
   /** Urban blocks. */
   urban: 'M4 4H16V14H4Z M22 4H36V14H22Z M4 20H16V36H4Z M22 20H36V28H22Z M22 34H36',
-  /** Building frame with scaffolding. */
-  supervision: 'M6 36H34 M10 36V6H30V36 M10 14H30 M10 22H30 M10 30H30',
+  /** Document with a folded corner and a tick: permits and approvals. */
+  permits: 'M10 4H26L32 10V36H10Z M26 4V10H32 M15 17H27 M15 22H27 M15 30L19 34L26 27',
 };
 
 interface ServiceIconProps {

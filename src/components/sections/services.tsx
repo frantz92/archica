@@ -12,7 +12,7 @@ export function Services({ dictionary }: SectionProps) {
   return (
     <Section id={sectionIds.services} labelledBy="services-title" tone="surface">
       <Container>
-        <SectionHeader id="services-title" title={services.title} />
+        <SectionHeader id="services-title" title={services.title} lead={services.lead} />
 
         {/* 2 × 2 matrix: lines are the 1 px gap over the line-coloured background. */}
         <ul className="rule-draw rule-y grid gap-px bg-line md:grid-cols-2">
@@ -24,6 +24,9 @@ export function Services({ dictionary }: SectionProps) {
               <ServiceIcon id={item.id} className="mb-2" />
               <h3 className="type-h3">{item.title}</h3>
               <p className="type-body max-w-[42ch]">{item.description}</p>
+              <p className="mt-auto pt-6 type-small text-fg-muted">
+                {services.audienceLabel} {item.audience}
+              </p>
             </li>
           ))}
         </ul>

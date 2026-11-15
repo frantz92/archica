@@ -58,31 +58,39 @@ export const fr = {
     },
   },
   services: {
-    title: 'Services',
+    title: 'Comment nous pouvons vous aider',
+    lead: 'Du choix du terrain à la fin du chantier, nous accompagnons votre projet à chaque étape : conception, démarches et suivi pendant les travaux.',
     items: [
       {
-        id: 'design',
-        title: 'Conception architecturale',
+        id: 'houses',
+        title: 'Maisons individuelles',
         description:
-          'De la conception à la documentation d’exécution pour des maisons privées, des bureaux et des bâtiments publics.',
+          'Nous vous aidons à choisir le terrain, puis nous concevons la maison avec vous. Nous proposons des solutions pratiques et contemporaines, et nous pouvons adapter un projet existant à vos besoins. Chaque projet est accompagné d’une visualisation.',
+        audience: 'Maîtres d’ouvrage privés',
       },
       {
-        id: 'interiors',
-        title: 'Architecture d’intérieur',
-        description: 'Aménagement des espaces adapté à votre mode de vie.',
+        id: 'public',
+        title: 'Ouvrages publics et communaux',
+        description:
+          'Promenades au bord des lacs, plages, aires de jeux, skateparks, cimetières et bâtiments publics. Nous concevons l’ensemble de l’aménagement, du tracé des allées aux kiosques, passerelles et mobilier urbain.',
+        audience: 'Collectivités locales',
       },
       {
         id: 'urban',
-        title: 'Planification urbaine',
+        title: 'Urbanisme',
         description:
-          'Concepts d’aménagement du territoire respectueux du contexte et de la communauté.',
+          'Plans locaux d’aménagement, études des conditions et orientations d’aménagement et décisions sur les conditions de construction. Nous mettons de l’ordre dans l’espace avant que le premier bâtiment ne sorte de terre.',
+        audience: 'Collectivités locales',
       },
       {
-        id: 'supervision',
-        title: 'Suivi de chantier',
-        description: 'Suivi sur le chantier afin que la réalisation soit conforme au projet.',
+        id: 'permits',
+        title: 'Démarches administratives',
+        description:
+          'Nous prenons en charge les permis, la documentation et les accords avec les administrations, et nous assurons le suivi du chantier. Grâce à notre large réseau de contacts, nous pouvons vous indiquer, à chaque étape, avec qui il vaut la peine de travailler.',
+        audience: 'Maîtres d’ouvrage privés et collectivités locales',
       },
     ],
+    audienceLabel: 'Pour qui :',
   },
   about: {
     title: 'Vous savez avec qui vous travaillez',

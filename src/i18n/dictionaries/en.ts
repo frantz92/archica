@@ -49,30 +49,39 @@ export const en = {
     },
   },
   services: {
-    title: 'Services',
+    title: 'How we can help',
+    lead: 'From choosing the plot to the end of construction, we stay with your project at every stage: design, paperwork and support during the build.',
     items: [
       {
-        id: 'design',
-        title: 'Architectural design',
+        id: 'houses',
+        title: 'Single-family houses',
         description:
-          'From concept to construction documentation for private houses, offices and public buildings.',
+          'We help you choose a plot, then design the house together with you. We propose practical, contemporary solutions, and we can adapt an existing design to your needs. Every project comes with a visualisation.',
+        audience: 'Private clients',
       },
       {
-        id: 'interiors',
-        title: 'Interior architecture',
-        description: 'Space planning tailored to the way you live.',
+        id: 'public',
+        title: 'Public and municipal projects',
+        description:
+          'Lakeside promenades, beaches, playgrounds, skate parks, cemeteries and public buildings. We design the whole scheme, from the layout of the paths to shelters, footbridges and street furniture.',
+        audience: 'Local authorities',
       },
       {
         id: 'urban',
         title: 'Urban planning',
-        description: 'Land development concepts that respect their context and community.',
+        description:
+          'Local spatial development plans, planning studies and development conditions decisions. We put the space in order before the first building goes up.',
+        audience: 'Local authorities',
       },
       {
-        id: 'supervision',
-        title: 'Construction supervision',
-        description: 'Supervision on site so that the finished building matches the design.',
+        id: 'permits',
+        title: 'Permits and approvals',
+        description:
+          'We handle permits, documentation and approvals from the authorities ourselves, and we supervise the work during construction. We have a wide network of contacts, so at every stage we can tell you who is worth working with.',
+        audience: 'Private clients and local authorities',
       },
     ],
+    audienceLabel: 'For whom:',
   },
   about: {
     title: 'Know who you are working with',
