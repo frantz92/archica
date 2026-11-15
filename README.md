@@ -17,6 +17,7 @@ npm run lint         # ESLint CLI (z regułami projektu: eqeqeq, no-console, imp
 npm run format:check # Prettier w trybie sprawdzania (CI)
 npm test             # testy jednostkowe (Vitest)
 npm run test:coverage # testy z raportem pokrycia i progiem 80%
+npm run test:e2e      # testy E2E (Playwright) na zbudowanej stronie; najpierw `npm run build`
 npm run check        # typecheck + lint + format:check + testy z pokryciem (to samo co bramka jakości w CI)
 npm run build        # build produkcyjny
 npm run start        # serwer na podstawie buildu
@@ -50,6 +51,19 @@ Czysta logika działa w środowisku Node, a testy komponentów włączają jsdom
 linie) i jest sprawdzane przez `npm run test:coverage`. Poza pokryciem zostają tylko `opengraph-image.tsx`
 i `apple-icon.tsx` (generowane obrazy). Testy pilnują też treści: te same klucze w PL/EN/FR, twarde spacje
 po jednoliterowych spójnikach (PL) i przed `: ; ! ?` (FR), brak zahardkodowanych danych kontaktowych.
+
+### Testy E2E i dostępność
+
+`e2e/*.spec.ts` (Playwright) uruchamiają zbudowaną stronę (`npm run build`, potem `npm run test:e2e`; serwer
+startuje sam na porcie 3100, zmiana przez `E2E_PORT`). Sprawdzają: trzy wersje językowe (język, tytuł, H1,
+sekcje, canonical, hreflang, JSON-LD, brak błędów w konsoli i naruszeń CSP), licznik w hero, strony 404,
+sitemap/robots/manifest/ikony, lądowanie kotwic pod nagłówkiem, zmianę języka zawsze od góry, motyw i menu
+mobilne, brak przewijania poziomego od 320 do 1440 px, mieszczenie się H1 i przycisku w 360 × 640 (BLUEPRINT §6.2),
+nagłówki bezpieczeństwa z BLUEPRINT §10 oraz audyt axe (WCAG 2.2 AA) obu motywów.
+
+W CI testy idą na Chromium, WebKit (Safari) i mobilnym Safari. Lokalnie Playwright nie pobiera własnych
+przeglądarek na starszych systemach (np. macOS 12), więc bez zmiennej `CI` suite używa zainstalowanego
+Google Chrome; `E2E_ALL=1` wymusza pełną macierz (wymaga przeglądarek Playwrighta).
 
 ## Edycja treści
 
