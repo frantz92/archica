@@ -51,9 +51,3 @@ export const projects: readonly Project[] = [
     placeholder: true,
   },
 ];
-
-// PLACEHOLDER: hero statistics (86 projects, 9 awards) are not confirmed facts.
-export const stats = {
-  projects: { value: 86, placeholder: true },
-  awards: { value: 9, placeholder: true },
-} as const;

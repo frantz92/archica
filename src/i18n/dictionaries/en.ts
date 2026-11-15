@@ -34,19 +34,18 @@ export const en = {
     privacy: 'Privacy policy',
   },
   hero: {
-    eyebrow: 'Architecture and Urban Planning Studio',
-    title: 'Design, interiors, supervision. One studio.',
-    lead: 'From the first sketch to the final handover, we lead every stage of the project.',
-    primaryCta: 'Discuss your project',
-    secondaryCta: 'See our projects',
+    eyebrow: 'Architecture and Urban Planning Studio · Stargard',
+    title: 'From first idea to a place you want to be.',
+    lead: `Since ${site.foundedYear} we have designed houses, public spaces and urban plans. We help you choose a plot, handle the paperwork and look for practical, contemporary solutions together.`,
+    primaryCta: 'Get in touch',
+    secondaryCta: 'See our work',
     imageAlt: 'Glass facade of a modern building against the sky',
     stats: {
       yearsLabel: (years: number): string =>
         pluralForm('en', years, { one: 'year in practice', other: 'years in practice' }),
       projectsLabel: 'projects',
-      awardsLabel: 'awards',
-      locationValue: site.address.city,
-      locationLabel: 'studio location',
+      tendersLabel: 'municipal tenders won',
+      municipalitiesLabel: 'municipalities and towns',
     },
   },
   services: {

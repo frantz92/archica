@@ -33,6 +33,8 @@ export const site = {
     opens: '08:00',
     closes: '16:00',
   },
+  /** Hero figures confirmed by the owner (Aneks 1, 2026-11-15). Years of practice are computed. */
+  stats: { projects: 86, tendersWon: 26, municipalities: 15 },
   domain,
   /** Host name without the scheme, for running text. */
   hostname: domain.replace('https://', ''),

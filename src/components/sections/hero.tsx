@@ -2,10 +2,9 @@ import { ButtonLink } from '@/components/ui/button-link';
 import { Container } from '@/components/ui/container';
 import { CountUp } from '@/components/ui/count-up';
 import { FramedMedia } from '@/components/ui/framed-media';
-import { PlaceholderBadge } from '@/components/ui/placeholder-badge';
 import { TextLink } from '@/components/ui/text-link';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
-import { stats } from '@/content/projects';
+import { site } from '@/content/site';
 import { sectionIds } from '@/i18n/config';
 
 import type { SectionProps } from './section-props';
@@ -19,8 +18,6 @@ const HERO_SIZES = '(min-width: 1024px) 33vw, (min-width: 768px) 46vw, 68vw';
 
 export function Hero({ dictionary, locale, years }: HeroProps) {
   const { hero, common } = dictionary;
-  const badge = <PlaceholderBadge label={common.placeholder} className="ml-2 align-middle" />;
-
   const statItems: TitleBlockItem[] = [
     {
       id: 'years',
@@ -29,30 +26,18 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
     },
     {
       id: 'projects',
-      label: (
-        <>
-          {hero.stats.projectsLabel}
-          {stats.projects.placeholder ? badge : null}
-        </>
-      ),
-      value: <CountUp value={stats.projects.value} delayMs={800} />,
+      label: hero.stats.projectsLabel,
+      value: <CountUp value={site.stats.projects} delayMs={800} />,
     },
     {
-      id: 'awards',
-      label: (
-        <>
-          {hero.stats.awardsLabel}
-          {stats.awards.placeholder ? badge : null}
-        </>
-      ),
-      value: <CountUp value={stats.awards.value} delayMs={900} />,
+      id: 'tenders',
+      label: hero.stats.tendersLabel,
+      value: <CountUp value={site.stats.tendersWon} delayMs={900} />,
     },
     {
-      id: 'location',
-      label: hero.stats.locationLabel,
-      value: hero.stats.locationValue,
-      // A word, not a number: the stat size does not fit "Stargard" in a narrow cell.
-      valueStyle: 'value',
+      id: 'municipalities',
+      label: hero.stats.municipalitiesLabel,
+      value: <CountUp value={site.stats.municipalities} delayMs={1000} />,
     },
   ];
 
@@ -66,7 +51,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
         <div className="grid-page flex-1 items-end gap-y-10 py-10 md:py-12">
           <div className="col-span-4 md:col-span-12 lg:col-span-6">
             <p className="type-label text-accent-text">{hero.eyebrow}</p>
-            <h1 id="hero-title" className="mt-6 max-w-[14ch] type-display">
+            <h1 id="hero-title" className="mt-6 max-w-[18ch] type-display">
               {hero.title}
             </h1>
             <p className="mt-6 type-lead">{hero.lead}</p>

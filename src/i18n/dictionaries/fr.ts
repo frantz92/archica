@@ -43,19 +43,18 @@ export const fr = {
     privacy: 'Politique de confidentialité',
   },
   hero: {
-    eyebrow: 'Atelier d’architecture et d’urbanisme',
-    title: 'Conception, intérieurs, suivi de chantier. Un seul atelier.',
-    lead: 'Du premier croquis à la réception de l’ouvrage, nous conduisons chaque étape du projet.',
-    primaryCta: 'Présentez-nous votre projet',
-    secondaryCta: 'Voir les projets',
+    eyebrow: 'Atelier d’architecture et d’urbanisme · Stargard',
+    title: 'De la première idée à un lieu où l’on a envie d’être.',
+    lead: `Depuis ${site.foundedYear}, nous concevons des maisons, des espaces publics et des plans d’urbanisme. Nous vous aidons à choisir le terrain, nous gérons les démarches et nous cherchons ensemble des solutions pratiques et contemporaines.`,
+    primaryCta: 'Nous contacter',
+    secondaryCta: 'Voir les réalisations',
     imageAlt: 'Façade vitrée d’un bâtiment moderne sur fond de ciel',
     stats: {
       yearsLabel: (years: number): string =>
         pluralForm('fr', years, { one: 'an de pratique', other: 'ans de pratique' }),
       projectsLabel: 'projets',
-      awardsLabel: 'prix',
-      locationValue: site.address.city,
-      locationLabel: 'siège de l’atelier',
+      tendersLabel: 'appels d’offres municipaux remportés',
+      municipalitiesLabel: 'communes et villes',
     },
   },
   services: {

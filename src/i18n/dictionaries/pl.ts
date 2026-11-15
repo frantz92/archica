@@ -35,11 +35,11 @@ export const pl = {
     privacy: 'Polityka prywatności',
   },
   hero: {
-    eyebrow: 'Studio Architektury i Urbanistyki',
-    title: 'Projekt, wnętrza, nadzór. Jedna pracownia.',
-    lead: 'Od pierwszego szkicu do odbioru inwestycji prowadzimy każdy etap projektu.',
-    primaryCta: 'Omów swój projekt',
-    secondaryCta: 'Zobacz projekty',
+    eyebrow: 'Studio Architektury i Urbanistyki · Stargard',
+    title: 'Od pierwszej myśli do miejsca, w którym chce się być.',
+    lead: `Od ${site.foundedYear} roku projektujemy domy jednorodzinne, przestrzenie publiczne i plany urbanistyczne. Pomagamy wybrać działkę, prowadzimy formalności i wspólnie szukamy rozwiązań praktycznych i współczesnych.`,
+    primaryCta: 'Skontaktuj się',
+    secondaryCta: 'Zobacz realizacje',
     imageAlt: 'Szklana fasada nowoczesnego budynku na tle nieba',
     stats: {
       yearsLabel: (years: number): string =>
@@ -50,9 +50,8 @@ export const pl = {
           other: 'lat praktyki',
         }),
       projectsLabel: 'projektów',
-      awardsLabel: 'nagród',
-      locationValue: site.address.city,
-      locationLabel: 'siedziba pracowni',
+      tendersLabel: 'wygranych przetargów miejskich',
+      municipalitiesLabel: 'gmin i miast',
     },
   },
   services: {
