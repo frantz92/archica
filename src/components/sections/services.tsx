@@ -9,7 +9,7 @@ export function Services({ dictionary }: SectionProps) {
   const { services } = dictionary;
 
   return (
-    <Section id={sectionIds.services} labelledBy="services-title">
+    <Section id={sectionIds.services} labelledBy="services-title" tone="surface">
       <Container>
         <SectionHeader id="services-title" title={services.title} />
 

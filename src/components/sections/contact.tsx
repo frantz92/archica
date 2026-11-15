@@ -69,7 +69,7 @@ export function Contact({ dictionary }: SectionProps) {
   ];
 
   return (
-    <Section id={sectionIds.contact} labelledBy="contact-title" className="border-t border-line">
+    <Section id={sectionIds.contact} labelledBy="contact-title" tone="surface" tightEnd>
       <Container>
         <SectionHeader id="contact-title" title={contact.title} lead={contact.lead} />
         <TitleBlock items={items} reveal className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4" />

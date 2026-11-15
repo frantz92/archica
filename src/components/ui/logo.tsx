@@ -15,7 +15,10 @@ const viewBoxes: Record<LogoVariant, string> = {
   stacked: '0 0 230.3 166.789',
 };
 
-/** Inline SVG logo painted with currentColor, so one component serves both themes. */
+/**
+ * Inline SVG logo. The emblem is amber (`--accent-line`, darkened on light backgrounds); the wordmark
+ * uses currentColor, so one component serves both themes.
+ */
 export function Logo({ variant, title, className }: LogoProps) {
   return (
     <svg
@@ -28,10 +31,10 @@ export function Logo({ variant, title, className }: LogoProps) {
       fillRule="nonzero"
     >
       <title>{title}</title>
-      {variant === 'mark' && <path d={MARK_PATH} />}
+      {variant === 'mark' && <path d={MARK_PATH} className="fill-accent-line" />}
       {variant === 'horizontal' && (
         <>
-          <path d={MARK_PATH} />
+          <path d={MARK_PATH} className="fill-accent-line" />
           <g transform="translate(128 -92.5)">
             <path d={WORDMARK_PATH} />
           </g>
@@ -39,7 +42,7 @@ export function Logo({ variant, title, className }: LogoProps) {
       )}
       {variant === 'stacked' && (
         <>
-          <path d={STACKED_MARK_PATH} />
+          <path d={STACKED_MARK_PATH} className="fill-accent-line" />
           <path d={WORDMARK_PATH} />
         </>
       )}

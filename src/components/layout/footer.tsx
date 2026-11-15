@@ -82,7 +82,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
 
   return (
     <footer className="bg-bg text-fg">
-      <Container className="pt-20 pb-10">
+      <Container className="pt-12 pb-10">
         <TitleBlock
           items={items}
           valueStyle="small"

@@ -1,5 +1,7 @@
 import { cn } from '@/lib/cn';
 
+import { SectionMark } from './section-mark';
+
 interface SectionHeaderProps {
   /** id of the h2; the parent `<section>` points to it with `aria-labelledby`. */
   id: string;
@@ -12,6 +14,9 @@ interface SectionHeaderProps {
 export function SectionHeader({ id, title, lead }: SectionHeaderProps) {
   return (
     <div className="reveal mb-12 grid-page gap-y-6 lg:mb-20">
+      <div className="col-span-4 md:col-span-12">
+        <SectionMark />
+      </div>
       <h2
         id={id}
         className={cn(

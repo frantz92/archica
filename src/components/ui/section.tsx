@@ -6,19 +6,33 @@ interface SectionProps {
   id: string;
   /** id of the heading element that labels this section. */
   labelledBy: string;
-  /** Applies the contrast band token set (BLUEPRINT §2.3). */
-  band?: boolean;
+  /** Background tone: base, a slightly lifted `surface`, or the contrast `band` (BLUEPRINT §2.3). */
+  tone?: 'default' | 'surface' | 'band';
+  /** Shorter bottom padding, for the section directly above the footer. */
+  tightEnd?: boolean;
   className?: string;
   children: ReactNode;
 }
 
 /** Full-width semantic section with the standard vertical rhythm. */
-export function Section({ id, labelledBy, band = false, className, children }: SectionProps) {
+export function Section({
+  id,
+  labelledBy,
+  tone = 'default',
+  tightEnd = false,
+  className,
+  children,
+}: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={cn('bg-bg section-y text-fg', band && 'band', className)}
+      className={cn(
+        'bg-bg text-fg',
+        tightEnd ? 'section-y-tight-end' : 'section-y',
+        tone !== 'default' && tone,
+        className,
+      )}
     >
       {children}
     </section>

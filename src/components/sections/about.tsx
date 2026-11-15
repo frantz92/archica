@@ -1,6 +1,7 @@
 import { Container } from '@/components/ui/container';
 import { Media } from '@/components/ui/media';
 import { Section } from '@/components/ui/section';
+import { SectionMark } from '@/components/ui/section-mark';
 import { TitleBlock, type TitleBlockItem } from '@/components/ui/title-block';
 import { site } from '@/content/site';
 import { sectionIds } from '@/i18n/config';
@@ -19,16 +20,16 @@ export function About({ dictionary }: SectionProps) {
   ];
 
   return (
-    <Section id={sectionIds.about} labelledBy="about-title" band>
+    <Section id={sectionIds.about} labelledBy="about-title" tone="band">
       <Container>
         {/* Mobile: heading, photo, text. Desktop: photo left (cols 1–5), text right (cols 7–12). */}
         <div className="grid-page gap-y-10 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-          <h2
-            id="about-title"
-            className="reveal col-span-4 type-h2 md:col-span-12 lg:col-span-6 lg:col-start-7 lg:row-start-1"
-          >
-            {about.title}
-          </h2>
+          <div className="reveal col-span-4 grid gap-6 md:col-span-12 lg:col-span-6 lg:col-start-7 lg:row-start-1">
+            <SectionMark />
+            <h2 id="about-title" className="type-h2">
+              {about.title}
+            </h2>
+          </div>
 
           <div className="col-span-4 md:col-span-8 lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
             <Media
