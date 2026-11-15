@@ -84,15 +84,14 @@ więc nowy plik dostaje nowy skrót w adresie (bez problemów z pamięcią podr�
 
 ## Placeholdery
 
-Każdy placeholder ma w danych `placeholder: true` i komentarz `// PLACEHOLDER:`. Na lokalnym środowisku
-i na wdrożeniach podglądowych (`VERCEL_ENV !== 'production'`) przy elemencie widać plakietkę „placeholder";
-na produkcji plakietek nie ma (poza numerem uprawnień, który jest zawsze jawnie fikcyjny).
+Każdy placeholder ma komentarz `// PLACEHOLDER:`. Na lokalnym środowisku i na wdrożeniach podglądowych
+(`VERCEL_ENV !== 'production'`) przy zdjęciach widać plakietkę „placeholder"; na produkcji plakietek nie ma
+(poza numerem uprawnień, który jest zawsze jawnie fikcyjny). Statystyki w hero (30 / 86 / 26 / 15) i cztery
+realizacje w portfolio to potwierdzone dane, nie placeholdery.
 
 | Co                                                  | Gdzie                                                    |
 | --------------------------------------------------- | -------------------------------------------------------- |
-| Statystyki „86 projektów" i „9 nagród"              | `src/content/projects.ts` (`stats`)                      |
-| Cztery projekty portfolio                           | `src/content/projects.ts` (`projects`)                   |
-| Sześć zdjęć                                         | `src/content/images.ts`, `public/images/`                |
+| Sześć zdjęć wraz z tekstami alternatywnymi          | `public/images/`, `src/content/images.ts`, słowniki      |
 | Numer uprawnień `MOCK/000/0000`                     | `src/content/site.ts` (`license`)                        |
 | Okresy przechowywania danych w polityce prywatności | `src/content/privacy/{pl,en,fr}.ts` (sekcja `retention`) |
 

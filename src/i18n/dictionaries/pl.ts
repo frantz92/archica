@@ -7,8 +7,8 @@ import { pluralForm } from '@/lib/plural';
  */
 export const pl = {
   meta: {
-    title: 'Archica — pracownia architektoniczna w Stargardzie',
-    description: `Pracownia architektury i urbanistyki w Stargardzie, od ${site.foundedYear} roku. Projektowanie architektoniczne, architektura wnętrz, planowanie urbanistyczne i nadzór inwestorski.`,
+    title: 'Architekt Stargard — projekty domów i urbanistyka | Archica',
+    description: `Biuro architektoniczne w Stargardzie, od ${site.foundedYear} roku. Projekty domów jednorodzinnych, przestrzeni publicznych i plany urbanistyczne. Od działki do końca budowy.`,
     ogImageAlt: 'Logo Archica — Studio Architektury i Urbanistyki',
     privacyTitle: 'Polityka prywatności',
     privacyDescription: `Informacje o przetwarzaniu danych osobowych na stronie ${site.hostname} oraz o prawach osób, których dane dotyczą.`,
@@ -128,27 +128,27 @@ export const pl = {
     },
   },
   contact: {
-    title: 'Masz działkę albo pomysł? Porozmawiajmy.',
-    lead: 'Zadzwoń lub napisz. Powiemy, od czego zacząć.',
+    title: 'Porozmawiajmy o projekcie',
+    lead: `Zadzwoń albo napisz: opowiedz, co chcesz zbudować lub zagospodarować, a podpowiemy, od czego zacząć. Jesteśmy dostępni od poniedziałku do piątku, ${site.hours.opens}–${site.hours.closes}.`,
     labels: {
       phone: 'Telefon',
       email: 'E-mail',
       address: 'Adres',
-      hours: 'Godziny pracy',
+      hours: 'Godziny',
     },
-    copyEmail: 'Skopiuj e-mail',
+    copyEmail: 'Kopiuj adres',
     copiedEmail: 'Skopiowano',
-    showOnMap: 'Zobacz w Mapach Google',
+    showOnMap: 'Pokaż na mapie',
     hoursDays: 'pon.–pt.',
     hoursTime: `${site.hours.opens}–${site.hours.closes}`,
   },
   footer: {
-    companyTitle: 'Dane firmy',
+    companyTitle: 'Firma',
     navTitle: 'Nawigacja',
     taxIdLabel: 'NIP',
-    licenseLabel: 'Numer uprawnień',
+    licenseLabel: 'Nr uprawnień',
     licenseTodo: 'do uzupełnienia',
-    backToTop: 'Wróć na górę',
+    backToTop: 'Do góry',
     copyright: (year: number): string => `© ${year} ${site.brand}`,
   },
   privacy: {
@@ -156,8 +156,8 @@ export const pl = {
     backToHome: 'Wróć na stronę główną',
   },
   notFound: {
-    title: 'Tej strony nie ma w projekcie',
-    description: 'Adres mógł się zmienić albo wkradła się literówka.',
+    title: 'Nie znaleziono strony',
+    description: 'Strona, której szukasz, nie istnieje albo została przeniesiona.',
     homeLink: 'Wróć na stronę główną',
   },
   common: {

@@ -6,8 +6,8 @@ import type { Dictionary } from './types';
 /** British English. Quotation marks “…”, apostrophe ’ (BLUEPRINT §4.3). */
 export const en = {
   meta: {
-    title: 'Archica — architecture studio in Stargard, Poland',
-    description: `Architecture and urban planning studio in Stargard, Poland, since ${site.foundedYear}. Architectural design, interior architecture, urban planning and construction supervision.`,
+    title: 'Architect in Stargard — houses and urban planning | Archica',
+    description: `Architecture studio in Stargard, Poland, since ${site.foundedYear}. House design, public spaces and urban planning, from choosing the plot to the finished build.`,
     ogImageAlt: 'Archica logo — Architecture and Urban Planning Studio',
     privacyTitle: 'Privacy policy',
     privacyDescription: `Information on how personal data is processed on ${site.hostname} and on the rights of data subjects.`,
@@ -122,25 +122,25 @@ export const en = {
     },
   },
   contact: {
-    title: 'Got a plot or an idea? Let’s talk.',
-    lead: 'Call or write to us. We will tell you where to start.',
+    title: 'Let’s talk about your project',
+    lead: `Call or write: tell us what you want to build or develop, and we will suggest where to start. We are available Monday to Friday, ${site.hours.opens}–${site.hours.closes}.`,
     labels: {
       phone: 'Phone',
       email: 'Email',
       address: 'Address',
-      hours: 'Opening hours',
+      hours: 'Hours',
     },
-    copyEmail: 'Copy email',
+    copyEmail: 'Copy address',
     copiedEmail: 'Copied',
-    showOnMap: 'View in Google Maps',
+    showOnMap: 'Show on map',
     hoursDays: 'Mon–Fri',
     hoursTime: `${site.hours.opens}–${site.hours.closes}`,
   },
   footer: {
-    companyTitle: 'Company details',
+    companyTitle: 'Company',
     navTitle: 'Navigation',
     taxIdLabel: 'NIP',
-    licenseLabel: 'Licence number',
+    licenseLabel: 'Licence no.',
     licenseTodo: 'to be completed',
     backToTop: 'Back to top',
     copyright: (year: number): string => `© ${year} ${site.brand}`,
@@ -150,8 +150,8 @@ export const en = {
     backToHome: 'Back to the home page',
   },
   notFound: {
-    title: 'This page isn’t in the plans',
-    description: 'The address may have changed, or there may be a typo.',
+    title: 'Page not found',
+    description: 'The page you are looking for does not exist or has been moved.',
     homeLink: 'Back to the home page',
   },
   common: {

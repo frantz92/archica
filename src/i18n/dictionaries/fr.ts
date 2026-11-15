@@ -15,8 +15,8 @@ const hours = {
  */
 export const fr = {
   meta: {
-    title: 'Archica — atelier d’architecture à Stargard, Pologne',
-    description: `Atelier d’architecture et d’urbanisme à Stargard, en Pologne, depuis ${site.foundedYear}. Conception architecturale, architecture d’intérieur, urbanisme et suivi de chantier.`,
+    title: 'Architecte à Stargard — maisons et urbanisme | Archica',
+    description: `Atelier d’architecture à Stargard (Pologne) depuis ${site.foundedYear}. Maisons individuelles, espaces publics et urbanisme, du choix du terrain à la fin du chantier.`,
     ogImageAlt: 'Logo Archica — Atelier d’architecture et d’urbanisme',
     privacyTitle: 'Politique de confidentialité',
     privacyDescription: `Informations sur le traitement des données personnelles sur ${site.hostname} et sur les droits des personnes concernées.`,
@@ -131,25 +131,25 @@ export const fr = {
     },
   },
   contact: {
-    title: 'Un terrain ou une idée ? Parlons-en.',
-    lead: 'Appelez-nous ou écrivez-nous. Nous vous dirons par où commencer.',
+    title: 'Parlons de votre projet',
+    lead: `Appelez-nous ou écrivez-nous : dites-nous ce que vous souhaitez construire ou aménager, nous vous indiquerons par où commencer. Nous sommes joignables du lundi au vendredi, de ${hours.opens} à ${hours.closes}.`,
     labels: {
       phone: 'Téléphone',
       email: 'E-mail',
       address: 'Adresse',
       hours: 'Horaires',
     },
-    copyEmail: 'Copier l’e-mail',
+    copyEmail: 'Copier l’adresse',
     copiedEmail: 'Copié',
-    showOnMap: 'Voir dans Google Maps',
+    showOnMap: 'Voir sur la carte',
     hoursDays: 'lun.–ven.',
     hoursTime: `${hours.opens}–${hours.closes}`,
   },
   footer: {
-    companyTitle: 'Données de l’entreprise',
+    companyTitle: 'Société',
     navTitle: 'Navigation',
     taxIdLabel: 'NIP',
-    licenseLabel: 'Numéro d’habilitation',
+    licenseLabel: 'N° d’agrément',
     licenseTodo: 'à compléter',
     backToTop: 'Haut de page',
     copyright: (year: number): string => `© ${year} ${site.brand}`,
@@ -159,9 +159,9 @@ export const fr = {
     backToHome: 'Retour à la page d’accueil',
   },
   notFound: {
-    title: 'Cette page ne figure pas aux plans',
-    description: 'L’adresse a peut-être changé, ou une faute de frappe s’est glissée.',
-    homeLink: 'Retour à la page d’accueil',
+    title: 'Page introuvable',
+    description: 'La page que vous cherchez n’existe pas ou a été déplacée.',
+    homeLink: 'Retour à l’accueil',
   },
   common: {
     placeholder: 'placeholder',
