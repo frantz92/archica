@@ -583,6 +583,15 @@ body:has(dialog[open]) {
   }
 }
 
+@keyframes count-veil {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes stat-in {
   from {
     opacity: 0;
@@ -619,18 +628,16 @@ body:has(dialog[open]) {
     animation-delay: 240ms;
   }
 
-  /* Hero: the figures appear once the frame has opened (§2.6 item 11). The h1 is never animated. */
-  .hero-stats dd {
-    animation: stat-in 600ms var(--ease-out) 900ms both;
-  }
-  .hero-stats > div:nth-child(2) dd {
-    animation-delay: 980ms;
-  }
-  .hero-stats > div:nth-child(3) dd {
-    animation-delay: 1060ms;
+  /*
+   * Hero figures (§2.6 item 11). The numbers are animated by <CountUp>; until it takes over (or
+   * without JavaScript) a CSS veil keeps them hidden for 700 ms and then shows the final value.
+   * The word cell ("Stargard") slides in on its own. The h1 is never animated.
+   */
+  .count-up:not([data-ready]) {
+    animation: count-veil 1ms linear 700ms both;
   }
   .hero-stats > div:nth-child(4) dd {
-    animation-delay: 1140ms;
+    animation: stat-in 600ms var(--ease-out) 1000ms both;
   }
 }
 

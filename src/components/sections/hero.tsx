@@ -1,5 +1,6 @@
 import { ButtonLink } from '@/components/ui/button-link';
 import { Container } from '@/components/ui/container';
+import { CountUp } from '@/components/ui/count-up';
 import { FramedMedia } from '@/components/ui/framed-media';
 import { PlaceholderBadge } from '@/components/ui/placeholder-badge';
 import { TextLink } from '@/components/ui/text-link';
@@ -21,7 +22,11 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
   const badge = <PlaceholderBadge label={common.placeholder} className="ml-2 align-middle" />;
 
   const statItems: TitleBlockItem[] = [
-    { id: 'years', label: hero.stats.yearsLabel(years), value: years },
+    {
+      id: 'years',
+      label: hero.stats.yearsLabel(years),
+      value: <CountUp value={years} delayMs={700} />,
+    },
     {
       id: 'projects',
       label: (
@@ -30,7 +35,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
           {stats.projects.placeholder ? badge : null}
         </>
       ),
-      value: stats.projects.value,
+      value: <CountUp value={stats.projects.value} delayMs={800} />,
     },
     {
       id: 'awards',
@@ -40,7 +45,7 @@ export function Hero({ dictionary, locale, years }: HeroProps) {
           {stats.awards.placeholder ? badge : null}
         </>
       ),
-      value: stats.awards.value,
+      value: <CountUp value={stats.awards.value} delayMs={900} />,
     },
     {
       id: 'location',
