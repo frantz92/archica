@@ -62,20 +62,24 @@ export const fr = {
     title: 'Services',
     items: [
       {
+        id: 'design',
         title: 'Conception architecturale',
         description:
           'De la conception à la documentation d’exécution pour des maisons privées, des bureaux et des bâtiments publics.',
       },
       {
+        id: 'interiors',
         title: 'Architecture d’intérieur',
         description: 'Aménagement des espaces adapté à votre mode de vie.',
       },
       {
+        id: 'urban',
         title: 'Planification urbaine',
         description:
           'Concepts d’aménagement du territoire respectueux du contexte et de la communauté.',
       },
       {
+        id: 'supervision',
         title: 'Suivi de chantier',
         description: 'Suivi sur le chantier afin que la réalisation soit conforme au projet.',
       },

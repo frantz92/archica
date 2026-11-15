@@ -53,19 +53,23 @@ export const en = {
     title: 'Services',
     items: [
       {
+        id: 'design',
         title: 'Architectural design',
         description:
           'From concept to construction documentation for private houses, offices and public buildings.',
       },
       {
+        id: 'interiors',
         title: 'Interior architecture',
         description: 'Space planning tailored to the way you live.',
       },
       {
+        id: 'urban',
         title: 'Urban planning',
         description: 'Land development concepts that respect their context and community.',
       },
       {
+        id: 'supervision',
         title: 'Construction supervision',
         description: 'Supervision on site so that the finished building matches the design.',
       },

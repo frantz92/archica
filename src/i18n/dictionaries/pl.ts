@@ -59,19 +59,23 @@ export const pl = {
     title: 'Usługi',
     items: [
       {
+        id: 'design',
         title: 'Projektowanie architektoniczne',
         description:
           'Od koncepcji do dokumentacji wykonawczej dla domów prywatnych, biur i budynków publicznych.',
       },
       {
+        id: 'interiors',
         title: 'Architektura wnętrz',
         description: 'Planowanie przestrzeni dopasowane do sposobu życia.',
       },
       {
+        id: 'urban',
         title: 'Planowanie urbanistyczne',
         description: 'Koncepcje zagospodarowania terenu respektujące kontekst i społeczność.',
       },
       {
+        id: 'supervision',
         title: 'Nadzór inwestorski',
         description: 'Nadzór na budowie, aby realizacja odpowiadała projektowi.',
       },
