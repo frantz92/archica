@@ -60,7 +60,8 @@ def parse_listing(output: str) -> tuple[list[str], list[str]]:
         parts = line.split(None, 8)
         if len(parts) < 9 or parts[0][0] not in "-dl":
             continue
-        name = parts[8].split(" -> ")[0]
+        # Newer OpenSSH clients print the listed path in front of each name; a name never has "/".
+        name = parts[8].split(" -> ")[0].rstrip("/").rsplit("/", 1)[-1]
         if name in (".", ".."):
             continue
         (directories if parts[0][0] == "d" else others).append(name)
