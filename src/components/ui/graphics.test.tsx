@@ -59,14 +59,14 @@ describe('Media', () => {
   });
 
   it('shows the placeholder badge while the file is a placeholder', () => {
-    vi.stubEnv('SITE_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'development');
     render(<Media image="hero" alt="a" sizes="1px" placeholderLabel="placeholder" />);
     expect(screen.getByText('placeholder')).toBeInTheDocument();
     vi.unstubAllEnvs();
   });
 
   it('hides the badge once the real photo is in place', () => {
-    vi.stubEnv('SITE_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'development');
     Object.defineProperty(images.about, 'placeholder', { value: false, configurable: true });
     render(<Media image="about" alt="a" sizes="1px" placeholderLabel="placeholder" />);
     expect(screen.queryByText('placeholder')).toBeNull();

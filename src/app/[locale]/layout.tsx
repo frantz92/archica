@@ -6,10 +6,12 @@ import { Header } from '@/components/layout/header';
 import { SkipLink } from '@/components/layout/skip-link';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { JsonLd } from '@/components/seo/json-ld';
+import { logoAssets } from '@/components/ui/logo-assets';
 import { site } from '@/content/site';
 import { locales } from '@/i18n/config';
 import { brandColors } from '@/lib/brand';
 import { resolveRoute } from '@/lib/route-locale';
+import { getSiteEnv } from '@/lib/site-env';
 import { buildProfessionalService } from '@/lib/structured-data';
 
 import '../globals.css';
@@ -34,6 +36,8 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
     metadataBase: new URL(site.domain),
     title: { default: dictionary.meta.title, template: `%s — ${site.brand}` },
     description: dictionary.meta.description,
+    icons: { icon: [{ url: logoAssets.favicon, type: 'image/svg+xml' }] },
+    ...(getSiteEnv() === 'preview' ? { robots: { index: false, follow: false } } : {}),
   };
 }
 

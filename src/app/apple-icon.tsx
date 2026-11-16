@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-import { MARK_PATH } from '@/components/ui/logo-paths';
+import { logoAssets } from '@/components/ui/logo-assets';
 import { brandColors } from '@/lib/brand';
 
 export const size = { width: 180, height: 180 };
@@ -23,7 +23,7 @@ export default function AppleIcon() {
       }}
     >
       <svg width={markSize} height={markSize} viewBox="0 0 100 100">
-        <path d={MARK_PATH} fill={brandColors.chalk} />
+        <path d={logoAssets.markPath} fill={brandColors.chalk} />
       </svg>
     </div>,
     size,

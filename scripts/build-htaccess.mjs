@@ -17,7 +17,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const host = new URL(SITE_ORIGIN).host;
 const escapeQuotes = (value) => value.replaceAll('"', '\\"');
 
-const headerLines = securityHeaders()
+const headerLines = securityHeaders({ preview: process.env.SITE_ENV === 'preview' })
   .map(([name, value]) => `  Header always set ${name} "${escapeQuotes(value)}"`)
   .join('\n');
 

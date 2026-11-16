@@ -206,6 +206,29 @@ pliki i usuwa z serwera te, których nie ma już w `out/` (poza `.well-known`, `
 
 Bez `DEPLOY_HOST`, `DEPLOY_USER` i `DEPLOY_PATH` workflow tylko ostrzega i nic nie wysyła.
 
+## Dwie propozycje logo
+
+Klient wybiera między dwoma logo: **propozycja 1** (geometria, obecne) i **propozycja 2** (organiczny łuk).
+Obie są w jednym kodzie; różni je tylko znak. Pliki marki: `brand/propozycja-1/` i `brand/propozycja-2/`
+(SVG, PDF, EPS, DXF i podgląd; propozycję 2 generuje `node scripts/build-brand.mjs` z pomiarów obrazka
+`brand/Image.jpg`). Kolory, układ i napis są wspólne.
+
+**Wybór logo przy budowaniu strony:** `NEXT_PUBLIC_LOGO=2 npm run build` (bez zmiennej, albo `1`: propozycja 1).
+Dotyczy logo w nagłówku i na stronie 404, ikony strony, ikony Apple i obrazu Open Graph. Podgląd lokalny:
+`NEXT_PUBLIC_LOGO=2 npm run dev`.
+
+**Wspólna baza, dwa wdrożenia (zamiast dwóch gałęzi):** w workflow _Deploy_ wybierasz `target`
+(`production` albo `preview`) i `logo` (`1` albo `2`). Kopia `preview` idzie do osobnego katalogu (sekret
+`DEPLOY_PATH_PREVIEW`, zmienna `SITE_CHECK_URL_PREVIEW`), nie jest indeksowana (`robots.txt` z `Disallow: /`,
+`noindex` w nagłówkach i metadanych) i nie ma plakietek „placeholder". Dzięki temu można pokazać klientowi
+obie propozycje obok siebie, a rozbieżności kodu nie ma, bo to ten sam commit.
+Z komputera: `DEPLOY_ENV_FILE=.env.deploy.preview NEXT_PUBLIC_LOGO=2 npm run deploy`
+(`.env.deploy.preview` to kopia `.env.deploy` z innym `DEPLOY_PATH` i linią `SITE_ENV=preview`).
+
+**Po decyzji klienta:** ustaw w `src/components/ui/logo-assets.ts` domyślną propozycję, usuń drugą
+(`brand/propozycja-N/`, `logo-paths*.ts`, `public/favicon-N.svg`, przełącznik `NEXT_PUBLIC_LOGO`) i zdecyduj,
+czy zachować katalog przeglądowy.
+
 ## Lista kontrolna publikacji
 
 - [ ] `npm run check:placeholders` nie zgłasza żadnych pozycji.

@@ -38,7 +38,7 @@ describe('manifest', () => {
       theme_color: brandColors.coal,
       background_color: brandColors.coal,
     });
-    expect(data.icons?.map((icon) => icon.src)).toEqual(['/icon.svg', '/apple-icon']);
+    expect(data.icons?.map((icon) => icon.src)).toEqual(['/favicon-1.svg', '/apple-icon']);
   });
 });
 
@@ -48,6 +48,14 @@ describe('robots', () => {
       rules: { userAgent: '*', allow: '/' },
       sitemap: `${site.domain}/sitemap.xml`,
     });
+  });
+});
+
+describe('robots (review copy)', () => {
+  it('keeps crawlers out of a preview build', () => {
+    vi.stubEnv('SITE_ENV', 'preview');
+    expect(robots()).toEqual({ rules: { userAgent: '*', disallow: '/' } });
+    vi.unstubAllEnvs();
   });
 });
 
@@ -84,6 +92,15 @@ describe('locale layout', () => {
       default: { pl, en, fr }[locale].meta.title,
       template: `%s — ${site.brand}`,
     });
+  });
+
+  it('adds the logo favicon and, in a preview build only, a noindex robots tag', async () => {
+    const live = await layoutMetadata(route('pl'));
+    expect(live.icons).toEqual({ icon: [{ url: '/favicon-1.svg', type: 'image/svg+xml' }] });
+    expect(live.robots).toBeUndefined();
+    vi.stubEnv('SITE_ENV', 'preview');
+    expect((await layoutMetadata(route('pl'))).robots).toEqual({ index: false, follow: false });
+    vi.unstubAllEnvs();
   });
 
   it('renders the document shell with language, dark default, landmarks and structured data', async () => {

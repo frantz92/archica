@@ -206,14 +206,14 @@ describe('contact links', () => {
 
 describe('PlaceholderBadge', () => {
   it('shows the label outside production', () => {
-    vi.stubEnv('SITE_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'development');
     render(<PlaceholderBadge label="placeholder" />);
     expect(screen.getByText('placeholder')).toBeInTheDocument();
     vi.unstubAllEnvs();
   });
 
-  it('renders nothing in production', () => {
-    vi.stubEnv('SITE_ENV', 'production');
+  it.each(['production', 'preview'])('renders nothing in a %s build', (siteEnv) => {
+    vi.stubEnv('SITE_ENV', siteEnv);
     const { container } = render(<PlaceholderBadge label="placeholder" />);
     expect(container).toBeEmptyDOMElement();
     vi.unstubAllEnvs();

@@ -98,7 +98,9 @@ test.describe('generated resources', () => {
   }
 
   test('the favicon is an SVG', async ({ request }) => {
-    const response = await request.get('/icon.svg');
+    const response = await request.get(
+      `/favicon-${process.env.NEXT_PUBLIC_LOGO === '2' ? '2' : '1'}.svg`,
+    );
     expect(response.status()).toBe(200);
     expect(response.headers()['content-type']).toContain('svg');
   });

@@ -1,4 +1,4 @@
-import { MARK_PATH, STACKED_MARK_PATH, WORDMARK_PATH } from './logo-paths';
+import { logoAssets } from './logo-assets';
 
 export type LogoVariant = 'mark' | 'horizontal' | 'stacked';
 
@@ -9,12 +9,6 @@ interface LogoProps {
   className?: string;
 }
 
-const viewBoxes: Record<LogoVariant, string> = {
-  mark: '0 0 100 100',
-  horizontal: '0 0 358.3 100',
-  stacked: '0 0 230.3 166.789',
-};
-
 /**
  * Inline SVG logo. The emblem is amber (`--accent-line`, darkened on light backgrounds); the wordmark
  * uses currentColor, so one component serves both themes.
@@ -23,7 +17,7 @@ export function Logo({ variant, title, className }: LogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBoxes[variant]}
+      viewBox={logoAssets.viewBoxes[variant]}
       role="img"
       aria-label={title}
       className={className}
@@ -32,19 +26,19 @@ export function Logo({ variant, title, className }: LogoProps) {
       overflow="visible"
     >
       <title>{title}</title>
-      {variant === 'mark' && <path d={MARK_PATH} className="fill-accent-line" />}
+      {variant === 'mark' && <path d={logoAssets.markPath} className="fill-accent-line" />}
       {variant === 'horizontal' && (
         <>
-          <path d={MARK_PATH} className="fill-accent-line" />
+          <path d={logoAssets.markPath} className="fill-accent-line" />
           <g transform="translate(128 -92.5)">
-            <path d={WORDMARK_PATH} />
+            <path d={logoAssets.wordmarkPath} />
           </g>
         </>
       )}
       {variant === 'stacked' && (
         <>
-          <path d={STACKED_MARK_PATH} className="fill-accent-line" />
-          <path d={WORDMARK_PATH} />
+          <path d={logoAssets.stackedMarkPath} className="fill-accent-line" />
+          <path d={logoAssets.wordmarkPath} />
         </>
       )}
     </svg>

@@ -367,7 +367,7 @@ describe('Header', () => {
 
 describe('Footer', () => {
   it('shows the company data and the licence placeholder', () => {
-    vi.stubEnv('SITE_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'development');
     render(<Footer locale="pl" dictionary={pl} />);
     expect(screen.getByText(site.fullName)).toBeInTheDocument();
     expect(screen.getByText(new RegExp(site.taxId))).toBeInTheDocument();

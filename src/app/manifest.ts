@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 
 import { site } from '@/content/site';
 import { defaultLocale } from '@/i18n/config';
+import { logoAssets } from '@/components/ui/logo-assets';
 import { brandColors } from '@/lib/brand';
 
 // Required for a static export: the file is written once, at build time.
@@ -17,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: brandColors.coal,
     background_color: brandColors.coal,
     icons: [
-      { src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' },
+      { src: logoAssets.favicon, sizes: 'any', type: 'image/svg+xml' },
       { src: '/apple-icon', sizes: '180x180', type: 'image/png' },
     ],
   };

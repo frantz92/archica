@@ -41,9 +41,9 @@ export function contentSecurityPolicy({ upgradeInsecure = true } = {}) {
   return parts.join('; ');
 }
 
-/** Response headers for every file, as [name, value] pairs. */
+/** Response headers for every file, as [name, value] pairs. `preview` adds X-Robots-Tag: noindex. */
 export function securityHeaders(options) {
-  return [
+  const headers = [
     ['Content-Security-Policy', contentSecurityPolicy(options)],
     // No includeSubDomains / preload until it is confirmed that no archica.pl subdomain runs on HTTP.
     ['Strict-Transport-Security', 'max-age=63072000'],
@@ -53,6 +53,8 @@ export function securityHeaders(options) {
     ['X-Frame-Options', 'DENY'],
     ['Cross-Origin-Opener-Policy', 'same-origin'],
   ];
+  if (options?.preview) headers.push(['X-Robots-Tag', 'noindex, nofollow']);
+  return headers;
 }
 
 /** HTML is revalidated on every visit (hashed assets are cached for a year, see .htaccess). */

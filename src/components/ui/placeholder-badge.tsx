@@ -1,4 +1,5 @@
 import { cn } from '@/lib/cn';
+import { getSiteEnv } from '@/lib/site-env';
 
 interface PlaceholderBadgeProps {
   /** Text from the dictionary (common.placeholder). */
@@ -7,11 +8,11 @@ interface PlaceholderBadgeProps {
 }
 
 /**
- * Small "placeholder" tag, visible locally and in CI builds only. The production build
- * (deploy workflow) sets SITE_ENV=production, which hides it (BLUEPRINT §3.3).
+ * Small "placeholder" tag, visible locally and in CI builds only. The deploy workflow sets
+ * SITE_ENV=production (live site) or SITE_ENV=preview (review copy), which hide it (BLUEPRINT §3.3).
  */
 export function PlaceholderBadge({ label, className }: PlaceholderBadgeProps) {
-  if (process.env.SITE_ENV === 'production') {
+  if (getSiteEnv() !== 'development') {
     return null;
   }
   return (

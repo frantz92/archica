@@ -49,6 +49,14 @@ describe('server configuration of the static export', () => {
     ]);
   });
 
+  it('marks a review copy as not to be indexed', () => {
+    expect(securityHeaders({ preview: true })).toContainEqual([
+      'X-Robots-Tag',
+      'noindex, nofollow',
+    ]);
+    expect(securityHeaders().map(([name]) => name)).not.toContain('X-Robots-Tag');
+  });
+
   it('declares the type of the image routes that have no file extension', () => {
     expect(FORCED_TYPES).toEqual({ 'apple-icon': 'image/png', 'opengraph-image': 'image/png' });
   });

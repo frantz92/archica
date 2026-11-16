@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-import { STACKED_MARK_PATH, WORDMARK_PATH } from '@/components/ui/logo-paths';
+import { logoAssets } from '@/components/ui/logo-assets';
 import { locales } from '@/i18n/config';
 import { brandColors } from '@/lib/brand';
 import { OG_IMAGE_SIZE } from '@/lib/metadata';
@@ -15,7 +15,9 @@ export function generateStaticParams() {
 }
 
 const LOGO_HEIGHT = 320;
-const LOGO_WIDTH = Math.round((LOGO_HEIGHT * 230.3) / 166.789);
+const LOGO_WIDTH = Math.round(
+  (LOGO_HEIGHT * logoAssets.stackedSize.width) / logoAssets.stackedSize.height,
+);
 
 /**
  * 1200 × 630, coal background, stacked logo in chalk drawn from vector paths (no font text).
@@ -35,9 +37,9 @@ export default async function OpenGraphImage({ params }: { params: LocaleParams 
         background: brandColors.coal,
       }}
     >
-      <svg width={LOGO_WIDTH} height={LOGO_HEIGHT} viewBox="0 0 230.3 166.789">
-        <path d={STACKED_MARK_PATH} fill={brandColors.chalk} />
-        <path d={WORDMARK_PATH} fill={brandColors.chalk} />
+      <svg width={LOGO_WIDTH} height={LOGO_HEIGHT} viewBox={logoAssets.viewBoxes.stacked}>
+        <path d={logoAssets.stackedMarkPath} fill={brandColors.chalk} />
+        <path d={logoAssets.wordmarkPath} fill={brandColors.chalk} />
       </svg>
     </div>,
     size,

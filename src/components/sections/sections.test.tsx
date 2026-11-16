@@ -227,7 +227,7 @@ describe('PrivacyDocumentView', () => {
   });
 
   it('flags placeholder paragraphs on preview deployments only', () => {
-    vi.stubEnv('SITE_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'development');
     const preview = render(
       <PrivacyDocumentView document={getPrivacyDocument('pl')} placeholderLabel="placeholder" />,
     );

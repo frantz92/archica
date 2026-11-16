@@ -12,6 +12,16 @@ on:
     - cron: '5 6 2 1 *'
   workflow_dispatch:
     inputs:
+      target:
+        description: 'production = the live site, preview = a review copy (not indexed)'
+        type: choice
+        options: [production, preview]
+        default: production
+      logo:
+        description: 'Logo proposal to build (1 or 2)'
+        type: choice
+        options: ['1', '2']
+        default: '1'
       dry_run:
         description: 'List what would be uploaded, upload nothing'
         type: boolean
@@ -43,13 +53,14 @@ jobs:
       DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
       DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || vars.DEPLOY_PATH }}
+      # The preview target has its own folder (and address) so that it never touches the live site.
+      DEPLOY_PATH: ${{ inputs.target == 'preview' && (secrets.DEPLOY_PATH_PREVIEW || vars.DEPLOY_PATH_PREVIEW) || (secrets.DEPLOY_PATH || vars.DEPLOY_PATH) }}
       DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || secrets.DEPLOY_PROTOCOL }}
       DEPLOY_PORT: ${{ vars.DEPLOY_PORT || secrets.DEPLOY_PORT }}
       DEPLOY_PARALLEL: ${{ vars.DEPLOY_PARALLEL }}
       DEPLOY_DEBUG: ${{ vars.DEPLOY_DEBUG }}
       DEPLOY_DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-      SITE_CHECK_URL: ${{ vars.SITE_CHECK_URL || secrets.SITE_CHECK_URL }}
+      SITE_CHECK_URL: ${{ inputs.target == 'preview' && (vars.SITE_CHECK_URL_PREVIEW || secrets.SITE_CHECK_URL_PREVIEW) || (vars.SITE_CHECK_URL || secrets.SITE_CHECK_URL) }}
     steps:
       - name: Check that the host is configured
         id: config
@@ -57,7 +68,7 @@ jobs:
           missing=""
           [ -n "$DEPLOY_HOST" ] || missing="$missing DEPLOY_HOST"
           [ -n "$DEPLOY_USER" ] || missing="$missing DEPLOY_USER"
-          [ -n "$DEPLOY_PATH" ] || missing="$missing DEPLOY_PATH"
+          [ -n "$DEPLOY_PATH" ] || missing="$missing DEPLOY_PATH(_PREVIEW for the preview target)"
           [ -n "$DEPLOY_PASSWORD$DEPLOY_SSH_KEY" ] || missing="$missing DEPLOY_SSH_KEY(or DEPLOY_PASSWORD for ftps)"
           if [ -n "$missing" ]; then
             echo "::warning::Deploy skipped, not set in the 'production' environment:$missing"
@@ -76,12 +87,14 @@ jobs:
       - run: npm ci
         if: steps.config.outputs.ready == 'true'
 
-      # SITE_ENV=production hides the "placeholder" tags (BLUEPRINT §3.3).
+      # SITE_ENV=production|preview hides the "placeholder" tags (BLUEPRINT §3.3); preview also
+      # keeps the copy out of search engines. NEXT_PUBLIC_LOGO selects the logo proposal.
       - name: Build the static site
         if: steps.config.outputs.ready == 'true'
         run: npm run build
         env:
-          SITE_ENV: production
+          SITE_ENV: ${{ inputs.target == 'preview' && 'preview' || 'production' }}
+          NEXT_PUBLIC_LOGO: ${{ inputs.logo || '1' }}
 
       - name: Check the build output
         if: steps.config.outputs.ready == 'true'

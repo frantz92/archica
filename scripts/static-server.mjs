@@ -58,7 +58,9 @@ function send(response, status, file, extra = {}) {
   response.writeHead(status, {
     'Content-Type': type,
     ...(type.startsWith('text/html') ? { 'Cache-Control': HTML_CACHE } : {}),
-    ...Object.fromEntries(securityHeaders({ upgradeInsecure })),
+    ...Object.fromEntries(
+      securityHeaders({ upgradeInsecure, preview: process.env.SITE_ENV === 'preview' }),
+    ),
     ...extra,
   });
   return file;
