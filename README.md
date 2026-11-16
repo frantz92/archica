@@ -68,7 +68,7 @@ Google Chrome; `E2E_ALL=1` wymusza pełną macierz (wymaga przeglądarek Playwri
 ## CI/CD
 
 Strona jest **statycznym eksportem** (`output: 'export'`): `npm run build` tworzy katalog `out/` ze zwykłymi
-plikami, które workflow `deploy.yml` wysyła na hosting SeoHost po zielonym CI na `master` (opis w sekcji
+plikami, które workflow `deploy.yml` wysyła na hosting SeoHost na ręczne polecenie i co roku 1 stycznia (opis w sekcji
 „Wdrożenie na SeoHost" niżej). Pozostałe workflow'y kontrolują jakość; pliki w `.github/workflows/`.
 
 | Workflow                                              | Kiedy                      | Co sprawdza                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -170,12 +170,15 @@ więc testy E2E sprawdzają te same reguły, które trafiają do `.htaccess`.
 **Lokalnie:** `npm run build && npm run start` (port 3000 lub `-- --port 3100`), strona pod
 `http://localhost:3000/pl/`.
 
-**Automatycznie (`.github/workflows/deploy.yml`):**
+**Kiedy strona idzie na serwer (`.github/workflows/deploy.yml`).** Push na `master` **nie** publikuje strony.
+Wdrożenie startuje tylko:
 
-- po zielonym CI na `master` (budowanie z `SITE_ENV=production`, bez plakietek „placeholder"),
+- ręcznie: _Actions → Deploy → Run workflow_ (gałąź `master`; budowanie z `SITE_ENV=production`, bez plakietek
+  „placeholder"; opcja `dry_run` pokazuje, co zostałoby wysłane, nic nie wysyła),
 - **1 stycznia o 00:05 UTC** (i awaryjnie 2 stycznia): przebudowa, żeby liczba „lat praktyki" i rok w stopce
-  zmieniły się bez edycji kodu,
-- ręcznie: _Actions → Deploy → Run workflow_ (opcja `dry_run` pokazuje, co zostałoby wysłane, nic nie wysyła).
+  zmieniły się bez edycji kodu.
+
+Przed ręcznym wdrożeniem upewnij się, że CI na `master` jest zielone.
 
 **Konfiguracja w GitHubie** (_Settings → Environments → New environment → `production`_):
 
