@@ -79,6 +79,8 @@ test.describe('language switch', () => {
   });
 
   test('keeps the page when switching language on the privacy policy', async ({ page }) => {
+    // The desktop switcher is hidden on a phone viewport (iPhone project), so fix the width.
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/pl/privacy');
     await page.locator('header a[hreflang="fr"]').first().click();
     await page.waitForURL('**/fr/privacy');
