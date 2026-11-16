@@ -5,6 +5,8 @@
 #   DEPLOY_PASSWORD (no spaces) or DEPLOY_SSH_KEY (one of them)
 #   DEPLOY_PROTOCOL = sftp (default) | ftps | ftp
 #   DEPLOY_PORT, DEPLOY_KNOWN_HOSTS (pins the SFTP host key), DEPLOY_DRY_RUN=1 (lists, uploads nothing)
+#   DEPLOY_PARALLEL (simultaneous transfers, default 1: shared hosts limit connections),
+#   DEPLOY_DEBUG=1 (prints the connection log to find out why a transfer fails)
 set -euo pipefail
 
 : "${DEPLOY_HOST:?DEPLOY_HOST is not set}"
@@ -22,7 +24,8 @@ esac
 [ -f out/index.html ] || [ -f out/404.html ] || { echo "out/ is missing: run npm run build." >&2; exit 1; }
 [ -f out/.htaccess ] || { echo "out/.htaccess is missing: the build did not finish." >&2; exit 1; }
 
-settings="set cmd:fail-exit yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5;"
+settings="set cmd:fail-exit yes; set net:max-retries 5; set net:timeout 30; set net:reconnect-interval-base 10; set net:connection-limit 2;"
+[ "${DEPLOY_DEBUG:-}" = "1" ] && settings="$settings debug -o /dev/stderr 5;"
 port_part=""
 [ -n "${DEPLOY_PORT:-}" ] && port_part=":${DEPLOY_PORT}"
 
@@ -35,11 +38,11 @@ case "$protocol" in
       chmod 600 ~/.ssh/deploy_key
       key_option="-i $HOME/.ssh/deploy_key"
     fi
-    host_check="-o StrictHostKeyChecking=accept-new"
+    host_check="-o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=20"
     if [ -n "${DEPLOY_KNOWN_HOSTS:-}" ]; then
       install -d -m 700 ~/.ssh
       printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/deploy_known_hosts
-      host_check="-o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/deploy_known_hosts"
+      host_check="-o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/deploy_known_hosts -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=20"
     fi
     settings="$settings set sftp:connect-program \"ssh -a -x $key_option $host_check\";"
     url="sftp://${DEPLOY_HOST}${port_part}" ;;
@@ -65,7 +68,7 @@ printf 'machine %s login %s password %s\n' "$DEPLOY_HOST" "$DEPLOY_USER" "${DEPL
 # Server-managed folders are left alone.
 lftp -c "$settings
 open $url
-mirror --reverse --delete --verbose --parallel=4 $dry_run \
+mirror --reverse --delete --verbose --no-perms --parallel=${DEPLOY_PARALLEL:-1} $dry_run \
   --exclude-glob .well-known/ --exclude-glob cgi-bin/ --exclude-glob .ftpquota \
   out/ \"$DEPLOY_PATH\"
 bye"

@@ -46,6 +46,8 @@ jobs:
       DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || vars.DEPLOY_PATH }}
       DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || secrets.DEPLOY_PROTOCOL }}
       DEPLOY_PORT: ${{ vars.DEPLOY_PORT || secrets.DEPLOY_PORT }}
+      DEPLOY_PARALLEL: ${{ vars.DEPLOY_PARALLEL }}
+      DEPLOY_DEBUG: ${{ vars.DEPLOY_DEBUG }}
       DEPLOY_DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
       SITE_CHECK_URL: ${{ vars.SITE_CHECK_URL || secrets.SITE_CHECK_URL }}
     steps:
