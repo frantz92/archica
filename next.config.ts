@@ -1,87 +1,29 @@
 import type { NextConfig } from 'next';
 
-const isDev = process.env.NODE_ENV !== 'production';
-const isPreview = process.env.VERCEL_ENV === 'preview';
-
 /**
- * CSP without nonces is a deliberate choice (BLUEPRINT §10): the site has no forms,
- * no user data and no third-party scripts, and nonces would force dynamic rendering.
+ * The site is exported as plain static files (`out/`) and uploaded to SeoHost (Apache).
+ * Next.js `headers()`/`redirects()` do not exist in a static export; the security headers,
+ * the `/` -> `/pl/` redirect and the 404 page are written to `out/.htaccess` after the build
+ * (scripts/build-htaccess.mjs) from the same definitions that the local server uses
+ * (scripts/lib/site-config.mjs).
  */
-function buildContentSecurityPolicy(): string {
-  const scriptSrc = ["'self'", "'unsafe-inline'"];
-  const connectSrc = ["'self'"];
-  const frameSrc: string[] = [];
-  const imgSrc = ["'self'", 'data:', 'blob:'];
-  const fontSrc = ["'self'"];
-  const styleSrc = ["'self'", "'unsafe-inline'"];
-
-  if (isDev) {
-    scriptSrc.push("'unsafe-eval'", 'https://va.vercel-scripts.com');
-  }
-  if (isPreview) {
-    scriptSrc.push('https://vercel.live');
-    connectSrc.push('https://vercel.live', 'wss://ws-us3.pusher.com');
-    frameSrc.push('https://vercel.live');
-    imgSrc.push('https://vercel.live', 'https://vercel.com');
-    fontSrc.push('https://vercel.live', 'https://assets.vercel.com');
-    styleSrc.push('https://vercel.live');
-  }
-
-  const directives: Array<[string, string[]]> = [
-    ['default-src', ["'self'"]],
-    ['script-src', scriptSrc],
-    ['style-src', styleSrc],
-    ['img-src', imgSrc],
-    ['font-src', fontSrc],
-    ['connect-src', connectSrc],
-    ['object-src', ["'none'"]],
-    ['base-uri', ["'self'"]],
-    ['form-action', ["'self'"]],
-    ['frame-ancestors', ["'none'"]],
-  ];
-  if (frameSrc.length > 0) {
-    directives.push(['frame-src', frameSrc]);
-  }
-
-  const parts = directives.map(([name, values]) => `${name} ${values.join(' ')}`);
-  // In development the site runs over plain HTTP, so upgrading requests would break it. WebKit
-  // also upgrades http://localhost (Chromium does not), so the WebKit E2E build opts out with
-  // CSP_UPGRADE_INSECURE=0; every deployed build keeps the directive.
-  if (!isDev && process.env.CSP_UPGRADE_INSECURE !== '0') {
-    parts.push('upgrade-insecure-requests');
-  }
-  return parts.join('; ');
-}
-
 const nextConfig: NextConfig = {
+  output: 'export',
+  // `/pl/` -> `pl/index.html`: works on any static host without rewrite rules.
+  trailingSlash: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  async redirects() {
-    return [{ source: '/', destination: '/pl', permanent: true }];
+  experimental: {
+    // One 404.html for every unknown URL (the language is picked in the browser).
+    globalNotFound: true,
   },
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // No image server on static hosting: variants are generated before the build
+    // (scripts/optimize-images.mjs) and addressed by this loader.
+    loader: 'custom',
+    loaderFile: './src/lib/image-loader.ts',
+    // Quality values used by <Media> (the custom loader ignores them, Next.js still validates them).
     qualities: [75, 85],
-  },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'Content-Security-Policy', value: buildContentSecurityPolicy() },
-          // No includeSubDomains / preload until it is confirmed that no archica.pl subdomain runs on HTTP.
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
-          },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
-        ],
-      },
-    ];
   },
 };
 
