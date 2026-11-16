@@ -11,6 +11,16 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: 'chore(deps)'
+    # Major bumps of the toolchain are done by hand, together with the packages that must follow
+    # (eslint-config-next / typescript-eslint for ESLint and TypeScript; @types/node tracks the
+    # Node version we deploy on, currently 22).
+    ignore:
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+      - dependency-name: eslint
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       production:
         dependency-type: production
