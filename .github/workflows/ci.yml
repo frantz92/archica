@@ -19,7 +19,7 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
-  # Stage 1: quality gate. Everything here blocks the merge.
+  # Quality gate. Everything here blocks the merge.
   quality:
     name: Quality gate
     runs-on: ubuntu-latest
@@ -55,7 +55,6 @@ jobs:
   # Stage 3: browser tests and accessibility, on the engines visitors use (WebKit is Safari).
   e2e:
     name: E2E (${{ matrix.project }})
-    needs: quality
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -95,10 +94,9 @@ jobs:
             test-results
           retention-days: 14
 
-  # Stage 2: performance budgets from BLUEPRINT §11, measured on the production build.
+  # Performance budgets from BLUEPRINT §11, measured on the production build.
   lighthouse:
     name: Lighthouse budgets
-    needs: quality
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

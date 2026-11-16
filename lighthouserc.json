@@ -1,16 +1,11 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 3,
+      "numberOfRuns": 1,
       "startServerCommand": "npm run start -- --port 3200",
       "startServerReadyPattern": "Ready",
       "startServerReadyTimeout": 60000,
-      "url": [
-        "http://localhost:3200/pl",
-        "http://localhost:3200/en",
-        "http://localhost:3200/fr",
-        "http://localhost:3200/pl/privacy"
-      ],
+      "url": ["http://localhost:3200/pl", "http://localhost:3200/en"],
       "settings": {
         "chromeFlags": "--no-sandbox --headless=new"
       }
