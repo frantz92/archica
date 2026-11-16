@@ -100,14 +100,21 @@ jobs:
         run: bash scripts/deploy.sh
 
       # Only when SITE_CHECK_URL (e.g. https://archica.pl) is set and the files were really uploaded.
+      # The host rate-limits requests (HTTP 429), so there are few of them and curl retries.
       - name: Check the live site
         if: steps.config.outputs.ready == 'true' && env.SITE_CHECK_URL != '' && inputs.dry_run != true
         run: |
           set -euo pipefail
+          sleep 10
+          fetch() { curl -sS -L --retry 6 --retry-delay 15 --max-time 30 -A "archica-deploy-check" "$@"; }
+
+          home_status="$(fetch -D headers.txt -o home.html -w '%{http_code}' "$SITE_CHECK_URL/pl/")"
+          cat headers.txt
+          [ "$home_status" = "200" ] || { echo "::error::The home page returned HTTP $home_status instead of 200."; exit 1; }
+          grep -qi '^content-security-policy:' headers.txt || { echo "::error::No Content-Security-Policy header on the live site (.htaccess not applied?)."; exit 1; }
+          grep -q '<h1' home.html || { echo "::error::The live home page has no heading."; exit 1; }
+
           sleep 5
-          headers="$(curl -fsSIL "$SITE_CHECK_URL/pl/")"
-          echo "$headers"
-          echo "$headers" | grep -qi '^content-security-policy:' || { echo "::error::No Content-Security-Policy header on the live site (.htaccess not applied?)"; exit 1; }
-          curl -fsSL "$SITE_CHECK_URL/pl/" | grep -q '<h1' || { echo "::error::The live home page has no heading."; exit 1; }
-          status="$(curl -s -o /dev/null -w '%{http_code}' "$SITE_CHECK_URL/pl/missing-page/")"
-          [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status instead of 404."; exit 1; }
+          missing_status="$(fetch -o /dev/null -w '%{http_code}' "$SITE_CHECK_URL/pl/missing-page/")"
+          [ "$missing_status" = "404" ] || { echo "::error::An unknown URL returned HTTP $missing_status instead of 404."; exit 1; }
+          echo "Live site OK: home 200 with security headers, unknown URL 404."
