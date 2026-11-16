@@ -44,8 +44,10 @@ function buildContentSecurityPolicy(): string {
   }
 
   const parts = directives.map(([name, values]) => `${name} ${values.join(' ')}`);
-  // In development the site runs over plain HTTP, so upgrading requests would break it.
-  if (!isDev) {
+  // In development the site runs over plain HTTP, so upgrading requests would break it. WebKit
+  // also upgrades http://localhost (Chromium does not), so the WebKit E2E build opts out with
+  // CSP_UPGRADE_INSECURE=0; every deployed build keeps the directive.
+  if (!isDev && process.env.CSP_UPGRADE_INSECURE !== '0') {
     parts.push('upgrade-insecure-requests');
   }
   return parts.join('; ');

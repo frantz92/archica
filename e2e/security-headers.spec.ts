@@ -36,7 +36,10 @@ for (const path of paths) {
       expect(directives['form-action']).toBe("'self'");
       expect(directives['frame-ancestors']).toBe("'none'");
       expect(directives['font-src']).toBe("'self'");
-      expect(csp).toContain('upgrade-insecure-requests');
+      // The WebKit CI build drops it (WebKit would upgrade http://localhost); see next.config.ts.
+      if (process.env.CSP_UPGRADE_INSECURE !== '0') {
+        expect(csp).toContain('upgrade-insecure-requests');
+      }
       // No third-party origins and no eval in production.
       expect(csp).not.toMatch(/https?:\/\//);
       expect(csp).not.toContain('unsafe-eval');

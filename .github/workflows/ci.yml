@@ -76,9 +76,15 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install browsers
         run: npx playwright install --with-deps ${{ matrix.project == 'mobile-safari' && 'webkit' || matrix.project }}
+      # WebKit upgrades http://localhost to https when the CSP has upgrade-insecure-requests, so no
+      # script or style would load. Chromium keeps the production CSP (and asserts it).
       - run: npm run build
+        env:
+          CSP_UPGRADE_INSECURE: ${{ matrix.project == 'chromium' && '1' || '0' }}
       - name: Run E2E and accessibility tests
         run: npx playwright test --project=${{ matrix.project }}
+        env:
+          CSP_UPGRADE_INSECURE: ${{ matrix.project == 'chromium' && '1' || '0' }}
       - name: Upload Playwright report
         if: failure()
         uses: actions/upload-artifact@v7
