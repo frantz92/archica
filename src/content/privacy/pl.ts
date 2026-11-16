@@ -35,7 +35,6 @@ export const privacyPl: PrivacyDocument = {
           type: 'list',
           items: [
             'dane techniczne związane z\u00A0odwiedzinami strony (np. adres IP, rodzaj przeglądarki, odwiedzane adresy, data i\u00A0godzina), przetwarzane przez dostawcę hostingu w\u00A0celu udostępnienia strony i\u00A0zapewnienia jej bezpieczeństwa;',
-            'zagregowane statystyki odwiedzin, zbierane za pomocą Vercel Analytics w\u00A0celu poznania sposobu korzystania ze strony;',
             'dane przekazane w\u00A0korespondencji telefonicznej lub mailowej (np. imię i\u00A0nazwisko, adres e-mail, numer telefonu, treść wiadomości), przetwarzane w\u00A0celu odpowiedzi na zapytanie i\u00A0prowadzenia rozmów o\u00A0projekcie.',
           ],
         },
@@ -47,21 +46,17 @@ export const privacyPl: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Dane przetwarzamy na podstawie art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes administratora: utrzymanie i\u00A0zabezpieczenie strony, statystyki, odpowiadanie na zapytania) oraz art. 6 ust. 1 lit. b RODO, gdy kontakt dotyczy działań podejmowanych przed zawarciem umowy na żądanie osoby, której dane dotyczą.',
+          text: 'Dane przetwarzamy na podstawie art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes administratora: utrzymanie i\u00A0zabezpieczenie strony, odpowiadanie na zapytania) oraz art. 6 ust. 1 lit. b RODO, gdy kontakt dotyczy działań podejmowanych przed zawarciem umowy na żądanie osoby, której dane dotyczą.',
         },
       ],
     },
     {
       id: 'hosting',
-      heading: 'Hosting i\u00A0analityka',
+      heading: 'Hosting',
       blocks: [
         {
           type: 'paragraph',
-          text: 'Stronę udostępnia Vercel Inc. (USA), która jest także dostawcą Vercel Analytics. Dane techniczne mogą być przetwarzane poza Europejskim Obszarem Gospodarczym, m.in. w\u00A0Stanach Zjednoczonych, z\u00A0zastosowaniem mechanizmów przewidzianych w\u00A0RODO, np. standardowych klauzul umownych.',
-        },
-        {
-          type: 'paragraph',
-          text: 'Vercel Analytics służy do statystyk odwiedzin i, według informacji dostawcy, nie wykorzystuje w\u00A0tym celu plików cookie.',
+          text: 'Stronę udostępnia dostawca hostingu SeoHost sp. z\u00A0o.o., ul. Obornicka 330, 60-689 Poznań. Serwery znajdują się w\u00A0Polsce (w\u00A0polskich centrach danych). Strona nie korzysta z\u00A0narzędzi analitycznych ani z\u00A0zewnętrznych skryptów.',
         },
       ],
     },
@@ -81,7 +76,7 @@ export const privacyPl: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Odbiorcami danych mogą być dostawcy usług informatycznych (hosting, analityka, poczta elektroniczna) działający na nasze zlecenie.',
+          text: 'Odbiorcami danych mogą być dostawcy usług informatycznych (hosting, poczta elektroniczna) działający na nasze zlecenie.',
         },
       ],
     },
@@ -97,7 +92,7 @@ export const privacyPl: PrivacyDocument = {
         },
         {
           type: 'paragraph',
-          text: 'Dane techniczne i\u00A0statystyczne są przechowywane przez okres określony przez dostawców hostingu i\u00A0analityki: [do uzupełnienia].',
+          text: 'Dane techniczne są przechowywane przez okres określony przez dostawcę hostingu: [do uzupełnienia].',
           placeholder: true,
         },
       ],

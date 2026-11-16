@@ -4,8 +4,8 @@ import { dictionaries, locales, plain, sectionIds, trackErrors } from './helpers
 
 test('the root URL redirects permanently to the Polish site', async ({ request }) => {
   const response = await request.get('/', { maxRedirects: 0 });
-  expect(response.status()).toBe(308);
-  expect(response.headers()['location']).toBe('/pl');
+  expect(response.status()).toBe(301);
+  expect(response.headers()['location']).toBe('/pl/');
 });
 
 for (const locale of locales) {
@@ -29,7 +29,7 @@ for (const locale of locales) {
       await page.goto(`/${locale}`);
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
         'href',
-        `https://archica.pl/${locale}`,
+        `https://archica.pl/${locale}/`,
       );
       for (const code of [...locales, 'x-default']) {
         await expect(page.locator(`link[rel="alternate"][hreflang="${code}"]`)).toHaveCount(1);

@@ -75,11 +75,10 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install browsers
         run: npx playwright install --with-deps ${{ matrix.project == 'mobile-safari' && 'webkit' || matrix.project }}
-      # WebKit upgrades http://localhost to https when the CSP has upgrade-insecure-requests, so no
-      # script or style would load. Chromium keeps the production CSP (and asserts it).
       - run: npm run build
-        env:
-          CSP_UPGRADE_INSECURE: ${{ matrix.project == 'chromium' && '1' || '0' }}
+      # WebKit upgrades http://localhost to https when the CSP has upgrade-insecure-requests, so no
+      # script or style would load. Only the local server drops it for WebKit; Chromium keeps the
+      # production CSP (and asserts it). The deployed .htaccess always has it.
       - name: Run E2E and accessibility tests
         run: npx playwright test --project=${{ matrix.project }}
         env:

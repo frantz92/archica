@@ -1,0 +1,107 @@
+name: Deploy
+
+# The site is a static export uploaded to the web host (SeoHost, see README "Wdrożenie").
+# It is published when the CI workflow has passed on master, and rebuilt every New Year
+# so that the years-of-practice figure and the footer year change without a code change.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [master]
+  schedule:
+    # 1 January, 00:05 UTC: 01:05 in Poland, so the new year is already in force.
+    - cron: '5 0 1 1 *'
+    # A day later, in case the first run failed.
+    - cron: '5 6 2 1 *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List what would be uploaded, upload nothing'
+        type: boolean
+        default: false
+
+# One deployment at a time; a running upload is never cancelled halfway.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  deploy:
+    name: Build and upload
+    # After a push, only when CI succeeded.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL }}
+      DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+      DEPLOY_DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+      SITE_CHECK_URL: ${{ vars.SITE_CHECK_URL }}
+    steps:
+      - name: Check that the host is configured
+        id: config
+        run: |
+          if [ -z "$DEPLOY_HOST" ] || [ -z "$DEPLOY_USER" ] || [ -z "$DEPLOY_PATH" ]; then
+            echo "::warning::Deploy skipped: DEPLOY_HOST, DEPLOY_USER and DEPLOY_PATH are not set in the 'production' environment."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.config.outputs.ready == 'true'
+        with:
+          # After CI, exactly the commit that passed it.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-node@v7
+        if: steps.config.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+        if: steps.config.outputs.ready == 'true'
+
+      # SITE_ENV=production hides the "placeholder" tags (BLUEPRINT §3.3).
+      - name: Build the static site
+        if: steps.config.outputs.ready == 'true'
+        run: npm run build
+        env:
+          SITE_ENV: production
+
+      - name: Check the build output
+        if: steps.config.outputs.ready == 'true'
+        run: npx playwright test e2e/static-output.spec.ts --project=chromium
+
+      - name: Install lftp
+        if: steps.config.outputs.ready == 'true'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends lftp
+
+      - name: Upload to the host
+        if: steps.config.outputs.ready == 'true'
+        run: bash scripts/deploy.sh
+
+      # Only when SITE_CHECK_URL (e.g. https://archica.pl) is set and the files were really uploaded.
+      - name: Check the live site
+        if: steps.config.outputs.ready == 'true' && env.SITE_CHECK_URL != '' && inputs.dry_run != true
+        run: |
+          set -euo pipefail
+          sleep 5
+          headers="$(curl -fsSIL "$SITE_CHECK_URL/pl/")"
+          echo "$headers"
+          echo "$headers" | grep -qi '^content-security-policy:' || { echo "::error::No Content-Security-Policy header on the live site (.htaccess not applied?)"; exit 1; }
+          curl -fsSL "$SITE_CHECK_URL/pl/" | grep -q '<h1' || { echo "::error::The live home page has no heading."; exit 1; }
+          status="$(curl -s -o /dev/null -w '%{http_code}' "$SITE_CHECK_URL/pl/missing-page/")"
+          [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status instead of 404."; exit 1; }

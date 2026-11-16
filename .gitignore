@@ -42,3 +42,6 @@ next-env.d.ts
 .idea/
 playwright-report/
 test-results/
+
+# generated image variants (scripts/optimize-images.mjs)
+/public/images/optimized/

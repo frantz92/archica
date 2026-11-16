@@ -227,14 +227,14 @@ describe('PrivacyDocumentView', () => {
   });
 
   it('flags placeholder paragraphs on preview deployments only', () => {
-    vi.stubEnv('VERCEL_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'preview');
     const preview = render(
       <PrivacyDocumentView document={getPrivacyDocument('pl')} placeholderLabel="placeholder" />,
     );
     expect(preview.getAllByText('placeholder').length).toBeGreaterThan(0);
     preview.unmount();
 
-    vi.stubEnv('VERCEL_ENV', 'production');
+    vi.stubEnv('SITE_ENV', 'production');
     render(
       <PrivacyDocumentView document={getPrivacyDocument('pl')} placeholderLabel="placeholder" />,
     );

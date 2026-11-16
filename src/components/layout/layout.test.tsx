@@ -110,6 +110,14 @@ describe('NavLinks', () => {
     document.body.innerHTML = '';
   });
 
+  it('treats the exported home URL with a trailing slash as the home page', () => {
+    setNavigation('/pl/', 'pl');
+    addSections();
+    render(<NavLinks locale="pl" links={links} ariaLabel="nav" />);
+    expect(liveObserver()?.observed.size).toBe(links.length);
+    document.body.innerHTML = '';
+  });
+
   it('highlights nothing and observes nothing outside the home page', () => {
     setNavigation('/pl/privacy', 'pl');
     render(<NavLinks locale="pl" links={links} ariaLabel="nav" />);
@@ -140,14 +148,14 @@ describe('LanguageSwitcher', () => {
   it('links to the same page in every language, without an anchor', () => {
     setNavigation('/pl/privacy', 'pl');
     render(<LanguageSwitcher currentLocale="pl" options={options} ariaLabel="Wybór języka" />);
-    expect(screen.getByRole('link', { name: 'PL' })).toHaveAttribute('href', '/pl/privacy');
-    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en/privacy');
-    expect(screen.getByRole('link', { name: 'FR' })).toHaveAttribute('href', '/fr/privacy');
+    expect(screen.getByRole('link', { name: 'PL' })).toHaveAttribute('href', '/pl/privacy/');
+    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en/privacy/');
+    expect(screen.getByRole('link', { name: 'FR' })).toHaveAttribute('href', '/fr/privacy/');
   });
 
   it('points to the home page of the other language from the home page', () => {
     render(<LanguageSwitcher currentLocale="pl" options={options} ariaLabel="x" />);
-    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en');
+    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en/');
   });
 
   it('never carries over a location hash', () => {
@@ -168,10 +176,16 @@ describe('LanguageSwitcher', () => {
     expect(fr).toHaveAttribute('title', 'Français');
   });
 
+  it('reads the exported path with its trailing slash', () => {
+    setNavigation('/pl/privacy/', 'pl');
+    render(<LanguageSwitcher currentLocale="pl" options={options} ariaLabel="x" />);
+    expect(screen.getByRole('link', { name: 'FR' })).toHaveAttribute('href', '/fr/privacy/');
+  });
+
   it('copes with a path outside the current locale', () => {
     setNavigation('/something', 'pl');
     render(<LanguageSwitcher currentLocale="pl" options={options} ariaLabel="x" />);
-    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en');
+    expect(screen.getByRole('link', { name: 'EN' })).toHaveAttribute('href', '/en/');
   });
 });
 
@@ -298,23 +312,29 @@ describe('NotFoundContent', () => {
     ['en', en.notFound],
     ['fr', fr.notFound],
   ] as const)('speaks %s on a localised route', (locale, text) => {
-    setNavigation(`/${locale}/x`, locale);
+    window.history.pushState({}, '', `/${locale}/x/`);
     render(<NotFoundContent strings={strings} logoName="Archica" />);
     expect(screen.getByRole('heading', { level: 1, name: text.title })).toBeInTheDocument();
     expect(screen.getByText(text.description)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: text.homeLink })).toHaveAttribute('href', `/${locale}`);
+    expect(screen.getByRole('link', { name: text.homeLink })).toHaveAttribute(
+      'href',
+      `/${locale}/`,
+    );
   });
 
   it('falls back to Polish outside a locale route', () => {
-    setNavigation('/zzz');
+    window.history.pushState({}, '', '/zzz');
     render(<NotFoundContent strings={strings} logoName="Archica" />);
     expect(screen.getByRole('heading', { level: 1, name: pl.notFound.title })).toBeInTheDocument();
   });
 
   it('falls back to Polish for an unknown language segment', () => {
-    setNavigation('/de/x', 'de');
+    window.history.pushState({}, '', '/de/x/');
     render(<NotFoundContent strings={strings} logoName="Archica" />);
-    expect(screen.getByRole('link', { name: pl.notFound.homeLink })).toHaveAttribute('href', '/pl');
+    expect(screen.getByRole('link', { name: pl.notFound.homeLink })).toHaveAttribute(
+      'href',
+      '/pl/',
+    );
   });
 
   it('shows the logo with its accessible name', () => {
@@ -347,7 +367,7 @@ describe('Header', () => {
 
 describe('Footer', () => {
   it('shows the company data and the licence placeholder', () => {
-    vi.stubEnv('VERCEL_ENV', 'preview');
+    vi.stubEnv('SITE_ENV', 'preview');
     render(<Footer locale="pl" dictionary={pl} />);
     expect(screen.getByText(site.fullName)).toBeInTheDocument();
     expect(screen.getByText(new RegExp(site.taxId))).toBeInTheDocument();

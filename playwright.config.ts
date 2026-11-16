@@ -28,7 +28,7 @@ export default defineConfig({
   // run `npm run build` first. An already running server on the port is reused locally.
   webServer: {
     command: `npm run start -- --port ${port}`,
-    url: `http://localhost:${port}/pl`,
+    url: `http://localhost:${port}/pl/`,
     reuseExistingServer: !isCI,
     timeout: 120_000,
   },

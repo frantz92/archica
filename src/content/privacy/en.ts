@@ -35,7 +35,6 @@ export const privacyEn: PrivacyDocument = {
           type: 'list',
           items: [
             'technical data related to visits to the website (e.g. IP address, browser type, pages visited, date and time), processed by the hosting provider in order to deliver the website and keep it secure;',
-            'aggregated visit statistics, collected with Vercel Analytics in order to understand how the website is used;',
             'data you provide in telephone or email correspondence (e.g. name, email address, telephone number, content of the message), processed in order to reply to your enquiry and to discuss your project.',
           ],
         },
@@ -47,21 +46,17 @@ export const privacyEn: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'We process data on the basis of Article 6(1)(f) of the GDPR (the controller’s legitimate interest: maintaining and securing the website, statistics, answering enquiries) and Article 6(1)(b) of the GDPR where contact concerns steps taken before entering into a contract at the request of the data subject.',
+          text: 'We process data on the basis of Article 6(1)(f) of the GDPR (the controller’s legitimate interest: maintaining and securing the website, answering enquiries) and Article 6(1)(b) of the GDPR where contact concerns steps taken before entering into a contract at the request of the data subject.',
         },
       ],
     },
     {
       id: 'hosting',
-      heading: 'Hosting and analytics',
+      heading: 'Hosting',
       blocks: [
         {
           type: 'paragraph',
-          text: 'The website is hosted by Vercel Inc. (USA), which is also the provider of Vercel Analytics. Technical data may be processed outside the European Economic Area, including in the United States, using the mechanisms provided for in the GDPR, e.g. standard contractual clauses.',
-        },
-        {
-          type: 'paragraph',
-          text: 'Vercel Analytics is used for visit statistics and, according to the provider, does not use cookies for this purpose.',
+          text: 'The website is provided by the hosting provider SeoHost sp. z o.o., ul. Obornicka 330, 60-689 Poznań, Poland. The servers are located in Poland (in Polish data centres). The website uses no analytics tools and no third-party scripts.',
         },
       ],
     },
@@ -81,7 +76,7 @@ export const privacyEn: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Recipients of data may include IT service providers (hosting, analytics, email) acting on our behalf.',
+          text: 'Recipients of data may include IT service providers (hosting, email) acting on our behalf.',
         },
       ],
     },
@@ -97,7 +92,7 @@ export const privacyEn: PrivacyDocument = {
         },
         {
           type: 'paragraph',
-          text: 'Technical and statistical data is kept for the period set by the hosting and analytics providers: [to be completed].',
+          text: 'Technical data is kept for the period set by the hosting provider: [to be completed].',
           placeholder: true,
         },
       ],

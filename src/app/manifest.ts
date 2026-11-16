@@ -4,11 +4,14 @@ import { site } from '@/content/site';
 import { defaultLocale } from '@/i18n/config';
 import { brandColors } from '@/lib/brand';
 
+// Required for a static export: the file is written once, at build time.
+export const dynamic = 'force-static';
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: site.fullName,
     short_name: site.brand,
-    start_url: `/${defaultLocale}`,
+    start_url: `/${defaultLocale}/`,
     display: 'standalone',
     lang: defaultLocale,
     theme_color: brandColors.coal,

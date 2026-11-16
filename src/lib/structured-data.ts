@@ -12,7 +12,7 @@ export function buildProfessionalService(locale: Locale): Record<string, unknown
     '@type': 'ProfessionalService',
     name: site.brand,
     legalName: site.fullName,
-    url: `${site.domain}/${locale}`,
+    url: `${site.domain}/${locale}/`,
     logo: `${site.domain}/apple-icon`,
     image: ogImageUrl(locale),
     telephone: site.phones.map((phone) => phone.display),

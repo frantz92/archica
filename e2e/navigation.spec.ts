@@ -71,7 +71,7 @@ test.describe('language switch', () => {
       );
       expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(500);
       await page.locator(`header a[hreflang="${target}"]`).first().click();
-      await page.waitForURL(`**/${target}`);
+      await page.waitForURL(`**/${target}/`);
       await expect(page.locator('html')).toHaveAttribute('lang', target);
       await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 10_000 }).toBe(0);
       expect(new URL(page.url()).hash).toBe('');
@@ -83,7 +83,7 @@ test.describe('language switch', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/pl/privacy');
     await page.locator('header a[hreflang="fr"]').first().click();
-    await page.waitForURL('**/fr/privacy');
+    await page.waitForURL('**/fr/privacy/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       plain(dictionaries.fr.meta.privacyTitle),
     );

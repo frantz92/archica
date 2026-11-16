@@ -1,6 +1,6 @@
 # BLUEPRINT.md — archica.pl
 
-Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.4, 2026-11-15 (zmiany względem 1.0: §13b). **Pierwszeństwo treści ma `BLUEPRINT-ANEKS-1.md`** (zatwierdzone teksty i zmiany treści z 2026-11-15); w razie różnic między tym dokumentem a aneksem w sprawie tekstów i danych obowiązuje aneks.
+Instrukcja wykonawcza dla modelu kodującego (Sonnet 5.5). Wersja 1.5, 2026-11-16 (zmiany względem 1.0: §13b). **Pierwszeństwo treści ma `BLUEPRINT-ANEKS-1.md`** (zatwierdzone teksty i zmiany treści z 2026-11-15); w razie różnic między tym dokumentem a aneksem w sprawie tekstów i danych obowiązuje aneks.
 Źródło prawdy o faktach: „Specyfikacja strony Archica (wersja 1.2)". Ten dokument ją uszczegóławia i w kilku punktach świadomie zmienia (lista w §13).
 
 ---
@@ -33,7 +33,7 @@ Jeżeli któregoś pliku brakuje, zgłoś to i nie generuj zamienników.
 | React | 19.x zgodny z Next. |
 | Tailwind CSS | 4.x, konfiguracja w CSS (`@theme`), bez `tailwind.config.*`. |
 | Node | 22 LTS lub 24 (pole `engines` w `package.json`). |
-| Zależności runtime | `next`, `react`, `react-dom`, `next-themes`, `@vercel/analytics`, `server-only`. Nic więcej. |
+| Zależności runtime | `next`, `react`, `react-dom`, `next-themes`, `server-only`. Nic więcej. |
 | Zależności dev | `typescript`, `@types/*`, `tailwindcss`, `@tailwindcss/postcss`, `eslint`, `eslint-config-next`, `prettier`, `prettier-plugin-tailwindcss`. |
 | Świadomie pominięte | shadcn/ui, base-ui, lucide-react, framer-motion/motion, next-intl, biblioteki karuzel i lightboxów. Ikon jest 5, są własnymi komponentami SVG. |
 | Skrypty | `dev`, `build`, `start`, `lint` (ESLint CLI, nie `next lint`), `typecheck` (`tsc --noEmit`), `format`, `check:placeholders` (§3.3). |
@@ -227,7 +227,7 @@ Tytuły i kategorie są tłumaczone (słowniki, teksty EN i FR w aneksie), nazwy
 Placeholderami są wyłącznie: sześć zdjęć (wraz z ich tekstami alternatywnymi), numer uprawnień i okresy przechowywania danych w polityce prywatności (Aneks 1, A#3). Statystyki w hero (30 / 86 / 26 / 15) i cztery realizacje portfolio są potwierdzonymi danymi.
 
 - Każdy ma komentarz `// PLACEHOLDER:` z opisem, co podmienić.
-- Na wdrożeniach podglądowych (`VERCEL_ENV !== 'production'`) i lokalnie przy elemencie widać małą plakietkę „placeholder". Na produkcji plakietek nie ma, poza numerem uprawnień, który zawsze jest jawnie fikcyjny.
+- Na wdrożeniach podglądowych (`SITE_ENV !== 'production'`) i lokalnie przy elemencie widać małą plakietkę „placeholder". Na produkcji plakietek nie ma, poza numerem uprawnień, który zawsze jest jawnie fikcyjny.
 - `npm run check:placeholders` (`scripts/check-placeholders.mjs`): wypisuje wszystkie znaczniki `PLACEHOLDER` z `src/content` i `src/i18n`, kończy się kodem 1, jeśli jakiś istnieje. Nie jest częścią `build`; służy jako kontrola przed publikacją.
 
 ### 3.4 Teksty
@@ -418,7 +418,7 @@ Przycisk główny: wypełnienie `--accent`, tekst `--on-accent`, styl `body` 500
 
 - Układ: h1, data aktualizacji, treść w jednej kolumnie (maks. 68ch) w kolumnach 1–8 na desktopie; sekcje z `<h2>`.
 - Treść z `src/content/privacy/{locale}.ts` jako struktura (lista sekcji: nagłówek + akapity/listy), renderowana jednym komponentem.
-- Zakres: administrator danych (dane z §3.1), hosting i analityka Vercel (możliwe przetwarzanie poza EOG, m.in. w USA), brak formularza, brak własnych plików cookie, kontakt telefoniczny i mailowy, prawa osób, których dane dotyczą, prawo skargi do Prezesa UODO.
+- Zakres: administrator danych (dane z §3.1), hosting SeoHost (dane operatora i lokalizacja serwerów jako placeholder do uzupełnienia), brak analityki, brak formularza, brak własnych plików cookie, kontakt telefoniczny i mailowy, prawa osób, których dane dotyczą, prawo skargi do Prezesa UODO.
 - Okresy przechowywania korespondencji: jawny placeholder „[do uzupełnienia]" z flagą `placeholder`.
 - Na górze pliku komentarz: tekst jest projektem wymagającym weryfikacji prawnej. Nie dodawaj tej informacji na stronie.
 
@@ -490,10 +490,10 @@ Nagłówki (w `next.config.ts`, dla wszystkich ścieżek):
 | `Cross-Origin-Opener-Policy` | `same-origin` |
 
 - CSP bez nonce jest świadomym wyborem: nonce wymusiłby renderowanie dynamiczne każdej strony, a strona nie ma formularzy, danych użytkownika ani skryptów zewnętrznych. `'unsafe-inline'` w `script-src` jest potrzebne dla skryptów startowych Next.js i `next-themes`.
-- W trybie deweloperskim dopuść dodatkowo `'unsafe-eval'` i źródła skryptu debugowego Vercel Analytics. Na wdrożeniach podglądowych dopuść `https://vercel.live` (pasek narzędzi Vercel) albo nie nakładaj tam CSP. Produkcja dostaje wersję z tabeli.
-- Vercel Analytics: komponent `<Analytics />` z `@vercel/analytics/next` w layoucie. Bez innych skryptów zewnętrznych, bez osadzonych map, bez fontów z CDN.
+- Eksport statyczny nie ma `headers()` Next.js: nagłówki z tabeli trafiają do `out/.htaccess` (skrypt `scripts/build-htaccess.mjs`) z jednego źródła, `scripts/lib/site-config.mjs`, którego używa też lokalny serwer testowy. Tryb deweloperski (`next dev`) działa bez CSP.
+- Bez analityki, bez skryptów zewnętrznych, bez osadzonych map, bez fontów z CDN.
 - Linki zewnętrzne: `rel="noopener noreferrer"`. Brak sekretów i zmiennych środowiskowych wymaganych do builda.
-- `README.md` zawiera listę kontrolną publikacji: `npm run check:placeholders`; weryfikacja prawna polityki prywatności; podpięcie domeny archica.pl i przekierowanie `www` → domena główna; **rekordy poczty (MX, SPF, DKIM) pozostają bez zmian** (dodajemy tylko rekordy wskazane przez Vercel, nie przenosimy serwerów nazw); test nagłówków; Lighthouse.
+- `README.md` zawiera listę kontrolną publikacji: `npm run check:placeholders`; weryfikacja prawna polityki prywatności; podpięcie domeny archica.pl i przekierowanie `www` → domena główna; **poczta (MX, SPF, DKIM) działa po przeniesieniu** (skrzynki skopiowane, strefa DNS gotowa przed zmianą serwerów nazw); test nagłówków; Lighthouse.
 
 ---
 
@@ -572,3 +572,4 @@ Zatwierdzone przez użytkownika 2026-11-14. Przy sprzeczności z §6.3 i §6.5 (
 | 26 | Jeden plik `globals.css`; powielone strażniki języka i listy nawigacji; brak testów | style w `src/styles/` (wynik kompilacji identyczny bajt w bajt), `lib/navigation.ts`, `lib/route-locale.ts`, `mapLocales`; testy Vitest (próg pokrycia 80%) | czystszy kod, siatka bezpieczeństwa | refaktor |
 | 27 | Brak testów w przeglądarce | Testy E2E Playwright (Chromium, WebKit, mobilny Safari w CI), audyt dostępności axe (WCAG 2.2 AA), test nagłówków z §10, test budżetu pierwszego ekranu z §6.2 | regresje zachowania i dostępności wychodzą w CI | testy |
 | 28 | Brak automatyzacji | GitHub Actions: bramka jakości (próg pokrycia 80%), E2E na Chromium/WebKit/mobilnym Safari, Lighthouse z budżetami z §11, bezpieczeństwo (audit, CodeQL, gitleaks, nagłówki z §10), Dependabot, workflow gotowości do publikacji; Vercel buduje podglądy i produkcję przez integrację Git | automatyczna ochrona jakości i produkcji | CI/CD |
+| 29 | Hosting Vercel, serwer Node, `headers()`/`redirects()`/ISR, Vercel Analytics | Hosting SeoHost, statyczny eksport (`output: 'export'`, `trailingSlash`), obrazy WebP generowane przed buildem i własny loader, `out/.htaccess` (HTTPS, `/` → `/pl/`, nagłówki z §10, cache, 404) z jednego źródła `scripts/lib/site-config.mjs`, globalna 404 z językiem wybieranym w przeglądarce, bez analityki, wdrożenie z GitHub Actions (`deploy.yml`) także 1 stycznia (zmiana liczby lat praktyki) | wizytówka bez serwera do utrzymania, koszt 0 zł ponad istniejący hosting | E |

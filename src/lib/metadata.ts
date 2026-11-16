@@ -11,7 +11,8 @@ export const pagePaths: readonly PagePath[] = ['', '/privacy'];
 export const OG_IMAGE_SIZE = { width: 1200, height: 630 } as const;
 
 export function pageUrl(locale: Locale, path: PagePath): string {
-  return `${site.domain}/${locale}${path}`;
+  // Trailing slash: that is the URL of the exported page (`/pl/privacy/index.html`).
+  return `${site.domain}/${locale}${path}/`;
 }
 
 /** hreflang map for one page: every language plus x-default pointing to the default language. */

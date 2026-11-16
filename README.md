@@ -1,7 +1,7 @@
 # Archica.pl
 
 Strona Studia Architektury i Urbanistyki Archica (Stargard, od 1996 r.). Next.js 16 (App Router),
-React 19, TypeScript (strict), Tailwind CSS 4. Języki: `/pl` (domyślny), `/en`, `/fr`. Hosting: Vercel.
+React 19, TypeScript (strict), Tailwind CSS 4. Języki: `/pl` (domyślny), `/en`, `/fr`. Hosting: SeoHost (statyczny eksport, Apache).
 
 Plan wykonawczy: [`BLUEPRINT.md`](./BLUEPRINT.md). Zasady pracy: [`CLAUDE.md`](./CLAUDE.md).
 
@@ -67,8 +67,9 @@ Google Chrome; `E2E_ALL=1` wymusza pełną macierz (wymaga przeglądarek Playwri
 
 ## CI/CD
 
-Hosting i wdrożenia: Vercel łączy się z repozytorium przez Git (podgląd każdego PR i produkcja po merge do
-`master`). GitHub Actions odpowiada za kontrolę jakości; pliki w `.github/workflows/`.
+Strona jest **statycznym eksportem** (`output: 'export'`): `npm run build` tworzy katalog `out/` ze zwykłymi
+plikami, które workflow `deploy.yml` wysyła na hosting SeoHost po zielonym CI na `master` (opis w sekcji
+„Wdrożenie na SeoHost" niżej). Pozostałe workflow'y kontrolują jakość; pliki w `.github/workflows/`.
 
 | Workflow                                              | Kiedy                      | Co sprawdza                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ----------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -144,7 +145,7 @@ więc nowy plik dostaje nowy skrót w adresie (bez problemów z pamięcią podr�
 ## Placeholdery
 
 Każdy placeholder ma komentarz `// PLACEHOLDER:`. Na lokalnym środowisku i na wdrożeniach podglądowych
-(`VERCEL_ENV !== 'production'`) przy zdjęciach widać plakietkę „placeholder"; na produkcji plakietek nie ma
+(`SITE_ENV !== 'production'`) przy zdjęciach widać plakietkę „placeholder"; na produkcji plakietek nie ma
 (poza numerem uprawnień, który jest zawsze jawnie fikcyjny). Statystyki w hero (30 / 86 / 26 / 15) i cztery
 realizacje w portfolio to potwierdzone dane, nie placeholdery.
 
@@ -157,26 +158,60 @@ realizacje w portfolio to potwierdzone dane, nie placeholdery.
 `npm run check:placeholders` wypisuje wszystkie znaczniki `PLACEHOLDER` z `src/content` i `src/i18n`
 i kończy się kodem 1, jeśli którykolwiek istnieje.
 
+## Wdrożenie na SeoHost
+
+**Jak to działa.** `npm run build` robi kolejno: warianty obrazów WebP (`scripts/optimize-images.mjs`, bo
+hosting statyczny nie ma serwera obrazów), eksport do `out/`, plik `out/.htaccess` (HTTPS, przekierowanie
+`/` → `/pl/`, nagłówki bezpieczeństwa, cache, strona 404; `scripts/build-htaccess.mjs`) i usunięcie
+wielomegabajtowych oryginałów zdjęć z `out/` (`scripts/prune-output.mjs`). Reguły serwera mają jedno źródło,
+`scripts/lib/site-config.mjs`; używa go też lokalny serwer (`npm run start`, `scripts/static-server.mjs`),
+więc testy E2E sprawdzają te same reguły, które trafiają do `.htaccess`.
+
+**Lokalnie:** `npm run build && npm run start` (port 3000 lub `-- --port 3100`), strona pod
+`http://localhost:3000/pl/`.
+
+**Automatycznie (`.github/workflows/deploy.yml`):**
+
+- po zielonym CI na `master` (budowanie z `SITE_ENV=production`, bez plakietek „placeholder"),
+- **1 stycznia o 00:05 UTC** (i awaryjnie 2 stycznia): przebudowa, żeby liczba „lat praktyki" i rok w stopce
+  zmieniły się bez edycji kodu,
+- ręcznie: _Actions → Deploy → Run workflow_ (opcja `dry_run` pokazuje, co zostałoby wysłane, nic nie wysyła).
+
+**Konfiguracja w GitHubie** (_Settings → Environments → New environment → `production`_):
+
+| Nazwa                | Rodzaj   | Wartość                                                                                        |
+| -------------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| `DEPLOY_HOST`        | secret   | serwer FTP/SSH z panelu SeoHost                                                                |
+| `DEPLOY_USER`        | secret   | użytkownik FTP/SSH                                                                             |
+| `DEPLOY_PASSWORD`    | secret   | hasło (bez spacji) **albo** `DEPLOY_SSH_KEY` z kluczem prywatnym                               |
+| `DEPLOY_PATH`        | secret   | katalog strony na serwerze, np. `public_html` (nigdy `/`; zawartość katalogu jest nadpisywana) |
+| `DEPLOY_KNOWN_HOSTS` | secret   | opcjonalnie: wpis `known_hosts` serwera (przypina klucz hosta SFTP)                            |
+| `DEPLOY_PROTOCOL`    | variable | `sftp` (domyślnie), `ftps` lub `ftp`                                                           |
+| `DEPLOY_PORT`        | variable | opcjonalnie, jeśli inny niż domyślny                                                           |
+| `SITE_CHECK_URL`     | variable | opcjonalnie, np. `https://archica.pl`: po wysyłce workflow sprawdza stronę, nagłówek CSP i 404 |
+
+Bez `DEPLOY_HOST`, `DEPLOY_USER` i `DEPLOY_PATH` workflow tylko ostrzega i nic nie wysyła.
+
 ## Lista kontrolna publikacji
 
 - [ ] `npm run check:placeholders` nie zgłasza żadnych pozycji.
 - [ ] Polityka prywatności przeszła weryfikację prawną (tekst jest projektem); zaktualizowana data zmiany.
-- [ ] Domena `archica.pl` podpięta w Vercel, a `www.archica.pl` przekierowuje na domenę główną.
-- [ ] **Rekordy poczty (MX, SPF, DKIM) pozostają bez zmian.** Dodajemy tylko rekordy wskazane przez Vercel;
-      nie przenosimy serwerów nazw.
+- [ ] Domena `archica.pl` wskazuje na hosting w SeoHost, a `www.archica.pl` przekierowuje na domenę główną (robi to `.htaccess`).
+- [ ] **Poczta (MX, SPF, DKIM) działa po przeniesieniu**: skrzynki skopiowane, rekordy w strefie DNS gotowe
+      przed zmianą serwerów nazw.
 - [ ] Test nagłówków bezpieczeństwa na wdrożeniu (CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`,
       `Permissions-Policy`, `X-Frame-Options`, `Cross-Origin-Opener-Policy`), np. securityheaders.com.
       HSTS jest bez `includeSubDomains` i `preload`, dopóki nie potwierdzisz, że żadna subdomena
       archica.pl nie działa po HTTP.
-- [ ] Na wdrożeniu podglądowym nie ma błędów CSP w konsoli (podgląd dopuszcza `vercel.live`); na produkcji
-      obowiązuje CSP z `next.config.ts`.
+- [ ] W konsoli przeglądarki na produkcji nie ma błędów CSP (CSP jest w `scripts/lib/site-config.mjs`,
+      trafia do `.htaccess`).
 - [ ] Lighthouse (mobile) ≥ 95 w każdej kategorii na `/pl`; LCP < 2,0 s, CLS < 0,02, INP < 200 ms.
 - [ ] Walidacja danych strukturalnych (Schema Markup Validator / Rich Results Test) i podgląd Open Graph.
-- [ ] Vercel Analytics włączone w projekcie Vercel.
+- [ ] Zdecydowano o analityce (obecnie jej nie ma; polityka prywatności mówi, że strona jej nie używa).
 
 ## Decyzje projektowe warte zapamiętania
 
-- Brak `proxy.ts`/middleware i wykrywania języka: `/` przekierowuje na `/pl` (308), język zmienia się tylko
+- Brak `proxy.ts`/middleware i wykrywania języka: `/` przekierowuje na `/pl/` (301, w `.htaccess`), język zmienia się tylko
   ręcznie.
 - CSP bez nonce jest świadomym wyborem (nonce wymusiłby renderowanie dynamiczne); `'unsafe-inline'` w
   `script-src` jest potrzebne dla skryptów startowych Next.js i `next-themes`.

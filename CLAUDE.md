@@ -31,5 +31,5 @@ Przed każdym etapem przeczytaj `BLUEPRINT.md` w całości. Jeśli repo zawiera 
 
 ## Kontekst biznesowy (skrót)
 Studio Architektury i Urbanistyki Archica, Stargard, od 1996 r. Odbiorcy: inwestorzy prywatni i samorządy.
-Hosting: Vercel (+ Vercel Analytics). Języki: /pl (domyślny), /en, /fr, bez formularza kontaktowego.
+Hosting: SeoHost (statyczny eksport `out/`, Apache; wdrożenie z GitHub Actions), bez analityki. Języki: /pl (domyślny), /en, /fr, bez formularza kontaktowego.
 Motyw ciemny domyślny, przełącznik jasny/ciemny. Strona polityki prywatności w 3 językach, linkowana ze stopki.

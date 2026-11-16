@@ -9,9 +9,6 @@ import { createPageMetadata } from '@/lib/metadata';
 import { resolveRoute } from '@/lib/route-locale';
 import { getYearsOfPractice } from '@/lib/years';
 
-// Rebuild daily so the years-of-practice figure does not go stale (BLUEPRINT §3.1).
-export const revalidate = 86400;
-
 export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
   const {
     locale,

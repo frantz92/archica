@@ -7,11 +7,11 @@ interface PlaceholderBadgeProps {
 }
 
 /**
- * Small "placeholder" tag, visible locally and on preview deployments only
- * (VERCEL_ENV !== 'production', BLUEPRINT §3.3). Renders nothing in production.
+ * Small "placeholder" tag, visible locally and in CI builds only. The production build
+ * (deploy workflow) sets SITE_ENV=production, which hides it (BLUEPRINT §3.3).
  */
 export function PlaceholderBadge({ label, className }: PlaceholderBadgeProps) {
-  if (process.env.VERCEL_ENV === 'production') {
+  if (process.env.SITE_ENV === 'production') {
     return null;
   }
   return (

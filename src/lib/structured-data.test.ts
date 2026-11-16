@@ -16,7 +16,7 @@ describe('buildProfessionalService', () => {
     expect(data).toMatchObject({
       name: site.brand,
       legalName: site.fullName,
-      url: `${site.domain}/pl`,
+      url: `${site.domain}/pl/`,
       email: site.email,
       foundingDate: String(site.foundedYear),
       vatID: `PL${site.taxId}`,
@@ -55,6 +55,6 @@ describe('buildProfessionalService', () => {
   });
 
   it('points the URL at the requested locale', () => {
-    expect(buildProfessionalService('fr').url).toBe(`${site.domain}/fr`);
+    expect(buildProfessionalService('fr').url).toBe(`${site.domain}/fr/`);
   });
 });

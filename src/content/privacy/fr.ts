@@ -35,7 +35,6 @@ export const privacyFr: PrivacyDocument = {
           type: 'list',
           items: [
             'des données techniques liées à la visite du site (par exemple l’adresse IP, le type de navigateur, les pages consultées, la date et l’heure), traitées par l’hébergeur afin de fournir le site et d’en assurer la sécurité\u00A0;',
-            'des statistiques de fréquentation agrégées, collectées avec Vercel Analytics afin de comprendre comment le site est utilisé\u00A0;',
             'les données que vous nous communiquez par téléphone ou par e-mail (par exemple nom, adresse e-mail, numéro de téléphone, contenu du message), traitées afin de répondre à votre demande et d’échanger sur votre projet.',
           ],
         },
@@ -47,21 +46,17 @@ export const privacyFr: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Nous traitons les données sur le fondement de l’article 6, paragraphe 1, point f) du RGPD (intérêt légitime du responsable du traitement\u00A0: exploitation et sécurisation du site, statistiques, réponse aux demandes) et de l’article 6, paragraphe 1, point b) du RGPD lorsque le contact concerne des mesures précontractuelles prises à la demande de la personne concernée.',
+          text: 'Nous traitons les données sur le fondement de l’article 6, paragraphe 1, point f) du RGPD (intérêt légitime du responsable du traitement\u00A0: exploitation et sécurisation du site, réponse aux demandes) et de l’article 6, paragraphe 1, point b) du RGPD lorsque le contact concerne des mesures précontractuelles prises à la demande de la personne concernée.',
         },
       ],
     },
     {
       id: 'hosting',
-      heading: 'Hébergement et statistiques',
+      heading: 'Hébergement',
       blocks: [
         {
           type: 'paragraph',
-          text: 'Le site est hébergé par Vercel Inc. (États-Unis), qui fournit également Vercel Analytics. Les données techniques peuvent être traitées en dehors de l’Espace économique européen, notamment aux États-Unis, selon les mécanismes prévus par le RGPD, par exemple les clauses contractuelles types.',
-        },
-        {
-          type: 'paragraph',
-          text: 'Vercel Analytics sert à établir des statistiques de fréquentation et, selon son fournisseur, n’utilise pas de cookies à cette fin.',
+          text: 'Le site est fourni par l’hébergeur SeoHost sp. z o.o., ul. Obornicka 330, 60-689 Poznań, Pologne. Les serveurs sont situés en Pologne (dans des centres de données polonais). Le site n’utilise aucun outil d’analyse ni aucun script tiers.',
         },
       ],
     },
@@ -81,7 +76,7 @@ export const privacyFr: PrivacyDocument = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Les destinataires des données peuvent être des prestataires de services informatiques (hébergement, statistiques, messagerie) agissant pour notre compte.',
+          text: 'Les destinataires des données peuvent être des prestataires de services informatiques (hébergement, messagerie) agissant pour notre compte.',
         },
       ],
     },
@@ -97,7 +92,7 @@ export const privacyFr: PrivacyDocument = {
         },
         {
           type: 'paragraph',
-          text: 'Les données techniques et statistiques sont conservées pendant la durée fixée par les prestataires d’hébergement et de statistiques\u00A0: [à compléter].',
+          text: 'Les données techniques sont conservées pendant la durée fixée par l’hébergeur\u00A0: [à compléter].',
           placeholder: true,
         },
       ],

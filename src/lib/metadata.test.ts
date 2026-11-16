@@ -14,11 +14,11 @@ import {
 
 describe('pageUrl', () => {
   it('builds the home URL of a locale', () => {
-    expect(pageUrl('pl', '')).toBe(`${site.domain}/pl`);
+    expect(pageUrl('pl', '')).toBe(`${site.domain}/pl/`);
   });
 
   it('builds a sub-page URL', () => {
-    expect(pageUrl('fr', '/privacy')).toBe(`${site.domain}/fr/privacy`);
+    expect(pageUrl('fr', '/privacy')).toBe(`${site.domain}/fr/privacy/`);
   });
 });
 
@@ -26,12 +26,12 @@ describe('languageAlternates', () => {
   it('lists every locale plus x-default pointing at the default language', () => {
     const map = languageAlternates('');
     expect(Object.keys(map).sort()).toEqual([...locales, 'x-default'].sort());
-    expect(map['x-default']).toBe(`${site.domain}/pl`);
+    expect(map['x-default']).toBe(`${site.domain}/pl/`);
   });
 
   it('keeps the sub-path for every language', () => {
     const map = languageAlternates('/privacy');
-    for (const locale of locales) expect(map[locale]).toBe(`${site.domain}/${locale}/privacy`);
+    for (const locale of locales) expect(map[locale]).toBe(`${site.domain}/${locale}/privacy/`);
   });
 });
 
@@ -55,7 +55,7 @@ describe('createPageMetadata', () => {
     const meta = createPageMetadata(input);
     expect(meta.title).toBe('Privacy policy');
     expect(meta.description).toBe('Description');
-    expect(meta.alternates?.canonical).toBe(`${site.domain}/en/privacy`);
+    expect(meta.alternates?.canonical).toBe(`${site.domain}/en/privacy/`);
     expect(meta.alternates?.languages).toEqual(languageAlternates('/privacy'));
   });
 
@@ -66,7 +66,7 @@ describe('createPageMetadata', () => {
       siteName: site.brand,
       locale: 'en_GB',
       alternateLocale: ['pl_PL', 'fr_FR'],
-      url: `${site.domain}/en/privacy`,
+      url: `${site.domain}/en/privacy/`,
       title: 'Privacy policy — Archica',
     });
     expect(meta.openGraph?.images).toEqual([

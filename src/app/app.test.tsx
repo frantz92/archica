@@ -14,16 +14,14 @@ import LocaleLayout, {
   generateStaticParams,
   viewport,
 } from './[locale]/layout';
-import NotFound from './[locale]/not-found';
+import GlobalNotFound from './global-not-found';
 import HomePage, { generateMetadata as homeMetadata } from './[locale]/page';
 import PrivacyPage, { generateMetadata as privacyMetadata } from './[locale]/privacy/page';
-import UnknownPage from './[locale]/[...rest]/page';
 import manifest from './manifest';
 import robots from './robots';
 import sitemap from './sitemap';
 
 vi.mock('next/font/google', () => ({ Inter: () => ({ variable: 'font-inter-var' }) }));
-vi.mock('@vercel/analytics/next', () => ({ Analytics: () => <span data-testid="analytics" /> }));
 
 /** Route props as Next.js passes them: `params` is a promise. */
 const route = (locale: string) => ({ params: Promise.resolve({ locale }) }) as never;
@@ -34,7 +32,7 @@ describe('manifest', () => {
     expect(data).toMatchObject({
       name: site.fullName,
       short_name: site.brand,
-      start_url: '/pl',
+      start_url: '/pl/',
       display: 'standalone',
       lang: 'pl',
       theme_color: brandColors.coal,
@@ -102,7 +100,6 @@ describe('locale layout', () => {
     expect(html).toContain('<footer');
     expect(html).toContain('application/ld+json');
     expect(html).toContain('"@type":"ProfessionalService"');
-    expect(html).toContain('data-testid="analytics"');
   });
 
   it('rejects an unknown language with a 404', async () => {
@@ -162,13 +159,11 @@ describe('privacy page', () => {
   });
 });
 
-describe('not found routes', () => {
-  it('turns any unknown path below a language into a 404', () => {
-    expect(() => UnknownPage()).toThrow();
-  });
-
-  it('renders the localised 404 for the current route', () => {
-    render(<NotFound />);
+describe('global 404 page', () => {
+  it('renders the 404 with the default language until the browser has read the address', () => {
+    render(<GlobalNotFound />, {
+      container: document.body.appendChild(document.createElement('div')),
+    });
     expect(screen.getByRole('heading', { level: 1, name: pl.notFound.title })).toBeInTheDocument();
   });
 });

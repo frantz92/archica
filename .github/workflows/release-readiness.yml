@@ -35,7 +35,10 @@ jobs:
         continue-on-error: true
         run: npm run check
 
+      # The same build as the deployed one (no "placeholder" tags).
       - run: npm run build
+        env:
+          SITE_ENV: production
 
       - name: Browsers
         run: npx playwright install --with-deps chromium webkit

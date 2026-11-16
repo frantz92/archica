@@ -26,8 +26,9 @@ interface LanguageSwitcherProps {
  */
 export function LanguageSwitcher({ currentLocale, options, ariaLabel }: LanguageSwitcherProps) {
   const pathname = usePathname();
+  // `/pl/privacy/` -> `/privacy` (the exported pages end with a slash, added back in the href).
   const rest = pathname.startsWith(`/${currentLocale}`)
-    ? pathname.slice(currentLocale.length + 1)
+    ? pathname.slice(currentLocale.length + 1).replace(/\/$/, '')
     : '';
 
   return (
@@ -38,7 +39,7 @@ export function LanguageSwitcher({ currentLocale, options, ariaLabel }: Language
           return (
             <li key={locale}>
               <a
-                href={`/${locale}${rest}`}
+                href={`/${locale}${rest}/`}
                 lang={locale}
                 hrefLang={locale}
                 title={options[locale].name}

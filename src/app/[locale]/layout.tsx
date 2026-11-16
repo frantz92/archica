@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -55,7 +54,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           <Footer locale={locale} dictionary={dictionary} />
         </ThemeProvider>
         <JsonLd data={buildProfessionalService(locale)} />
-        <Analytics />
       </body>
     </html>
   );

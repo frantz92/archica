@@ -3,6 +3,9 @@ import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { languageAlternates, pagePaths, pageUrl } from '@/lib/metadata';
 
+// Required for a static export: the file is written once, at build time.
+export const dynamic = 'force-static';
+
 /** Six URLs (3 languages × 2 pages), each with its hreflang alternates. */
 export default function sitemap(): MetadataRoute.Sitemap {
   return pagePaths.flatMap((path) =>

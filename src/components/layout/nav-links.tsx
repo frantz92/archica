@@ -16,7 +16,8 @@ interface NavLinksProps {
 /** Section links; the section currently in view gets aria-current. No link is active off the home page. */
 export function NavLinks({ locale, links, ariaLabel }: NavLinksProps) {
   const pathname = usePathname();
-  const isHome = pathname === `/${locale}`;
+  // The exported home page is served at `/pl/` (trailing slash).
+  const isHome = pathname.replace(/\/$/, '') === `/${locale}`;
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {

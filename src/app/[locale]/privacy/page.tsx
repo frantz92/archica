@@ -7,9 +7,6 @@ import { site } from '@/content/site';
 import { createPageMetadata } from '@/lib/metadata';
 import { resolveRoute } from '@/lib/route-locale';
 
-// Rebuild daily so the copyright year in the footer does not go stale.
-export const revalidate = 86400;
-
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/privacy'>): Promise<Metadata> {
