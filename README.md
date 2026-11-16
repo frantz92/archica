@@ -180,18 +180,29 @@ Wdrożenie startuje tylko:
 
 Przed ręcznym wdrożeniem upewnij się, że CI na `master` jest zielone.
 
+**Wdrożenie z własnego komputera** (gdy GitHub Actions się zacina albo jest niedostępny): plik `.env.deploy`
+w katalogu projektu (jest w `.gitignore`) z liniami `DEPLOY_HOST=...`, `DEPLOY_USER=...`, `DEPLOY_PATH=...`,
+`DEPLOY_PROTOCOL=sftp`, `DEPLOY_PORT=...` i `DEPLOY_SSH_KEY_FILE=/ścieżka/do/klucza`, potem `npm run deploy`.
+Wystarczy Python 3 i `sftp` z macOS (nic nie trzeba instalować). Z `DEPLOY_DRY_RUN=1` w tym pliku skrypt
+tylko wypisuje, co wyśle i co usunie.
+
+SeoHost (hosting współdzielony) przyjmuje **tylko logowanie kluczem SSH** i **tylko SFTP** (bez poleceń w
+powłoce, więc bez `rsync`), na porcie z Panelu Klienta (nie 22). Klucz publiczny dodaje się w DirectAdmin
+(_Funkcje zaawansowane → Klucze SSH_, potem „Autoryzacja"). Skrypt `scripts/sftp-deploy.py` wysyła wszystkie
+pliki i usuwa z serwera te, których nie ma już w `out/` (poza `.well-known`, `cgi-bin`, `.ftpquota`).
+
 **Konfiguracja w GitHubie** (_Settings → Environments → New environment → `production`_):
 
-| Nazwa                | Rodzaj   | Wartość                                                                                        |
-| -------------------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `DEPLOY_HOST`        | secret   | serwer FTP/SSH z panelu SeoHost                                                                |
-| `DEPLOY_USER`        | secret   | użytkownik FTP/SSH                                                                             |
-| `DEPLOY_PASSWORD`    | secret   | hasło (bez spacji) **albo** `DEPLOY_SSH_KEY` z kluczem prywatnym                               |
-| `DEPLOY_PATH`        | secret   | katalog strony na serwerze, np. `public_html` (nigdy `/`; zawartość katalogu jest nadpisywana) |
-| `DEPLOY_KNOWN_HOSTS` | secret   | opcjonalnie: wpis `known_hosts` serwera (przypina klucz hosta SFTP)                            |
-| `DEPLOY_PROTOCOL`    | variable | `sftp` (domyślnie), `ftps` lub `ftp`                                                           |
-| `DEPLOY_PORT`        | variable | opcjonalnie, jeśli inny niż domyślny                                                           |
-| `SITE_CHECK_URL`     | variable | opcjonalnie, np. `https://archica.pl`: po wysyłce workflow sprawdza stronę, nagłówek CSP i 404 |
+| Nazwa                | Rodzaj   | Wartość                                                                                               |
+| -------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `DEPLOY_HOST`        | secret   | serwer FTP/SSH z panelu SeoHost                                                                       |
+| `DEPLOY_USER`        | secret   | użytkownik FTP/SSH                                                                                    |
+| `DEPLOY_SSH_KEY`     | secret   | klucz prywatny SSH (cały plik; SeoHost nie przyjmuje haseł). `DEPLOY_PASSWORD` tylko dla `ftps`/`ftp` |
+| `DEPLOY_PATH`        | secret   | katalog strony na serwerze, np. `public_html` (nigdy `/`; zawartość katalogu jest nadpisywana)        |
+| `DEPLOY_KNOWN_HOSTS` | secret   | opcjonalnie: wpis `known_hosts` serwera (przypina klucz hosta SFTP)                                   |
+| `DEPLOY_PROTOCOL`    | variable | `sftp` (domyślnie; dla SeoHost), `ftps` lub `ftp`                                                     |
+| `DEPLOY_PORT`        | variable | port SSH z Panelu Klienta (SeoHost: nie 22)                                                           |
+| `SITE_CHECK_URL`     | variable | opcjonalnie, np. `https://archica.pl`: po wysyłce workflow sprawdza stronę, nagłówek CSP i 404        |
 
 Bez `DEPLOY_HOST`, `DEPLOY_USER` i `DEPLOY_PATH` workflow tylko ostrzega i nic nie wysyła.
 

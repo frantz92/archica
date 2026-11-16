@@ -24,7 +24,13 @@ test.describe('static export (out/)', () => {
       expect(existsSync(join(out, locale, 'privacy', 'index.html'))).toBe(true);
       expect(existsSync(join(out, locale, 'opengraph-image'))).toBe(true);
     }
-    for (const file of ['404.html', 'robots.txt', 'sitemap.xml', 'manifest.webmanifest']) {
+    for (const file of [
+      'index.html',
+      '404.html',
+      'robots.txt',
+      'sitemap.xml',
+      'manifest.webmanifest',
+    ]) {
       expect(existsSync(join(out, file)), file).toBe(true);
     }
   });

@@ -17,7 +17,8 @@
     "check:placeholders": "node scripts/check-placeholders.mjs",
     "test:e2e": "playwright test",
     "prebuild": "node scripts/optimize-images.mjs",
-    "postbuild": "node scripts/build-htaccess.mjs && node scripts/prune-output.mjs"
+    "postbuild": "node scripts/build-htaccess.mjs && node scripts/prune-output.mjs",
+    "deploy": "bash scripts/deploy-local.sh"
   },
   "dependencies": {
     "next": "16.4.6",
