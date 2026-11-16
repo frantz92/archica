@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # Application dependencies. One grouped pull request a week keeps the review small; every PR
+  # runs the whole quality gate, so a breaking update shows up red instead of in production.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Warsaw
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+    groups:
+      production:
+        dependency-type: production
+      development:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  # Versions of the actions used in .github/workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Warsaw
+    commit-message:
+      prefix: 'chore(ci)'
+    groups:
+      actions:
+        patterns: ['*']

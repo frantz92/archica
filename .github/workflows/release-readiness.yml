@@ -1,0 +1,81 @@
+name: Release readiness
+
+# Run by hand before pointing archica.pl at a production deployment (go / no-go).
+# Red while any placeholder is left in the content.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: true
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  readiness:
+    name: Go / no-go
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Placeholders (photos, licence number, retention periods)
+        id: placeholders
+        continue-on-error: true
+        run: npm run check:placeholders
+
+      - name: Full quality gate
+        id: quality
+        continue-on-error: true
+        run: npm run check
+
+      - run: npm run build
+
+      - name: Browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Security headers on the production build
+        id: headers
+        continue-on-error: true
+        run: npx playwright test e2e/security-headers.spec.ts --project=chromium
+
+      - name: Lighthouse, strict budgets (5 runs per page)
+        id: lighthouse
+        continue-on-error: true
+        run: npx --yes @lhci/cli@0.16.1 autorun --config=lighthouserc.release.json
+
+      - name: Verdict
+        if: always()
+        run: |
+          {
+            echo "## Release readiness"
+            echo
+            echo "| check | result |"
+            echo "|---|---|"
+            echo "| Placeholders removed | ${{ steps.placeholders.outcome }} |"
+            echo "| Quality gate (types, lint, format, tests 80%) | ${{ steps.quality.outcome }} |"
+            echo "| Security headers | ${{ steps.headers.outcome }} |"
+            echo "| Lighthouse budgets (BLUEPRINT §11) | ${{ steps.lighthouse.outcome }} |"
+            echo
+            echo "Still to confirm by hand (README, release checklist): legal review of the privacy policy,"
+            echo "domain and www redirect, MX/SPF/DKIM unchanged, structured data validation, Vercel Analytics on."
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.placeholders.outcome }}" != "success" ] || [ "${{ steps.quality.outcome }}" != "success" ] \
+            || [ "${{ steps.headers.outcome }}" != "success" ] || [ "${{ steps.lighthouse.outcome }}" != "success" ]; then
+            echo "Not ready to publish."
+            exit 1
+          fi
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-release
+          path: .lighthouseci
+          retention-days: 30

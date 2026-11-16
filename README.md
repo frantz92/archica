@@ -65,6 +65,35 @@ W CI testy idą na Chromium, WebKit (Safari) i mobilnym Safari. Lokalnie Playwri
 przeglądarek na starszych systemach (np. macOS 12), więc bez zmiennej `CI` suite używa zainstalowanego
 Google Chrome; `E2E_ALL=1` wymusza pełną macierz (wymaga przeglądarek Playwrighta).
 
+## CI/CD
+
+Hosting i wdrożenia: Vercel łączy się z repozytorium przez Git (podgląd każdego PR i produkcja po merge do
+`master`). GitHub Actions odpowiada za kontrolę jakości; pliki w `.github/workflows/`.
+
+| Workflow                                              | Kiedy                      | Co sprawdza                                                                                                                                                                                                                                                                                                                              |
+| ----------------------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ci.yml` → **Quality gate**                           | push do `master`, każdy PR | typecheck, lint, Prettier, testy jednostkowe z progiem pokrycia 80%, build; raport pokrycia jako artefakt                                                                                                                                                                                                                                |
+| `ci.yml` → **E2E** (Chromium, WebKit, mobilny Safari) | po bramce jakości          | testy Playwright, audyt dostępności axe (WCAG 2.2 AA), zmiana języka, kotwice, brak przewijania poziomego                                                                                                                                                                                                                                |
+| `ci.yml` → **Lighthouse budgets**                     | po bramce jakości          | dostępność, best practices i SEO ≥ 95, LCP < 2 s, CLS < 0,02 (BLUEPRINT §11) blokują; **wydajność ≥ 95 i TBT ≤ 200 ms są na razie ostrzeżeniami** (lokalny pomiar na obciążonym Macu nie jest wiarygodny); po pierwszym pomiarze na GitHubie przełącz je na `error` w `lighthouserc.json`. Ścisłe budżety ma `lighthouserc.release.json` |
+| `security.yml`                                        | push, PR, co poniedziałek  | `npm audit` (zależności produkcyjne, high i critical), CodeQL, skan sekretów (gitleaks), nagłówki bezpieczeństwa z §10 na zbudowanej stronie                                                                                                                                                                                             |
+| `release-readiness.yml`                               | ręcznie („Run workflow")   | go / no-go przed podpięciem domeny: placeholdery, pełna bramka, nagłówki, Lighthouse ze ścisłymi budżetami i 5 przebiegami                                                                                                                                                                                                               |
+| Dependabot (`dependabot.yml`)                         | co poniedziałek            | tygodniowe, grupowane PR-y z aktualizacjami npm i wersji akcji; każdy przechodzi całą bramkę                                                                                                                                                                                                                                             |
+
+**Jak sprawdzić wyniki:** na GitHubie zakładka _Actions_ pokazuje uruchomienia (kroki, logi, artefakty:
+pokrycie, raporty Playwright i Lighthouse), a w PR sekcja _Checks_ na dole. Lokalny odpowiednik bramki jakości
+to `npm run check`.
+
+**Wymagane checki (ustawienie w GitHubie, nie da się go zapisać w kodzie):** _Settings → Branches → Add rule_
+dla `master`: zaznacz _Require a pull request before merging_, _Require review from Code Owners_
+(`.github/CODEOWNERS`), _Require status checks to pass before merging_ i wybierz: `Quality gate`,
+`E2E (chromium)`, `E2E (webkit)`, `E2E (mobile-safari)`, `Lighthouse budgets`, `Dependency audit`,
+`CodeQL`, `Secret scan`, `Security headers`. Nazwy zadań pojawią się na liście po pierwszym uruchomieniu.
+Dodatkowo włącz _Dependabot alerts_ i _Secret scanning_ w _Settings → Code security_.
+
+**Przed publikacją:** uruchom `release-readiness.yml` (zakładka _Actions → Release readiness → Run workflow_).
+Dopóki w treści są placeholdery, workflow jest czerwony; zielony oznacza, że można podpinać `archica.pl`.
+Pozostałe punkty listy kontrolnej poniżej (weryfikacja prawna polityki, DNS, poczta) nadal robisz ręcznie.
+
 ## Edycja treści
 
 - **Teksty widoczne na stronie** są w słownikach `src/i18n/dictionaries/`. `pl.ts` jest wzorcem:
